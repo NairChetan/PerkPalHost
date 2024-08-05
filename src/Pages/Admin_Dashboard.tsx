@@ -7,10 +7,8 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import EditIcon from "@mui/icons-material/Edit";
-import { BarChart } from "@mui/x-charts/BarChart";
 import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
-// import Typography from "@mui/material/Typography";
-// import Button from '@mui/material/Button';
+import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
 
 const Admin_Dashboard = () => {
   return (
@@ -159,10 +157,10 @@ const Admin_Dashboard = () => {
               sx={{
                 width: "100%",
                 height: "80%",
-                display: "flex",
-                flexDirection: "row",
               }}
-            ></Box>
+            >
+              <Bar_Chart />
+            </Box>
           </Box>
           <Box
             sx={{
@@ -254,7 +252,9 @@ const Admin_Dashboard = () => {
                 display: "flex",
                 flexDirection: "row",
               }}
-            ></Box>
+            >
+              <Bar_Chart />
+            </Box>
           </Box>
         </Grid>
         <Grid
