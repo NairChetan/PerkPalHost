@@ -1,9 +1,9 @@
-import Dummy from "./Pages/Dummy";
+import PendingApproval from "./Pages/PendingApproval";
 
 function App() {
   return (
     <>
-      <Dummy />
+      <PendingApproval />
     </>
   );
 }
