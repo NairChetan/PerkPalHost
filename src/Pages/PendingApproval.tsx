@@ -16,7 +16,7 @@ const PendingApproval = () => {
   const itemsPerPage = 6; // Number of accordion items per page
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
