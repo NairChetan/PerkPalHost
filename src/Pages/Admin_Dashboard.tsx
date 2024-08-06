@@ -9,6 +9,8 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
 import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
+import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
+import Employee_chart from "../Components/Admin_Dashboard/Charts/Employee_chart";
 
 const Admin_Dashboard = () => {
   return (
@@ -41,222 +43,6 @@ const Admin_Dashboard = () => {
           m: 0,
         }}
       >
-        <Grid
-          item
-          sx={{
-            width: {
-              xs: "100%", // For extra-small screens
-              sm: "48.5%", // For small screens
-              md: "48.5%", // For medium screens
-              lg: "30%", // For large screens
-              xl: "30%", // For extra-large screens
-            },
-            height: {
-              xs: "88vh", // For extra-small screens
-              sm: "88vh", // For small screens
-              md: "88vh", // For medium screens
-              lg: "90%", // For large screens
-              xl: "90%", // For extra-large screens
-            },
-            mt: {
-              xs: "3%", // For extra-small screens
-              sm: "3%", // For small screens
-              md: "3%", // For medium screens
-              lg: 0, // For large screens
-              xl: 0, // For extra-large screens
-            },
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              height: "48%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
-              boxShadow: 1,
-              borderRadius: 7,
-              pt: "2%",
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                height: "20%",
-
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "80%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  pl: "4%",
-                }}
-              >
-                <Typography
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    height: "70%",
-                    width: "100%",
-                    fontWeight: "bold", // Makes the text bold
-                    textAlign: "start", // Centers the text
-                    fontSize: {
-                      xs: "5vw", // Extra small devices (phones, 600px and down)
-                      sm: "3vw", // Small devices (tablets, 600px and up)
-                      md: "2vw", // Medium devices (desktops, 900px and up)
-                      lg: "1.5vw", // Large devices (large desktops, 1200px and up)
-                      xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-                    },
-                  }}
-                >
-                  DU Performance
-                </Typography>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    height: "30%",
-                    width: "100%",
-                    fontWeight: "bold", // Makes the text bold
-                    textAlign: "start", // Centers the text
-                    fontSize: {
-                      xs: "2.5vw", // Extra small devices (phones, 600px and down)
-                      sm: "1.5vw", // Small devices (tablets, 600px and up)
-                      md: "1.1vw", // Medium devices (desktops, 900px and up)
-                      lg: "0.7vw", // Large devices (large desktops, 1200px and up)
-                      xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-                    },
-                  }}
-                >
-                  Points/DU
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  width: "20%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <DateRangePick />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: "80%",
-              }}
-            >
-              <Bar_Chart />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              height: "48%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
-              boxShadow: 1,
-              borderRadius: 7,
-              pt: "2%",
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                height: "20%",
-
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "85%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  pl: "4%",
-                }}
-              >
-                <Typography
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    height: "70%",
-                    width: "100%",
-                    fontWeight: "bold", // Makes the text bold
-                    textAlign: "start", // Centers the text
-                    fontSize: {
-                      xs: "5vw", // Extra small devices (phones, 600px and down)
-                      sm: "3vw", // Small devices (tablets, 600px and up)
-                      md: "2vw", // Medium devices (desktops, 900px and up)
-                      lg: "1.5vw", // Large devices (large desktops, 1200px and up)
-                      xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-                    },
-                  }}
-                >
-                  Employee Performance
-                </Typography>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    height: "30%",
-                    width: "100%",
-                    fontWeight: "bold", // Makes the text bold
-                    textAlign: "start", // Centers the text
-                    fontSize: {
-                      xs: "2.5vw", // Extra small devices (phones, 600px and down)
-                      sm: "1.5vw", // Small devices (tablets, 600px and up)
-                      md: "1.1vw", // Medium devices (desktops, 900px and up)
-                      lg: "0.7vw", // Large devices (large desktops, 1200px and up)
-                      xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-                    },
-                  }}
-                >
-                  Points/Employee
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  width: "15%",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <DateRangePick />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: "80%",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Bar_Chart />
-            </Box>
-          </Box>
-        </Grid>
         <Grid
           item
           sx={{
@@ -464,7 +250,7 @@ const Admin_Dashboard = () => {
             >
               <SchoolOutlinedIcon fontSize="inherit" />
             </Box>
-            Manager Roles
+            Export Data
           </Button>
           <Button
             variant="contained"
@@ -515,10 +301,10 @@ const Admin_Dashboard = () => {
           sx={{
             width: {
               xs: "100%", // For extra-small screens
-              sm: "48.5%", // For small screens
-              md: "48.5%", // For medium screens
-              lg: "22%", // For large screens
-              xl: "22%", // For extra-large screens
+              sm: "100%", // For small screens
+              md: "100%", // For medium screens
+              lg: "52%", // For large screens
+              xl: "52%", // For extra-large screens
             },
             height: {
               xs: "88vh", // For extra-small screens
@@ -534,13 +320,36 @@ const Admin_Dashboard = () => {
               lg: 0, // For large screens
               xl: 0, // For extra-large screens
             },
-            backgroundColor: "#FFF",
             display: "flex",
-            flexDirection: "row",
-            boxShadow: 1,
-            borderRadius: 7,
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
-        ></Grid>
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 1,
+              borderRadius: 7,
+              pt: "2%",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: "10%",
+                backgroundColor: "#333",
+                pr: "2%",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            ></Box>
+            <Employee_chart />
+          </Box>
+        </Grid>
       </Grid>
 
       <Footer />

@@ -5,7 +5,7 @@ import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Box } from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import format from "date-fns/format";
 
 interface DateRange {
   startDate: Date;
@@ -66,49 +66,53 @@ const DateRangePick: React.FC = () => {
             }}
           />
         )}
-        <Box
-          sx={{
-            width: "25%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center", // Align items vertically center
-            justifyContent: "center", // Align items horizontally to the start
-            fontSize: {
-              xs: "8vw", // Extra small devices (phones, 600px and down)
-              sm: "5vw", // Small devices (tablets, 600px and up)
-              md: "4.5vw", // Medium devices (desktops, 900px and up)
-              lg: "3vw", // Large devices (large desktops, 1200px and up)
-              xl: "2.5vw", // Extra large devices (larger desktops, 1536px and up)
-            },
+
+        <input
+          value={`${format(range[0].startDate, "MMM/dd")} to ${format(
+            range[0].endDate,
+            "MMM/dd"
+          )}`}
+          readOnly
+          style={{
+            width: "10vw",
+            minWidth: "10vw",
+            margin: 0,
+            padding: "8px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            fontSize: "16px",
+            backgroundColor: "#f9f9f9",
+            boxSizing: "content-box",
+            cursor: "pointer",
+            overflow: "hidden",
+            textAlign: "center",
+            color: "#0050B5",
           }}
-        >
-          <CalendarMonthIcon
-            fontSize="inherit"
-            onClick={() => setOpen((prevOpen) => !prevOpen)}
-          />
-          {open && (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                zIndex: "100",
-                border: "1px solid gray", // Add border with width, style, and color
-              }}
-              ref={refOne}
-            >
-              <DateRangePicker
-                onChange={handleSelect}
-                editableDateInputs={true}
-                moveRangeOnFirstSelection={false}
-                ranges={range}
-                months={1}
-                direction="horizontal"
-              />
-            </Box>
-          )}
-        </Box>
+          className="inputBox"
+          onClick={() => setOpen((open) => !open)}
+        />
+        {open && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: "100",
+              border: "1px solid gray", // Add border with width, style, and color
+            }}
+            ref={refOne}
+          >
+            <DateRangePicker
+              onChange={handleSelect}
+              editableDateInputs={true}
+              moveRangeOnFirstSelection={false}
+              ranges={range}
+              months={1}
+              direction="horizontal"
+            />
+          </Box>
+        )}
       </Box>
     </>
   );

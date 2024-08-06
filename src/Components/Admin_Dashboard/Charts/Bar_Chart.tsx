@@ -22,23 +22,22 @@ const Bar_Chart = () => {
 
   const chartData = {
     labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "November",
-      "December",
+      "DU1",
+      "DU2",
+      "DU3",
+      "DU4",
+      "DU5",
+      "DU6",
+      "DU7",
+      "DU8",
+      "DU9",
+      "DU10",
+      "DU11",
     ],
     datasets: [
       {
         data: [30, 20, 50, 40, 70, 20, 50, 30, 10, 70, 90, 40],
         backgroundColor: "#06C",
-        borderWidth: 1,
       },
     ],
   };
