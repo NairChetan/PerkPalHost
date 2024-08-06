@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Chart as ChartJS,
   BarElement,
@@ -6,41 +7,18 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 import { Bar } from "react-chartjs-2";
+import React from "react";
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-const Bar_Chart = () => {
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false, // Hide the legend
-      },
-    },
-  };
+// Define the type for the component's props
+interface BarChartProps {
+  chartData: any;
+  chartOptions: any;
+}
 
-  const chartData = {
-    labels: [
-      "DU1",
-      "DU2",
-      "DU3",
-      "DU4",
-      "DU5",
-      "DU6",
-      "DU7",
-      "DU8",
-      "DU9",
-      "DU10",
-      "DU11",
-    ],
-    datasets: [
-      {
-        data: [30, 20, 50, 40, 70, 20, 50, 30, 10, 70, 90, 40],
-        backgroundColor: "#06C",
-      },
-    ],
-  };
+const Bar_Chart: React.FC<BarChartProps> = ({ chartData, chartOptions }) => {
   return (
     <>
       <div

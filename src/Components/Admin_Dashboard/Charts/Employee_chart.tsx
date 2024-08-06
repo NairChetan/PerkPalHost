@@ -3,6 +3,36 @@ import { Box, Typography } from "@mui/material";
 import DateRangePick from "../DateRange/DateRangePick";
 import Bar_Chart from "../Charts/Bar_Chart";
 
+const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false, // Hide the legend
+    },
+  },
+};
+
+const chartData = {
+  labels: [
+    "Rithik",
+    "bob",
+    "alby",
+    "riya",
+    "tom",
+    "emma",
+    "sanjay",
+    "jhon",
+    "hob",
+    "pappu",
+  ],
+  datasets: [
+    {
+      data: [100, 400, 150, 200, 50, 350, 100, 300, 230, 90],
+      backgroundColor: "#06C",
+    },
+  ],
+};
+
 const Employee_chart = () => {
   return (
     <>
@@ -42,7 +72,7 @@ const Employee_chart = () => {
               },
             }}
           >
-            DU Performance
+            Employee Performance
           </Typography>
           <Typography
             sx={{
@@ -62,7 +92,7 @@ const Employee_chart = () => {
               },
             }}
           >
-            Points/DU
+            Points/Employee
           </Typography>
         </Box>
         <Box
@@ -84,7 +114,7 @@ const Employee_chart = () => {
           height: "75%",
         }}
       >
-        <Bar_Chart />
+        <Bar_Chart chartData={chartData} chartOptions={chartOptions} />
       </Box>
     </>
   );

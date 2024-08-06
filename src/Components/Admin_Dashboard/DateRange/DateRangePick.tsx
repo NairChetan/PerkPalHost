@@ -86,7 +86,7 @@ const DateRangePick: React.FC = () => {
             cursor: "pointer",
             overflow: "hidden",
             textAlign: "center",
-            color: "#0050B5",
+            color: "#06c",
           }}
           className="inputBox"
           onClick={() => setOpen((open) => !open)}

@@ -3,6 +3,37 @@ import { Box, Typography } from "@mui/material";
 import DateRangePick from "../DateRange/DateRangePick";
 import Bar_Chart from "../Charts/Bar_Chart";
 
+const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false, // Hide the legend
+    },
+  },
+};
+
+const chartData = {
+  labels: [
+    "DU1",
+    "DU2",
+    "DU3",
+    "DU4",
+    "DU5",
+    "DU6",
+    "DU7",
+    "DU8",
+    "DU9",
+    "DU10",
+    "DU11",
+  ],
+  datasets: [
+    {
+      data: [30, 20, 50, 40, 70, 20, 50, 30, 10, 70, 90, 40],
+      backgroundColor: "#06C",
+    },
+  ],
+};
+
 const DU_chart = () => {
   return (
     <>
@@ -84,7 +115,7 @@ const DU_chart = () => {
           height: "75%",
         }}
       >
-        <Bar_Chart />
+        <Bar_Chart chartData={chartData} chartOptions={chartOptions} />
       </Box>
     </>
   );

@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Button, Typography, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import EditIcon from "@mui/icons-material/Edit";
 import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
 import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
 import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
 import Employee_chart from "../Components/Admin_Dashboard/Charts/Employee_chart";
+import LeaderBoardAdmin from "../Components/Admin_Dashboard/LeaderBoard/LeaderBoardAdmin";
+import ChartTab from "../Components/Admin_Dashboard/Tabs/Chart_tab";
 
 const Admin_Dashboard = () => {
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
   return (
     <>
       <Navbar />
@@ -76,6 +83,13 @@ const Admin_Dashboard = () => {
               width: "100%",
               height: "7%",
               fontWeight: 600,
+              fontSize: {
+                xs: "5vw", // Extra small devices (phones, 600px and down)
+                sm: "2.5vw", // Small devices (tablets, 600px and up)
+                md: "2.5vw", // Medium devices (desktops, 900px and up)
+                lg: "1.5vw", // Large devices (large desktops, 1200px and up)
+                xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
+              },
             }}
           >
             Employee Leaderboard
@@ -89,8 +103,11 @@ const Admin_Dashboard = () => {
               flexDirection: "row",
               boxShadow: 1,
               borderRadius: 7,
+              overflowY: "auto",
             }}
-          ></Box>
+          >
+            <LeaderBoardAdmin />
+          </Box>
         </Grid>
         <Grid
           item
@@ -248,7 +265,7 @@ const Admin_Dashboard = () => {
                 },
               }}
             >
-              <SchoolOutlinedIcon fontSize="inherit" />
+              <GetAppIcon fontSize="inherit" />
             </Box>
             Export Data
           </Button>
@@ -334,20 +351,26 @@ const Admin_Dashboard = () => {
               flexDirection: "column",
               boxShadow: 1,
               borderRadius: 7,
-              pt: "2%",
             }}
           >
             <Box
               sx={{
                 width: "100%",
                 height: "10%",
-                backgroundColor: "#333",
                 pr: "2%",
                 display: "flex",
                 flexDirection: "row",
+                // pb: "10%",
               }}
-            ></Box>
-            <Employee_chart />
+            >
+              <ChartTab
+                selectedTab={selectedTab}
+                handleTabChange={handleTabChange}
+              />
+            </Box>
+
+            {selectedTab === 0 && <Employee_chart />}
+            {selectedTab === 1 && <DU_chart />}
           </Box>
         </Grid>
       </Grid>
