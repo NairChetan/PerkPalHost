@@ -7,17 +7,20 @@ import Footer from "../Components/Footer/Footer";
 const Dummy = () => {
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           width: "100%", // Set width to 100%
           height: "78vh", // Set height to 75vh
-          backgroundColor: "#111",
+          backgroundColor: "#f3f3f3",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: "2%",
         }}
       >
         {/* Your content goes here */}
       </Box>
-      <Footer />
     </>
   );
 };
