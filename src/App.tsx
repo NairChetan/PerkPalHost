@@ -1,9 +1,17 @@
-import Dummy from "./Pages/Dummy";
+
+
+
+import EmployeeDashboard from "./Pages/EmployeeDashboard";
+
+
 
 function App() {
   return (
     <>
-      <Dummy />
+      <EmployeeDashboard/>
+     
+
+
     </>
   );
 }
