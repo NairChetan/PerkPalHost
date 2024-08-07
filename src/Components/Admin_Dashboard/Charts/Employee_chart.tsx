@@ -27,7 +27,7 @@ const chartData = {
   ],
   datasets: [
     {
-      data: [100, 400, 150, 200, 50, 350, 100, 300, 230, 90],
+      data: [300, 400, 150, 200, 50, 350, 10, 300, 230, 90],
       backgroundColor: "#06C",
     },
   ],
@@ -64,8 +64,8 @@ const Employee_chart = () => {
               fontWeight: "bold", // Makes the text bold
               textAlign: "start", // Centers the text
               fontSize: {
-                xs: "6vw", // Extra small devices (phones, 600px and down)
-                sm: "4vw", // Small devices (tablets, 600px and up)
+                xs: "4vw", // Extra small devices (phones, 600px and down)
+                sm: "3.5vw", // Small devices (tablets, 600px and up)
                 md: "3vw", // Medium devices (desktops, 900px and up)
                 lg: "2vw", // Large devices (large desktops, 1200px and up)
                 xl: "2.15vw", // Extra large devices (larger desktops, 1536px and up)

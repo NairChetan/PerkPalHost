@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, Container, Button, Typography, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
@@ -13,12 +13,29 @@ import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
 import Employee_chart from "../Components/Admin_Dashboard/Charts/Employee_chart";
 import LeaderBoardAdmin from "../Components/Admin_Dashboard/LeaderBoard/LeaderBoardAdmin";
 import ChartTab from "../Components/Admin_Dashboard/Tabs/Chart_tab";
+import { TabContext, TabPanel } from "@mui/lab";
 
 const Admin_Dashboard = () => {
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [selectedTab, setSelectedTab] = useState<string>("1");
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
+  };
+
+  const [open, setOpen] = useState<boolean>(false);
+  const refOne = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("click", hideOnClickOutside, true);
+    return () => {
+      document.removeEventListener("click", hideOnClickOutside, true);
+    };
+  }, []);
+
+  const hideOnClickOutside = (e: MouseEvent) => {
+    if (refOne.current && !refOne.current.contains(e.target as Node)) {
+      setOpen(false);
+    }
   };
   return (
     <>
@@ -228,6 +245,7 @@ const Admin_Dashboard = () => {
           </Button>
           <Button
             variant="contained"
+            onClick={() => setOpen((open) => !open)}
             sx={{
               px: "5%",
               width: "100%",
@@ -269,6 +287,36 @@ const Admin_Dashboard = () => {
             </Box>
             Export Data
           </Button>
+          {open && (
+            <Box
+              sx={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                backdropFilter: "blur(10px)",
+                zIndex: 99, // Ensure it's behind the DateRangePicker but above other content
+              }}
+            />
+          )}
+          {open && (
+            <Box
+              sx={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: "100",
+                border: "1px solid gray",
+                width: "50vw",
+                height: "50vh",
+                background: "#fff", // Add border with width, style, and color
+              }}
+              ref={refOne}
+            ></Box>
+          )}
+
           <Button
             variant="contained"
             sx={{
@@ -351,26 +399,16 @@ const Admin_Dashboard = () => {
               flexDirection: "column",
               boxShadow: 1,
               borderRadius: 7,
+              pb: "2%",
             }}
           >
-            <Box
-              sx={{
-                width: "100%",
-                height: "10%",
-                pr: "2%",
-                display: "flex",
-                flexDirection: "row",
-                // pb: "10%",
-              }}
-            >
-              <ChartTab
-                selectedTab={selectedTab}
-                handleTabChange={handleTabChange}
-              />
-            </Box>
+            <ChartTab
+              selectedTab={selectedTab}
+              handleTabChange={handleTabChange}
+            />
 
-            {selectedTab === 0 && <Employee_chart />}
-            {selectedTab === 1 && <DU_chart />}
+            {/* {selectedTab === 0 && <Employee_chart />}
+            {selectedTab === 1 && <DU_chart />} */}
           </Box>
         </Grid>
       </Grid>
