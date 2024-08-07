@@ -1,9 +1,10 @@
-import Dummy from "./Pages/Dummy";
+import Admin_Dashboard from "./Pages/Admin_Dashboard";
 
 function App() {
   return (
     <>
-      <Dummy />
+      <Admin_Dashboard />
+      {/* <MyComponent /> */}
     </>
   );
 }
