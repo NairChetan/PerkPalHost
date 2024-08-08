@@ -1,0 +1,44 @@
+
+.Log{
+    text-align: left;
+  }
+  .table {
+      width: 100%;
+      border-collapse: collapse;
+      align-items: center;
+    }
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    .table tr:nth-child(odd) {
+      background-color: #FFFFFF;
+    }
+    
+    .table tr:nth-child(even) {
+      background-color: #F1F3F9;
+    }
+    .table th {
+      background-color: #F1F3F9;
+    }
+  
+  
+    /* Responsive */
+  
+    @media (max-width: 426px) {
+      .tableWrapper {
+        overflow-x: auto;
+      }
+    }
+    
+    @media (max-width: 376px) {
+      .tableWrapper {
+        overflow-x: auto;
+      }
+    }
+    
+    @media (max-width: 321px) {
+      .tableWrapper {
+        overflow-x: auto;
+      }
+    }
