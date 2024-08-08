@@ -9,8 +9,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Typography, Button, Grid } from "@mui/material";
-
+import { useFetchPendingApproval } from "../Components/CustomHooks/CustomHooks";
 const PendingApproval = () => {
+  const { employeeNameList, participantList, error, loading } = useFetchPendingApproval("employee");
+
+  // console.log(employeeNameList[0]);
+  // console.log(participantList[0]);
+  // console.log(error);
+  // console.log(loading);
+
   const [expanded, setExpanded] = useState<string | false>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Number of accordion items per page

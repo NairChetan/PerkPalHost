@@ -1,9 +1,10 @@
-import PendingApproval from "./Pages/PendingApproval";
+import Admin_Dashboard from "./Pages/Admin_Dashboard";
 
 function App() {
   return (
     <>
-      <PendingApproval />
+      <Admin_Dashboard />
+      {/* <MyComponent /> */}
     </>
   );
 }
