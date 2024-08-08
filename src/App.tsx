@@ -1,17 +1,10 @@
-import NewEntry from "./Components/Clockin/NewEntry/NewEntry";
-import UserLogin from "./Components/Clockin/UserLogin/UserLogin";
-import Footer from "./Components/Footer/Footer";
-import Navbar from "./Components/NavBar/Navbar";
-import Clockin from './Pages/Clockin';
+import Admin_Dashboard from "./Pages/Admin_Dashboard";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Clockin />
-      <Footer/>
-
-
+      <Admin_Dashboard />
+      {/* <MyComponent /> */}
     </>
   );
 }
