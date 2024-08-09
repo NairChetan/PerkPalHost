@@ -14,22 +14,15 @@
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.6",
-<<<<<<< HEAD
-=======
-    "@mui/joy": "^5.0.0-beta.48",
->>>>>>> f750fcd07df9624761b18193e21fbda83a880837
     "@mui/material": "^5.16.6",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-charts": "^7.12.0",
     "@mui/x-date-pickers": "^7.12.0",
     "axios": "^1.7.2",
-<<<<<<< HEAD
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
-=======
-    "dayjs": "^1.11.12",
->>>>>>> f750fcd07df9624761b18193e21fbda83a880837
     "formik": "^2.4.6",
+    "install": "^0.13.0",
     "perkpal": "file:",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
