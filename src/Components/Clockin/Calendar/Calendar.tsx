@@ -56,7 +56,17 @@ const Calendar: React.FC<CalendarProps> = ({ entries, setSelectedDate }) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div>
+      <div >
+     
+      <div className={styles.calendarContainer}>
+         <div className={styles.calendarleft}>
+         <img
+          src="../../src/assets/Images/achievement 1.png"
+          alt="Celebration Icon"
+          className={styles.calendarImage}
+        />
+         </div>
+        <div className={styles.calendarright}>
         <DatePicker className={styles.datepicker}
              sx={{
               // Add your custom styles here
@@ -98,6 +108,8 @@ const Calendar: React.FC<CalendarProps> = ({ entries, setSelectedDate }) => {
               )}
             </div>
           ))}
+        </div>
+        </div>
         </div>
       </div>
     </LocalizationProvider>

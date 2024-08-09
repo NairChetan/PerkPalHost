@@ -31,8 +31,8 @@ const UserLogin: React.FC<UserLoginProps> = ({ entries, selectedDate }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Activity</th>
             <th>Category</th>
+            <th>Activity</th>
             <th>Description</th>
             <th>Duration (Hrs)</th>
             <th>Remarks</th>
@@ -45,8 +45,8 @@ const UserLogin: React.FC<UserLoginProps> = ({ entries, selectedDate }) => {
         <tbody>
           {filteredEntries.map((entry, index) => (
             <tr key={index}>
-              <td>{entry.activity}</td>
               <td>{entry.category}</td>
+              <td>{entry.activity}</td>
               <td>{entry.description}</td>
               <td>{entry.duration}</td>
               <td>{entry.remarks}</td>

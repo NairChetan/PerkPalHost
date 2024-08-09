@@ -24,6 +24,11 @@
   
   
     /* Responsive */
+    @media (max-width: 769px) {
+      .tableWrapper {
+        overflow-x: auto;
+      }
+    }
   
     @media (max-width: 426px) {
       .tableWrapper {

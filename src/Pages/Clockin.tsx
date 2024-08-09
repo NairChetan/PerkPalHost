@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserLogin from '../Components/Clockin/UserLogin/UserLogin';
-import NewEntry from '../Components/Clockin/NewEntry/NewEntry';
+import NewEntry from '../Components/NewEntry/NewEntry';
 import Calendar from '../Components/Clockin/Calendar/Calendar';
 import dayjs from 'dayjs';
 import styles from './Clockin.module.css';
@@ -35,7 +35,7 @@ const Clockin: React.FC = () => {
   return (
     <div className={styles.clockinContainer}>
       <UserLogin entries={entries} selectedDate={selectedDate} />
-      <NewEntry addEntry={addEntry} />
+      {/* <NewEntry addEntry={addEntry} /> */}
       <Calendar entries={entries} setSelectedDate={setSelectedDate} />
     </div>
   );
