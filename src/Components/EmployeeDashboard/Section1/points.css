@@ -1,0 +1,22 @@
+.points-card{
+    display: flex;
+    flex-direction: column;
+    
+    width: 100%; 
+    border-radius: 15px;
+    justify-content: center;    
+}
+.points-img{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;   
+    align-items: center;
+}
+
+.reward-icon{ 
+    width: 20%;
+}
+
+@media screen {
+    
+}
