@@ -1,6 +1,6 @@
 import React from 'react'
 import '../Section2/clubs.css'
-import { Box } from '@mui/material'
+
 
 import celebimg from '../../../assets/Images/EmployeeDashboardAssets/celebration.png'
 import gold from '../../../assets/Images/EmployeeDashboardAssets/gold.png'

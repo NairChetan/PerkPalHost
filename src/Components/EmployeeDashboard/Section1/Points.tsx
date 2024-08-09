@@ -1,7 +1,6 @@
 import '../../EmployeeDashboard/Section1/points.css'
 import React from 'react'
 import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.png'
-import Leaderboard from './LeaderBoard'
 import CountUp from 'react-countup';
 
 
