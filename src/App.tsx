@@ -9,7 +9,7 @@ function App() {
       {/* <Admin_Dashboard /> */}
       {/* <MyComponent /> */}
       <Navbar/>
-      <Clockin/>
+{/*       <Clockin/> */}
       <Footer/>
     </>
   );
