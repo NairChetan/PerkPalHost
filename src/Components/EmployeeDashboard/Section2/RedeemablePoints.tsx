@@ -32,7 +32,7 @@ const Points: React.FC = () => {
               <p style={{ fontSize: '50px', fontWeight: '700', marginRight: '10px' }}>
                 <CountUp delay={0.2} end={points} formattingFn={formatValue} />
               </p>
-              <img className='reward-icon' src={bonusimg} alt='Reward Icon' style={{ width: '70px', height: '70px' }} />
+              <img className='reward-icon' src={bonusimg} alt='Reward Icon' style={{ width: '70px', height: '70px', position:'relative' }} />
             </>
           ) : (
             <div style={{ color: 'red', fontWeight: '700', fontSize: '18px' }}>

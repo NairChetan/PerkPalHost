@@ -212,6 +212,51 @@ const EmployeeDashboard = () => {
           </Button>
 
         </Grid>   
+        <Grid
+          item
+          sx={{
+            width: {
+              xs: "100%", // For extra-small screens
+              sm: "100%", // For small screens
+              md: "100%", // For medium screens
+              lg: "52%", // For large screens
+              xl: "52%", // For extra-large screens
+            },
+            height: {
+              xs: "88vh", // For extra-small screens
+              sm: "88vh", // For small screens
+              md: "88vh", // For medium screens
+              lg: "90%", // For large screens
+              xl: "90%", // For extra-large screens
+            },
+            mt: {
+              xs: "3%", // For extra-small screens
+              sm: "3%", // For small screens
+              md: "3%", // For medium screens
+              lg: 0, // For large screens
+              xl: 0, // For extra-large screens
+            },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 1,
+              borderRadius: 7,
+              pb: "2%",
+            }}
+          >
+            
+              {/* Enter you charts here for section 4 */}
+          </Box>
+        </Grid>
       </Grid>
  
       <Footer />
