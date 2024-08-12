@@ -7,7 +7,6 @@ import Footer from "../Components/Footer/Footer";
 import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
 import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
 import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
-import Employee_chart from "../Components/Admin_Dashboard/Charts/Employee_chart";
 import LeaderBoardAdmin from "../Components/Admin_Dashboard/LeaderBoard/LeaderBoardAdmin";
 import ChartTab from "../Components/Admin_Dashboard/Tabs/Chart_tab";
 import { TabContext, TabPanel } from "@mui/lab";
