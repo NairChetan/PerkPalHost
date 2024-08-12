@@ -1,0 +1,84 @@
+/* LogIn_Page.module.css */
+.fadeIn {
+
+    animation: fadeIn 2s ease-in both;
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+.slideTop1 {
+
+    animation: slideTop1 .5s ease-in both;
+}
+
+@keyframes slideTop1 {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.slideTop2 {
+
+    animation: slideTop2 .5s ease-in both;
+}
+
+@keyframes slideTop2 {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slideTop3 {
+
+    animation: slideTop3 1.3s ease-out both;
+
+}
+
+@keyframes slideTop3 {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+.revealBox {
+
+    animation: revealFromLeft 1.5s ease-out;
+
+}
+
+@keyframes revealFromLeft {
+    0% {
+        /* transform: translateX(-100%); */
+        opacity: 0;
+    }
+
+    100% {
+        /* transform: translateX(0); */
+        opacity: 1;
+    }
+}

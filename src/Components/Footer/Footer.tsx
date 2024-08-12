@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/system/Box";
 import backgroundImage from "../../assets/Images/Sin City Red.jpg";
-import logo_f from "../../assets/Icons/perkpal  white logo.png";
+import exp_logo from "../../assets/Images/Group 32 (1).png";
 
 const Footer = () => {
   return (
@@ -13,7 +13,7 @@ const Footer = () => {
           alignItems: "center",
           width: "100%",
           height: "10vh",
-          px: "5%",
+          px: "4%",
           // Adding background image
           backgroundImage: `url(${backgroundImage})`, // Use the imported image here
           backgroundSize: "cover", // Ensure the image covers the entire box
@@ -22,7 +22,7 @@ const Footer = () => {
       >
         <Box
           component="img"
-          src={logo_f} // Use the imported image
+          src={exp_logo} // Use the imported image
           alt="PerkPal Logo" // Provide an alt attribute for accessibility
           sx={{
             width: "auto",
