@@ -1,6 +1,8 @@
 /* LogIn_Page.module.css */
 .fadeIn {
-    animation: fadeIn 4s ease-in both;
+
+    animation: fadeIn 2s ease-in both;
+
 }
 
 @keyframes fadeIn {
@@ -48,7 +50,8 @@
 
 .slideTop3 {
 
-    animation: slideTop3 1.5s ease-in-out both;
+    animation: slideTop3 1.3s ease-out both;
+
 }
 
 @keyframes slideTop3 {
@@ -63,7 +66,9 @@
 
 
 .revealBox {
-    animation: revealFromLeft 3s ease-out;
+
+    animation: revealFromLeft 1.5s ease-out;
+
 }
 
 @keyframes revealFromLeft {
