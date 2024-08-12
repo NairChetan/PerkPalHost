@@ -1,56 +1,699 @@
 {
-  "entries": [
-    {
-      "id": "96e6",
-      "activity": "Training Programs",
-      "category": "Facilitating Training Programs",
-      "description": "asssadffff qwrrrrrrrrrrrrrrr teryyyyyyyy wqehiohoijhopjp wqojhhojpje wqlhjpjpjqwpr poqwjpojr",
-      "durationHours": 1,
-      "durationMinutes": 15,
-      "remarks": "SARa improves the quality SJDOPJ AKLNJEROIJWEPOJRPOWJ DOJROPJEWPORJKPWEKJERW ERWOIRJRPOJREPOJKERW",
-      "duration": "1:15",
-      "date": "2024-08-04",
-      "status": "pending"
-    },
-    {
-      "id": "7c9a",
-      "activity": "Training Programs",
-      "category": "Facilitating Training Programs",
-      "description": "Newwwww",
-      "duration": "5:30",
-      "proof": null,
-      "date": "2024-08-05T05:57:10.793Z",
-      "status": "pending"
-    },
-    {
-      "id": "5e33",
-      "activity": "Training Programs",
-      "category": "Participation In Training Programs",
-      "description": "ENtryyy",
-      "duration": "03:00",
-      "proof": null,
-      "date": "2024-08-05T05:59:23.294Z",
-      "status": "pending"
-    },
-    {
-      "id": "f15a",
-      "category": "Training Programs",
-      "activity": "Facilitating Training Programs",
-      "description": "saraaaaaa",
-      "duration": "03:00",
-      "proof": "body.jpg",
-      "date": "2024-08-08T17:55:28.631Z",
-      "status": "Pending"
-    },
-    {
-      "id": "f15a",
-      "category": "Training Programs",
-      "activity": "Facilitating Training Programs",
-      "description": "saraaaaaa",
-      "duration": "03:00",
-      "proof": "body.jpg",
-      "date": "2024-08-08T17:55:28.631Z",
-      "status": "Pending"
-    }
-  ]
-}
+    "employee": [
+      {
+        "emp_id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "department_id": 1,
+        "role": "admin",
+        "total_points": 100,
+        "redeemable_points": 50,
+        "club_id": 1,
+        "created_by": 1,
+        "updated_by": 1,
+        "created_date": "2024-01-01T10:00:00Z",
+        "updated_date": "2024-01-01T10:00:00Z",
+        "description": "Senior Manager"
+      },
+      {
+        "emp_id": 2,
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "email": "jane.smith@example.com",
+        "department_id": 2,
+        "role": "employee",
+        "total_points": 150,
+        "redeemable_points": 75,
+        "club_id": 2,
+        "created_by": 2,
+        "updated_by": 2,
+        "created_date": "2024-01-02T11:00:00Z",
+        "updated_date": "2024-01-02T11:00:00Z",
+        "description": "Marketing Specialist"
+      },
+      {
+        "emp_id": 3,
+        "first_name": "Alice",
+        "last_name": "Johnson",
+        "email": "alice.johnson@example.com",
+        "department_id": 3,
+        "role": "employee",
+        "total_points": 200,
+        "redeemable_points": 100,
+        "club_id": 3,
+        "created_by": 3,
+        "updated_by": 3,
+        "created_date": "2024-01-03T12:00:00Z",
+        "updated_date": "2024-01-03T12:00:00Z",
+        "description": "Software Engineer"
+      },
+      {
+        "emp_id": 4,
+        "first_name": "Bob",
+        "last_name": "Williams",
+        "email": "bob.williams@example.com",
+        "department_id": 4,
+        "role": "employee",
+        "total_points": 250,
+        "redeemable_points": 125,
+        "club_id": 4,
+        "created_by": 4,
+        "updated_by": 4,
+        "created_date": "2024-01-04T13:00:00Z",
+        "updated_date": "2024-01-04T13:00:00Z",
+        "description": "Data Analyst"
+      },
+      {
+        "emp_id": 5,
+        "first_name": "Charlie",
+        "last_name": "Brown",
+        "email": "charlie.brown@example.com",
+        "department_id": 5,
+        "role": "employee",
+        "total_points": 300,
+        "redeemable_points": 150,
+        "club_id": 1,
+        "created_by": 5,
+        "updated_by": 5,
+        "created_date": "2024-01-05T14:00:00Z",
+        "updated_date": "2024-01-05T14:00:00Z",
+        "description": "Product Manager"
+      },
+      {
+        "emp_id": 6,
+        "first_name": "David",
+        "last_name": "Wilson",
+        "email": "david.wilson@example.com",
+        "department_id": 6,
+        "role": "employee",
+        "total_points": 350,
+        "redeemable_points": 175,
+        "club_id": 2,
+        "created_by": 6,
+        "updated_by": 6,
+        "created_date": "2024-01-06T15:00:00Z",
+        "updated_date": "2024-01-06T15:00:00Z",
+        "description": "UX Designer"
+      },
+      {
+        "emp_id": 7,
+        "first_name": "Eve",
+        "last_name": "Taylor",
+        "email": "eve.taylor@example.com",
+        "department_id": 1,
+        "role": "employee",
+        "total_points": 400,
+        "redeemable_points": 200,
+        "club_id": 3,
+        "created_by": 7,
+        "updated_by": 7,
+        "created_date": "2024-01-07T16:00:00Z",
+        "updated_date": "2024-01-07T16:00:00Z",
+        "description": "Business Analyst"
+      },
+      {
+        "emp_id": 8,
+        "first_name": "Frank",
+        "last_name": "Moore",
+        "email": "frank.moore@example.com",
+        "department_id": 2,
+        "role": "employee",
+        "total_points": 450,
+        "redeemable_points": 225,
+        "club_id": 4,
+        "created_by": 8,
+        "updated_by": 8,
+        "created_date": "2024-01-08T17:00:00Z",
+        "updated_date": "2024-01-08T17:00:00Z",
+        "description": "Software Developer"
+      },
+      {
+        "emp_id": 9,
+        "first_name": "Grace",
+        "last_name": "Lee",
+        "email": "grace.lee@example.com",
+        "department_id": 3,
+        "role": "employee",
+        "total_points": 500,
+        "redeemable_points": 250,
+        "club_id": 1,
+        "created_by": 9,
+        "updated_by": 9,
+        "created_date": "2024-01-09T18:00:00Z",
+        "updated_date": "2024-01-09T18:00:00Z",
+        "description": "Marketing Coordinator"
+      },
+      {
+        "emp_id": 10,
+        "first_name": "Hannah",
+        "last_name": "White",
+        "email": "hannah.white@example.com",
+        "department_id": 4,
+        "role": "employee",
+        "total_points": 550,
+        "redeemable_points": 275,
+        "club_id": 2,
+        "created_by": 10,
+        "updated_by": 10,
+        "created_date": "2024-01-10T19:00:00Z",
+        "updated_date": "2024-01-10T19:00:00Z",
+        "description": "HR Specialist"
+      }
+    ],
+    "Category": [
+        {
+          "category_id": 1,
+          "category_name": "Workshops",
+          "created_by": 1,
+          "updated_by": 1,
+          "created_date": "2024-01-01T10:00:00Z",
+          "updated_date": "2024-01-01T10:00:00Z",
+          "description": "Activities related to workshops and training."
+        },
+        {
+          "category_id": 2,
+          "category_name": "Seminars",
+          "created_by": 2,
+          "updated_by": 2,
+          "created_date": "2024-01-02T11:00:00Z",
+          "updated_date": "2024-01-02T11:00:00Z",
+          "description": "Activities related to seminars and talks."
+        },
+        {
+          "category_id": 3,
+          "category_name": "Team Building",
+          "created_by": 3,
+          "updated_by": 3,
+          "created_date": "2024-01-03T12:00:00Z",
+          "updated_date": "2024-01-03T12:00:00Z",
+          "description": "Activities aimed at team building and collaboration."
+        },
+        {
+          "category_id": 4,
+          "category_name": "Social Events",
+          "created_by": 4,
+          "updated_by": 4,
+          "created_date": "2024-01-04T13:00:00Z",
+          "updated_date": "2024-01-04T13:00:00Z",
+          "description": "Social events and gatherings."
+        },
+        {
+          "category_id": 5,
+          "category_name": "Training",
+          "created_by": 5,
+          "updated_by": 5,
+          "created_date": "2024-01-05T14:00:00Z",
+          "updated_date": "2024-01-05T14:00:00Z",
+          "description": "Training sessions and skill development activities."
+        },
+        {
+          "category_id": 6,
+          "category_name": "Health and Wellness",
+          "created_by": 6,
+          "updated_by": 6,
+          "created_date": "2024-01-06T15:00:00Z",
+          "updated_date": "2024-01-06T15:00:00Z",
+          "description": "Activities related to health and wellness."
+        },
+        {
+          "category_id": 7,
+          "category_name": "Community Service",
+          "created_by": 7,
+          "updated_by": 7,
+          "created_date": "2024-01-07T16:00:00Z",
+          "updated_date": "2024-01-07T16:00:00Z",
+          "description": "Community service and outreach programs."
+        },
+        {
+          "category_id": 8,
+          "category_name": "Networking",
+          "created_by": 8,
+          "updated_by": 8,
+          "created_date": "2024-01-08T17:00:00Z",
+          "updated_date": "2024-01-08T17:00:00Z",
+          "description": "Networking events and professional connections."
+        },
+        {
+          "category_id": 9,
+          "category_name": "Mentorship",
+          "created_by": 9,
+          "updated_by": 9,
+          "created_date": "2024-01-09T18:00:00Z",
+          "updated_date": "2024-01-09T18:00:00Z",
+          "description": "Mentorship and guidance programs."
+        },
+        {
+          "category_id": 10,
+          "category_name": "Recognition",
+          "created_by": 10,
+          "updated_by": 10,
+          "created_date": "2024-01-10T19:00:00Z",
+          "updated_date": "2024-01-10T19:00:00Z",
+          "description": "Recognition and awards for achievements."
+        }
+      ],
+    "Club": [
+      {
+        "club_id": 1,
+        "club_name": "Fitness Club",
+        "club_description": "A club for fitness enthusiasts.",
+        "initial_threshold": 50,
+        "final_threshold": 100,
+        "benefits": "Gym memberships and fitness gear.",
+        "created_by": 1,
+        "updated_by": 1,
+        "create_date": "2024-05-01T08:00:00Z",
+        "update_date": "2024-05-01T08:00:00Z"
+      },
+      {
+        "club_id": 2,
+        "club_name": "Book Club",
+        "club_description": "A club for book lovers.",
+        "initial_threshold": 60,
+        "final_threshold": 120,
+        "benefits": "Book discounts and reading sessions.",
+        "created_by": 2,
+        "updated_by": 2,
+        "create_date": "2024-05-02T09:00:00Z",
+        "update_date": "2024-05-02T09:00:00Z"
+      },
+      {
+        "club_id": 3,
+        "club_name": "Tech Club",
+        "club_description": "A club for tech enthusiasts.",
+        "initial_threshold": 70,
+        "final_threshold": 140,
+        "benefits": "Tech gadgets and workshops.",
+        "created_by": 3,
+        "updated_by": 3,
+        "create_date": "2024-05-03T09:00:00Z",
+        "update_date": "2024-05-03T09:00:00Z"
+      },
+      {
+        "club_id": 4,
+        "club_name": "Travel Club",
+        "club_description": "A club for travel enthusiasts.",
+        "initial_threshold": 90,
+        "final_threshold": 180,
+        "benefits": "Travel discounts and group trips.",
+        "created_by": 4,
+        "updated_by": 4,
+        "create_date": "2024-05-04T10:00:00Z",
+        "update_date": "2024-05-04T10:00:00Z"
+      }
+    ],
+    "Activity": [
+      {
+        "activity_id": 1,
+        "activity_name": "Team Building Exercise",
+        "category_id": 1,
+        "weightage_per_hour": 10,
+        "created_by": 1,
+        "updated_by": 1,
+        "created_date": "2024-05-01T10:00:00Z",
+        "updated_date": "2024-05-01T10:00:00Z",
+        "description": "Exercise to improve team dynamics."
+      },
+      {
+        "activity_id": 2,
+        "activity_name": "Leadership Workshop",
+        "category_id": 2,
+        "weightage_per_hour": 15,
+        "created_by": 2,
+        "updated_by": 2,
+        "created_date": "2024-05-02T11:00:00Z",
+        "updated_date": "2024-05-02T11:00:00Z",
+        "description": "Workshop focused on leadership skills."
+      },
+      {
+        "activity_id": 3,
+        "activity_name": "Coding Bootcamp",
+        "category_id": 3,
+        "weightage_per_hour": 20,
+        "created_by": 3,
+        "updated_by": 3,
+        "created_date": "2024-05-03T12:00:00Z",
+        "updated_date": "2024-05-03T12:00:00Z",
+        "description": "Intensive coding training."
+      },
+      {
+        "activity_id": 4,
+        "activity_name": "Sales Training",
+        "category_id": 4,
+        "weightage_per_hour": 25,
+        "created_by": 4,
+        "updated_by": 4,
+        "created_date": "2024-05-04T13:00:00Z",
+        "updated_date": "2024-05-04T13:00:00Z",
+        "description": "Training for improving sales skills."
+      },
+      {
+        "activity_id": 5,
+        "activity_name": "Finance Seminar",
+        "category_id": 5,
+        "weightage_per_hour": 30,
+        "created_by": 5,
+        "updated_by": 5,
+        "created_date": "2024-05-05T14:00:00Z",
+        "updated_date": "2024-05-05T14:00:00Z",
+        "description": "Seminar on financial management."
+      },
+      {
+        "activity_id": 6,
+        "activity_name": "IT Support Workshop",
+        "category_id": 6,
+        "weightage_per_hour": 10,
+        "created_by": 6,
+        "updated_by": 6,
+        "created_date": "2024-05-06T15:00:00Z",
+        "updated_date": "2024-05-06T15:00:00Z",
+        "description": "Workshop on IT support."
+      },
+      {
+        "activity_id": 7,
+        "activity_name": "Tech Conference",
+        "category_id": 7,
+        "weightage_per_hour": 15,
+        "created_by": 7,
+        "updated_by": 7,
+        "created_date": "2024-05-07T16:00:00Z",
+        "updated_date": "2024-05-07T16:00:00Z",
+        "description": "Conference on the latest tech trends."
+      },
+      {
+        "activity_id": 8,
+        "activity_name": "Travel Expo",
+        "category_id": 8,
+        "weightage_per_hour": 20,
+        "created_by": 8,
+        "updated_by": 8,
+        "created_date": "2024-05-08T17:00:00Z",
+        "updated_date": "2024-05-08T17:00:00Z",
+        "description": "Expo for travel enthusiasts."
+      },
+      {
+        "activity_id": 9,
+        "activity_name": "Marketing Meetup",
+        "category_id": 1,
+        "weightage_per_hour": 25,
+        "created_by": 9,
+        "updated_by": 9,
+        "created_date": "2024-05-09T18:00:00Z",
+        "updated_date": "2024-05-09T18:00:00Z",
+        "description": "Meetup for marketing professionals."
+      },
+      {
+        "activity_id": 10,
+        "activity_name": "Customer Service Workshop",
+        "category_id": 2,
+        "weightage_per_hour": 30,
+        "created_by": 10,
+        "updated_by": 10,
+        "created_date": "2024-05-10T19:00:00Z",
+        "updated_date": "2024-05-10T19:00:00Z",
+        "description": "Workshop on customer service skills."
+      }
+    ],
+    "Learderboard": [
+      {
+        "leaderboard_id": 1,
+        "employee_id": 1
+      },
+      {
+        "leaderboard_id": 2,
+        "employee_id": 2
+      },
+      {
+        "leaderboard_id": 3,
+        "employee_id": 3
+      },
+      {
+        "leaderboard_id": 4,
+        "employee_id": 4
+      },
+      {
+        "leaderboard_id": 5,
+        "employee_id": 5
+      },
+      {
+        "leaderboard_id": 6,
+        "employee_id": 6
+      },
+      {
+        "leaderboard_id": 7,
+        "employee_id": 7
+      },
+      {
+        "leaderboard_id": 8,
+        "employee_id": 8
+      },
+      {
+        "leaderboard_id": 9,
+        "employee_id": 9
+      },
+      {
+        "leaderboard_id": 10,
+        "employee_id": 10
+      }
+    ],
+    "department": [
+      {
+        "department_id": 1,
+        "department_name": "HR",
+        "department_manager": 1,
+        "created_by": 1,
+        "updated_by": 1,
+        "created_date": "2024-01-01T10:00:00Z",
+        "updated_date": "2024-01-01T10:00:00Z",
+        "description": "Human Resources Department"
+      },
+      {
+        "department_id": 2,
+        "department_name": "Marketing",
+        "department_manager": 2,
+        "created_by": 2,
+        "updated_by": 2,
+        "created_date": "2024-01-02T11:00:00Z",
+        "updated_date": "2024-01-02T11:00:00Z",
+        "description": "Marketing and Sales Department"
+      },
+      {
+        "department_id": 3,
+        "department_name": "Engineering",
+        "department_manager": 3,
+        "created_by": 3,
+        "updated_by": 3,
+        "created_date": "2024-01-03T12:00:00Z",
+        "updated_date": "2024-01-03T12:00:00Z",
+        "description": "Engineering and Development Department"
+      },
+      {
+        "department_id": 4,
+        "department_name": "Finance",
+        "department_manager": 4,
+        "created_by": 4,
+        "updated_by": 4,
+        "created_date": "2024-01-04T13:00:00Z",
+        "updated_date": "2024-01-04T13:00:00Z",
+        "description": "Finance and Accounting Department"
+      },
+      {
+        "department_id": 5,
+        "department_name": "Product",
+        "department_manager": 5,
+        "created_by": 5,
+        "updated_by": 5,
+        "created_date": "2024-01-05T14:00:00Z",
+        "updated_date": "2024-01-05T14:00:00Z",
+        "description": "Product Management Department"
+      },
+      {
+        "department_id": 6,
+        "department_name": "Design",
+        "department_manager": 6,
+        "created_by": 6,
+        "updated_by": 6,
+        "created_date": "2024-01-06T15:00:00Z",
+        "updated_date": "2024-01-06T15:00:00Z",
+        "description": "Design and UX Department"
+      }
+    ],
+    "Login": [
+      {
+        "serial_number": 1,
+        "emp_id": 1,
+        "timestamp": "2024-05-01T08:00:00Z"
+      },
+      {
+        "serial_number": 2,
+        "emp_id": 2,
+        "timestamp": "2024-05-01T08:30:00Z"
+      },
+      {
+        "serial_number": 3,
+        "emp_id": 3,
+        "timestamp": "2024-05-01T09:00:00Z"
+      },
+      {
+        "serial_number": 4,
+        "emp_id": 4,
+        "timestamp": "2024-05-01T09:30:00Z"
+      },
+      {
+        "serial_number": 5,
+        "emp_id": 5,
+        "timestamp": "2024-05-01T10:00:00Z"
+      },
+      {
+        "serial_number": 6,
+        "emp_id": 6,
+        "timestamp": "2024-05-01T10:30:00Z"
+      },
+      {
+        "serial_number": 7,
+        "emp_id": 7,
+        "timestamp": "2024-05-01T11:00:00Z"
+      },
+      {
+        "serial_number": 8,
+        "emp_id": 8,
+        "timestamp": "2024-05-01T11:30:00Z"
+      },
+      {
+        "serial_number": 9,
+        "emp_id": 9,
+        "timestamp": "2024-05-01T12:00:00Z"
+      },
+      {
+        "serial_number": 10,
+        "emp_id": 10,
+        "timestamp": "2024-05-01T12:30:00Z"
+      }
+    ],
+    "participation": [
+      {
+        "serial_number": 1,
+        "emp_id": 1,
+        "activity_id": 1,
+        "duration": 2,
+        "approval_status": 1
+      },
+      {
+        "serial_number": 2,
+        "emp_id": 2,
+        "activity_id": 2,
+        "duration": 3,
+        "approval_status": 2
+      },
+      {
+        "serial_number": 3,
+        "emp_id": 3,
+        "activity_id": 3,
+        "duration": 4,
+        "approval_status": 0
+      },
+      {
+        "serial_number": 4,
+        "emp_id": 4,
+        "activity_id": 4,
+        "duration": 5,
+        "approval_status": 1
+      },
+      {
+        "serial_number": 5,
+        "emp_id": 5,
+        "activity_id": 5,
+        "duration": 6,
+        "approval_status": 2
+      },
+      {
+        "serial_number": 6,
+        "emp_id": 6,
+        "activity_id": 6,
+        "duration": 7,
+        "approval_status": 0
+      },
+      {
+        "serial_number": 7,
+        "emp_id": 7,
+        "activity_id": 7,
+        "duration": 8,
+        "approval_status": 1
+      },
+      {
+        "serial_number": 8,
+        "emp_id": 8,
+        "activity_id": 8,
+        "duration": 9,
+        "approval_status": 2
+      },
+      {
+        "serial_number": 9,
+        "emp_id": 9,
+        "activity_id": 9,
+        "duration": 10,
+        "approval_status": 0
+      },
+      {
+        "serial_number": 10,
+        "emp_id": 10,
+        "activity_id": 10,
+        "duration": 11,
+        "approval_status": 1
+      }
+    ],
+    "Rewards": [
+      {
+        "reward_id": 1,
+        "reward_name": "Gold Medal",
+        "reward_threshold": 100,
+        "created_by": 1,
+        "updated_by": 1,
+        "created_date": "2024-05-01T10:00:00Z",
+        "updated_date": "2024-05-01T10:00:00Z",
+        "description": "Awarded for achieving 100 points."
+      },
+      {
+        "reward_id": 2,
+        "reward_name": "Silver Medal",
+        "reward_threshold": 200,
+        "created_by": 2,
+        "updated_by": 2,
+        "created_date": "2024-05-02T11:00:00Z",
+        "updated_date": "2024-05-02T11:00:00Z",
+        "description": "Awarded for achieving 200 points."
+      },
+      {
+        "reward_id": 3,
+        "reward_name": "Bronze Medal",
+        "reward_threshold": 300,
+        "created_by": 3,
+        "updated_by": 3,
+        "created_date": "2024-05-03T12:00:00Z",
+        "updated_date": "2024-05-03T12:00:00Z",
+        "description": "Awarded for achieving 300 points."
+      },
+      {
+        "reward_id": 4,
+        "reward_name": "Gift Card",
+        "reward_threshold": 400,
+        "created_by": 4,
+        "updated_by": 4,
+        "created_date": "2024-05-04T13:00:00Z",
+        "updated_date": "2024-05-04T13:00:00Z",
+        "description": "Gift card for achieving 400 points."
+      },
+      {
+        "reward_id": 5,
+        "reward_name": "Vacation Package",
+        "reward_threshold": 500,
+        "created_by": 5,
+        "updated_by": 5,
+        "created_date": "2024-05-05T14:00:00Z",
+        "updated_date": "2024-05-05T14:00:00Z",
+        "description": "Vacation package for achieving 500 points."
+      }
+    ]
+  }
+  
