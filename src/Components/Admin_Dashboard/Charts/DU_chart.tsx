@@ -29,7 +29,7 @@ const chartData = {
   datasets: [
     {
       data: [30, 20, 50, 40, 70, 20, 50, 30, 10, 70, 90, 40],
-      backgroundColor: "#06C",
+      backgroundColor: "#fa6f7d",
     },
   ],
 };
