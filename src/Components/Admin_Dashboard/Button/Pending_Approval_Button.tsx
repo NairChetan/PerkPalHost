@@ -11,12 +11,13 @@ const Pending_Approval_Button = () => {
           px: "5%",
           width: "100%",
           height: "20%",
-          backgroundColor: "#E4F048",
+          backgroundColor: "#ffe1e1", // Change button background color
+          color: "#831919", // Change text color
           display: "flex",
           alignItems: "center", // Align items vertically center
           justifyContent: "flex-start", // Align items horizontally to the start
           borderRadius: 7,
-          color: "#111",
+
           boxShadow: 1,
           fontWeight: 700,
           fontSize: {
@@ -25,6 +26,10 @@ const Pending_Approval_Button = () => {
             md: "2.5vw", // Medium devices (desktops, 900px and up)
             lg: "1.15vw", // Large devices (large desktops, 1200px and up)
             xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
+          },
+          "&:hover": {
+            backgroundColor: "#dba2a2", // Change background color on hover
+            color: "#5a1a1a", // Change text color
           },
         }}
       >

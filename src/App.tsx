@@ -1,9 +1,9 @@
-import LogIn_Page from "./Pages/LogIn_Page";
+import Admin_Dashboard from "./Pages/Admin_Dashboard";
 
 function App() {
   return (
     <>
-      <LogIn_Page />
+      <Admin_Dashboard />
     </>
   );
 }
