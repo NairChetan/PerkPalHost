@@ -1,5 +1,11 @@
+import LogIn_Page from "./Pages/LogIn_Page";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <LogIn_Page />
+    </>
+  );
 }
 
 export default App;
