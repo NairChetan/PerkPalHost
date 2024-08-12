@@ -3,10 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Box, Container, Button, Typography, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import GetAppIcon from "@mui/icons-material/GetApp";
-import EditIcon from "@mui/icons-material/Edit";
+
 import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
 import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
 import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
@@ -14,6 +11,10 @@ import Employee_chart from "../Components/Admin_Dashboard/Charts/Employee_chart"
 import LeaderBoardAdmin from "../Components/Admin_Dashboard/LeaderBoard/LeaderBoardAdmin";
 import ChartTab from "../Components/Admin_Dashboard/Tabs/Chart_tab";
 import { TabContext, TabPanel } from "@mui/lab";
+import Pending_Approval_Button from "../Components/Admin_Dashboard/Button/Pending_Approval_Button";
+import Category_Edit_Button from "../Components/Admin_Dashboard/Button/Category_Edit_Button";
+import Export_Data_Button from "../Components/Admin_Dashboard/Button/Export_Data_Button";
+import Club_Edit_Button from "../Components/Admin_Dashboard/Button/Club_Edit_Button";
 
 const Admin_Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState<string>("1");
@@ -22,21 +23,6 @@ const Admin_Dashboard = () => {
     setSelectedTab(newValue);
   };
 
-  const [open, setOpen] = useState<boolean>(false);
-  const refOne = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    document.addEventListener("click", hideOnClickOutside, true);
-    return () => {
-      document.removeEventListener("click", hideOnClickOutside, true);
-    };
-  }, []);
-
-  const hideOnClickOutside = (e: MouseEvent) => {
-    if (refOne.current && !refOne.current.contains(e.target as Node)) {
-      setOpen(false);
-    }
-  };
   return (
     <>
       <Navbar />
@@ -157,209 +143,10 @@ const Admin_Dashboard = () => {
             pt: "3%",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              px: "5%",
-              width: "100%",
-              height: "20%",
-              backgroundColor: "#E4F048",
-              display: "flex",
-              alignItems: "center", // Align items vertically center
-              justifyContent: "flex-start", // Align items horizontally to the start
-              borderRadius: 7,
-              color: "#111",
-              boxShadow: 1,
-              fontWeight: 700,
-              fontSize: {
-                xs: "5.5vw", // Extra small devices (phones, 600px and down)
-                sm: "2.5vw", // Small devices (tablets, 600px and up)
-                md: "2.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1.15vw", // Large devices (large desktops, 1200px and up)
-                xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: "25%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center", // Align items vertically center
-                justifyContent: "center", // Align items horizontally to the start
-                fontSize: {
-                  xs: "20vw", // Extra small devices (phones, 600px and down)
-                  sm: "7vw", // Small devices (tablets, 600px and up)
-                  md: "7vw", // Medium devices (desktops, 900px and up)
-                  lg: "4vw", // Large devices (large desktops, 1200px and up)
-                  xl: "4vw", // Extra large devices (larger desktops, 1536px and up)
-                },
-              }}
-            >
-              <AssignmentIcon fontSize="inherit" />
-            </Box>
-            Pending Approval
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              px: "5%",
-              width: "100%",
-              height: "20%",
-              backgroundColor: "#E4F048",
-              display: "flex",
-              alignItems: "center", // Align items vertically center
-              justifyContent: "flex-start", // Align items horizontally to the start
-              borderRadius: 7,
-              color: "#111",
-              boxShadow: 1,
-              fontWeight: 700,
-              fontSize: {
-                xs: "5.5vw", // Extra small devices (phones, 600px and down)
-                sm: "2.5vw", // Small devices (tablets, 600px and up)
-                md: "2.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1.15vw", // Large devices (large desktops, 1200px and up)
-                xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: "25%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center", // Align items vertically center
-                justifyContent: "center", // Align items horizontally to the start
-                fontSize: {
-                  xs: "20vw", // Extra small devices (phones, 600px and down)
-                  sm: "7vw", // Small devices (tablets, 600px and up)
-                  md: "7vw", // Medium devices (desktops, 900px and up)
-                  lg: "4vw", // Large devices (large desktops, 1200px and up)
-                  xl: "4vw", // Extra large devices (larger desktops, 1536px and up)
-                },
-              }}
-            >
-              <LocalOfferIcon fontSize="inherit" />
-            </Box>
-            Category Edit
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => setOpen((open) => !open)}
-            sx={{
-              px: "5%",
-              width: "100%",
-              height: "20%",
-              backgroundColor: "#E4F048",
-              display: "flex",
-              alignItems: "center", // Align items vertically center
-              justifyContent: "flex-start", // Align items horizontally to the start
-              borderRadius: 7,
-              color: "#111",
-              boxShadow: 1,
-              fontWeight: 700,
-              fontSize: {
-                xs: "5.5vw", // Extra small devices (phones, 600px and down)
-                sm: "2.5vw", // Small devices (tablets, 600px and up)
-                md: "2.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1.15vw", // Large devices (large desktops, 1200px and up)
-                xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: "25%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center", // Align items vertically center
-                justifyContent: "center", // Align items horizontally to the start
-                fontSize: {
-                  xs: "20vw", // Extra small devices (phones, 600px and down)
-                  sm: "7vw", // Small devices (tablets, 600px and up)
-                  md: "7vw", // Medium devices (desktops, 900px and up)
-                  lg: "4vw", // Large devices (large desktops, 1200px and up)
-                  xl: "4vw", // Extra large devices (larger desktops, 1536px and up)
-                },
-              }}
-            >
-              <GetAppIcon fontSize="inherit" />
-            </Box>
-            Export Data
-          </Button>
-          {open && (
-            <Box
-              sx={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100vw",
-                height: "100vh",
-                backdropFilter: "blur(10px)",
-                zIndex: 99, // Ensure it's behind the DateRangePicker but above other content
-              }}
-            />
-          )}
-          {open && (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                zIndex: "100",
-                border: "1px solid gray",
-                width: "50vw",
-                height: "50vh",
-                background: "#fff", // Add border with width, style, and color
-              }}
-              ref={refOne}
-            ></Box>
-          )}
-
-          <Button
-            variant="contained"
-            sx={{
-              px: "5%",
-              width: "100%",
-              height: "20%",
-              backgroundColor: "#E4F048",
-              display: "flex",
-              alignItems: "center", // Align items vertically center
-              justifyContent: "flex-start", // Align items horizontally to the start
-              borderRadius: 7,
-              color: "#111",
-              boxShadow: 1,
-              fontWeight: 700,
-              fontSize: {
-                xs: "5.5vw", // Extra small devices (phones, 600px and down)
-                sm: "2.5vw", // Small devices (tablets, 600px and up)
-                md: "2.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1.15vw", // Large devices (large desktops, 1200px and up)
-                xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: "25%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center", // Align items vertically center
-                justifyContent: "center", // Align items horizontally to the start
-                fontSize: {
-                  xs: "20vw", // Extra small devices (phones, 600px and down)
-                  sm: "7vw", // Small devices (tablets, 600px and up)
-                  md: "7vw", // Medium devices (desktops, 900px and up)
-                  lg: "4vw", // Large devices (large desktops, 1200px and up)
-                  xl: "4vw", // Extra large devices (larger desktops, 1536px and up)
-                },
-              }}
-            >
-              <EditIcon fontSize="inherit" />
-            </Box>
-            Club Edit
-          </Button>
+          <Pending_Approval_Button />
+          <Category_Edit_Button />
+          <Export_Data_Button />
+          <Club_Edit_Button />
         </Grid>
         <Grid
           item
@@ -406,9 +193,6 @@ const Admin_Dashboard = () => {
               selectedTab={selectedTab}
               handleTabChange={handleTabChange}
             />
-
-            {/* {selectedTab === 0 && <Employee_chart />}
-            {selectedTab === 1 && <DU_chart />} */}
           </Box>
         </Grid>
       </Grid>
