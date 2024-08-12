@@ -8,19 +8,17 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Button, Grid, Checkbox, FormControlLabel } from "@mui/material";
 import { useFetchPendingApproval } from "../Components/CustomHooks/CustomHooks";
+
 const PendingApproval = () => {
   const { employeeNameList, participantList, error, loading } = useFetchPendingApproval("employee");
-
-  // console.log(employeeNameList[0]);
-  // console.log(participantList[0]);
-  // console.log(error);
-  // console.log(loading);
 
   const [expanded, setExpanded] = useState<string | false>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Number of accordion items per page
+  const [selectedPanels, setSelectedPanels] = useState<string[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const handleChange =
     (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -28,12 +26,10 @@ const PendingApproval = () => {
     };
 
   const handleApprove = (name: string) => {
-    // Handle approve action here
     console.log(`${name} approved`);
   };
 
   const handleReject = (name: string) => {
-    // Handle reject action here
     console.log(`${name} rejected`);
   };
 
@@ -43,6 +39,24 @@ const PendingApproval = () => {
       handleApprove(name);
     } else if (action === 'reject') {
       handleReject(name);
+    }
+  };
+
+  const handleSelectAll = () => {
+    const allPanels = names.map((_, index) => `panel${index + 1}`);
+    if (selectAll) {
+      setSelectedPanels([]);
+    } else {
+      setSelectedPanels(allPanels);
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const handleSelectPanel = (panel: string) => {
+    if (selectedPanels.includes(panel)) {
+      setSelectedPanels(selectedPanels.filter(item => item !== panel));
+    } else {
+      setSelectedPanels([...selectedPanels, panel]);
     }
   };
 
@@ -107,9 +121,29 @@ const PendingApproval = () => {
               borderRadius: "8px",
             }}
           >
-            <Typography variant="h5" sx={{ alignSelf: "flex-start", mb: 2 }}>
-              Pending Approvals
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                mb: 2,
+              }}
+            >
+              <Typography variant="h5">
+                Pending Approvals
+              </Typography>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    color="primary"
+                  />
+                }
+                label="Select All"
+              />
+            </Box>
             {currentItems.map((name, index) => (
               <Accordion
                 key={index}
@@ -118,6 +152,7 @@ const PendingApproval = () => {
                   borderRadius: "5px",
                   boxShadow: "12%",
                   mb: 2,
+                  backgroundColor: selectedPanels.includes(`panel${index + 1}`) ? "#e0f7fa" : "white",
                 }}
                 expanded={expanded === `panel${index + 1}`}
                 onChange={handleChange(`panel${index + 1}`)}
@@ -126,13 +161,14 @@ const PendingApproval = () => {
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={`panel${index + 1}bh-content`}
                   id={`panel${index + 1}bh-header`}
+                  onClick={() => handleSelectPanel(`panel${index + 1}`)}
                 >
                   <Grid container alignItems="center">
                     <Grid item xs={12} sm={3}>
                       <Typography>{name}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>DU-{index + 1}</Typography>
+                      <Typography>emp{index + 1}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
                       <Typography>ILP Mentorship</Typography>
