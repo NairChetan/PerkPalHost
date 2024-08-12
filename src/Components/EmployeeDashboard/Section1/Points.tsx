@@ -8,7 +8,7 @@ const formatValue = (value: number) => {
 };
 
 const Points: React.FC = () => {
-  const points = 761; // Example value, can be dynamically set
+  const points = 13400; // Example value, can be dynamically set
 
   return (
     <>

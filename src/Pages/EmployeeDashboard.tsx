@@ -75,6 +75,7 @@ const EmployeeDashboard = () => {
             },
             display: "flex",
             flexDirection: "column",
+            justifyContent:'space-between'
           }}
         >
           <Box
