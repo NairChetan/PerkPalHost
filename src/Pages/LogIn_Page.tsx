@@ -33,21 +33,25 @@ const LogIn_Page = () => {
             position: "absolute",
             bottom: 0,
             left: 0,
+
             width: {
               xs: "70%", // for extra-small devices
               sm: "60%", // for small devices
               md: "35%", // for medium devices and up
             },
+
             height: "auto",
             zIndex: 1,
             mixBlendMode: "overlay",
             opacity: 2,
+
             display: {
               xs: "none", // show on extra-small devices
               sm: "block", // show on small devices
               md: "block", // show on medium devices and up
               lg: "block", // show on large devices and up
             },
+
           }}
           className={styles.slideTop3} // Apply the fadeIn class
         />
@@ -57,6 +61,7 @@ const LogIn_Page = () => {
           alt="Background Text 1"
           sx={{
             position: "absolute",
+
             bottom: {
               xs: "40%", // for extra-small devices
               sm: "17%", // for small devices
@@ -72,16 +77,19 @@ const LogIn_Page = () => {
               sm: "40%", // for small devices
               md: "30%", // for medium devices and up
             },
+
             height: "auto",
             zIndex: 1,
             mixBlendMode: "overlay",
             opacity: 2,
+
             display: {
               xs: "none", // hide on extra-small devices
               sm: "block", // show on small devices
               md: "block", // show on medium devices and up
               lg: "block", // show on large devices and up
             },
+
           }}
           className={styles.slideTop2} // Apply the fadeIn class
         />
@@ -91,6 +99,7 @@ const LogIn_Page = () => {
           alt="Background Text 2"
           sx={{
             position: "absolute",
+
             bottom: 0,
             right: {
               xs: "7%", // for extra-small devices
@@ -102,16 +111,19 @@ const LogIn_Page = () => {
               sm: "85%", // for small devices
               md: "93%", // for medium devices and up
             },
+
             height: "auto",
             zIndex: 1,
             mixBlendMode: "overlay",
             opacity: 2,
+
             display: {
               xs: "none", // hide on extra-small devices
               sm: "block", // show on small devices
               md: "block", // show on medium devices and up
               lg: "block", // show on large devices and up
             },
+
           }}
           className={styles.slideTop1} // Apply the fadeIn class
         />
@@ -121,6 +133,7 @@ const LogIn_Page = () => {
           alt="Logo"
           sx={{
             position: "absolute",
+
             right: {
               xs: "8%", // for extra-small devices
               sm: "9%", // for small devices
@@ -131,16 +144,19 @@ const LogIn_Page = () => {
               sm: "45%", // for small devices
               md: "35%", // for medium devices and up
             },
+
             height: "auto",
             zIndex: 1,
             mixBlendMode: "overlay",
             opacity: 2,
+
             display: {
               xs: "block", // show on extra-small devices
               sm: "block", // show on small devices
               md: "block", // show on medium devices and up
               lg: "block", // show on large devices and up
             },
+
           }}
           className={styles.revealBox} // Apply the fadeIn class
         />
@@ -148,6 +164,7 @@ const LogIn_Page = () => {
           component="div"
           sx={{
             position: "absolute",
+
             top: {
               xs: "35%", // for extra-small devices
               sm: "31%", // for small devices
@@ -171,6 +188,7 @@ const LogIn_Page = () => {
               md: "block", // show on medium devices and up
               lg: "block", // show on large devices and up
             },
+
           }}
           className={styles.fadeIn} // Apply the fadeIn class
         >
