@@ -91,10 +91,10 @@ const Export_Data_Button = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: "100",
-            border: "1px solid gray",
             width: "50vw",
-            height: "50vh",
-            background: "#fff", // Add border with width, style, and color
+            height: "70vh",
+            background: "#1D1E22", // Add border with width, style, and color
+            borderRadius: "50px",
           }}
           ref={refOne}
         ></Box>
