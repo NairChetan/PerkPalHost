@@ -55,7 +55,7 @@ export default function EdTabs() {
           }}
         >
           <Tab
-            label="Monthly Chart"
+            label="Annual points"
             {...a11yProps(0)}
             sx={{
               color: '#9e9e9e', // Inactive tab color
@@ -65,7 +65,7 @@ export default function EdTabs() {
             }}
           />
           <Tab
-            label="Annual Chart"
+            label="Monthly Points"
             {...a11yProps(1)}
             sx={{
               color: '#9e9e9e', // Inactive tab color
