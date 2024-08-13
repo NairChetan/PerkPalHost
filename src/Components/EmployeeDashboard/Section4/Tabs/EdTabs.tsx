@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import AnnualChart from '../Charts/AnnualChart';
 import MonthlyChart from '../Charts/MonthlyChart';
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -45,16 +44,43 @@ export default function EdTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Monthly Chart" {...a11yProps(0)} />
-          <Tab label="Annual Chart" {...a11yProps(1)} />
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          sx={{
+            '.MuiTabs-indicator': {
+              backgroundColor: '#4f3a69', // Indicator color
+            },
+          }}
+        >
+          <Tab
+            label="Monthly Chart"
+            {...a11yProps(0)}
+            sx={{
+              color: '#9e9e9e', // Inactive tab color
+              '&.Mui-selected': {
+                color: '#4f3a69', // Active tab color
+              },
+            }}
+          />
+          <Tab
+            label="Annual Chart"
+            {...a11yProps(1)}
+            sx={{
+              color: '#9e9e9e', // Inactive tab color
+              '&.Mui-selected': {
+                color: '#764832', // Active tab color
+              },
+            }}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <AnnualChart/>
+        <AnnualChart />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MonthlyChart/>
+        <MonthlyChart />
       </CustomTabPanel>
     </Box>
   );

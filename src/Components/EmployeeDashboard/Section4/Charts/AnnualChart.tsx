@@ -26,7 +26,7 @@ const chartData = {
   datasets: [
     {
       data: [1500, 570, 1000, 2000, 900,1800],
-      backgroundColor: "#06C",
+      backgroundColor: "#a083c9",
     },
   ],
 };
