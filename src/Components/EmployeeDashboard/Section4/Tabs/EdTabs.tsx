@@ -2,9 +2,8 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Approved from './Tabs/Approved';
-import Pending from './Tabs/Pending';
-import Rejected from './Tabs/Rejected';
+import AnnualChart from '../Charts/AnnualChart';
+import MonthlyChart from '../Charts/MonthlyChart';
 
 
 interface TabPanelProps {
@@ -36,7 +35,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
+export default function EdTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -47,19 +46,15 @@ export default function BasicTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Approved" {...a11yProps(0)} />
-          <Tab label="Pending" {...a11yProps(1)} />
-          <Tab label="Rejected" {...a11yProps(2)} />
+          <Tab label="Monthly Chart" {...a11yProps(0)} />
+          <Tab label="Annual Chart" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Approved/>
+        <AnnualChart/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Pending/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <Rejected/>
+        <MonthlyChart/>
       </CustomTabPanel>
     </Box>
   );

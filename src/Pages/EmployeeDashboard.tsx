@@ -8,7 +8,9 @@ import Points from "../Components/EmployeeDashboard/Section1/Points";
 import RedeemablePoints from "../Components/EmployeeDashboard/Section2/RedeemablePoints";
 import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
+import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
 
+EdTabs
 
 
 
@@ -254,8 +256,9 @@ const EmployeeDashboard = () => {
               pb: "2%",
             }}
           >
-            
-              {/* Enter you charts here for section 4 */}
+            <EdTabs/>
+           
+              
           </Box>
         </Grid>
       </Grid>
