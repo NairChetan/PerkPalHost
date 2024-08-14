@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box} from "@mui/material";
+// import {Typography } from "@mui/material";
 
-import DateRangePick from "../DateRange/DateRangePick";
-import Bar_Chart from "../Charts/Bar_Chart";
+import Bar_Chart from "../../Section4/Charts/BarChartEd";
+// import DateRangePick from "../../../Admin_Dashboard/DateRange/DateRangePick";
 
 const chartOptions = {
   responsive: true,
@@ -14,26 +15,23 @@ const chartOptions = {
 
 const chartData = {
   labels: [
-    "Rithik",
-    "bob",
-    "alby",
-    "riya",
-    "tom",
-    "emma",
-    "sanjay",
-    "jhon",
-    "hob",
-    "pappu",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025",
+    
   ],
   datasets: [
     {
-      data: [300, 400, 150, 200, 50, 350, 10, 300, 230, 90],
+      data: [1500, 570, 1000, 2000, 900,1800],
       backgroundColor: "#a083c9",
     },
   ],
 };
 
-const Employee_chart = () => {
+const AnnualChart = () => {
   return (
     <>
       <Box
@@ -45,7 +43,7 @@ const Employee_chart = () => {
           flexDirection: "row",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             width: "65%",
             height: "100%",
@@ -64,15 +62,15 @@ const Employee_chart = () => {
               fontWeight: "bold", // Makes the text bold
               textAlign: "start", // Centers the text
               fontSize: {
-                xs: "4vw", // Extra small devices (phones, 600px and down)
-                sm: "3.5vw", // Small devices (tablets, 600px and up)
+                xs: "6vw", // Extra small devices (phones, 600px and down)
+                sm: "4vw", // Small devices (tablets, 600px and up)
                 md: "3vw", // Medium devices (desktops, 900px and up)
                 lg: "2vw", // Large devices (large desktops, 1200px and up)
                 xl: "2.15vw", // Extra large devices (larger desktops, 1536px and up)
               },
             }}
           >
-            Employee Performance
+            Annual Performance
           </Typography>
           <Typography
             sx={{
@@ -92,7 +90,7 @@ const Employee_chart = () => {
               },
             }}
           >
-            Points/Employee
+            Points/Year
           </Typography>
         </Box>
         <Box
@@ -106,7 +104,7 @@ const Employee_chart = () => {
           }}
         >
           <DateRangePick />
-        </Box>
+        </Box> */}
       </Box>
       <Box
         sx={{
@@ -120,4 +118,4 @@ const Employee_chart = () => {
   );
 };
 
-export default Employee_chart;
+export default AnnualChart;

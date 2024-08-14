@@ -50,7 +50,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#4f359b" },
+                "&.Mui-selected": { color: "#764832" },
               }}
             />
             <Tab
@@ -67,7 +67,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#4f359b " },
+                "&.Mui-selected": { color: "#764832 " },
               }}
             />
           </TabList>
