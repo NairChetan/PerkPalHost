@@ -1,9 +1,9 @@
-import Admin_Dashboard from "./Pages/Admin_Dashboard";
+import Clockin from "./Pages/Clockin";
 
 function App() {
   return (
     <>
-      <Admin_Dashboard />
+      <Clockin />
     </>
   );
 }

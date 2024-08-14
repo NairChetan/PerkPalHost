@@ -5,6 +5,8 @@ import NewEntry from '../Components/NewEntry/NewEntry';
 import Calendar from '../Components/Clockin/Calendar/Calendar';
 import dayjs from 'dayjs';
 import styles from './Clockin.module.css';
+import Navbar from '../Components/NavBar/Navbar';
+import Footer from '../Components/Footer/Footer';
 
 const Clockin: React.FC = () => {
   const [entries, setEntries] = useState<any[]>([]);
@@ -34,9 +36,10 @@ const Clockin: React.FC = () => {
 
   return (
     <div className={styles.clockinContainer}>
+      <Navbar/>
       <UserLogin entries={entries} selectedDate={selectedDate} />
-      {/* <NewEntry addEntry={addEntry} /> */}
       <Calendar entries={entries} setSelectedDate={setSelectedDate} />
+      <Footer/>
     </div>
   );
 };
