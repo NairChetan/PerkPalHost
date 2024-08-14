@@ -1,5 +1,11 @@
+import Admin_Dashboard from "./Pages/Admin_Dashboard";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Admin_Dashboard />
+    </>
+  );
 }
 
 export default App;
