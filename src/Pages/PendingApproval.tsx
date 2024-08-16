@@ -8,15 +8,22 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Typography, Button, Grid, Checkbox, FormControlLabel } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Grid,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { useFetchPendingApproval } from "../Components/CustomHooks/CustomHooks";
 
 const PendingApproval = () => {
-  const { employeeNameList, participantList, error, loading } = useFetchPendingApproval("employee");
+  const { employeeNameList, participantList, error, loading } =
+    useFetchPendingApproval("employee");
 
   const [expanded, setExpanded] = useState<string | false>(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // Number of accordion items per page
+  const itemsPerPage = 4; // Number of accordion items per page
   const [selectedPanels, setSelectedPanels] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
 
@@ -33,11 +40,15 @@ const PendingApproval = () => {
     console.log(`${name} rejected`);
   };
 
-  const handleIconClick = (event: React.MouseEvent, name: string, action: 'approve' | 'reject') => {
+  const handleIconClick = (
+    event: React.MouseEvent,
+    name: string,
+    action: "approve" | "reject"
+  ) => {
     event.stopPropagation(); // Prevents the accordion from expanding
-    if (action === 'approve') {
+    if (action === "approve") {
       handleApprove(name);
-    } else if (action === 'reject') {
+    } else if (action === "reject") {
       handleReject(name);
     }
   };
@@ -54,7 +65,7 @@ const PendingApproval = () => {
 
   const handleSelectPanel = (panel: string) => {
     if (selectedPanels.includes(panel)) {
-      setSelectedPanels(selectedPanels.filter(item => item !== panel));
+      setSelectedPanels(selectedPanels.filter((item) => item !== panel));
     } else {
       setSelectedPanels([...selectedPanels, panel]);
     }
@@ -97,7 +108,7 @@ const PendingApproval = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          minHeight: "100vh",
+          minHeight: "78vh",
           backgroundColor: "#f3f3f3",
         }}
       >
@@ -107,7 +118,7 @@ const PendingApproval = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            p: { xs: 2, sm: 4 },
+            //p: { xs: 2, sm: 4 },
           }}
         >
           <Box
@@ -130,9 +141,7 @@ const PendingApproval = () => {
                 mb: 2,
               }}
             >
-              <Typography variant="h5">
-                Pending Approvals
-              </Typography>
+              <Typography variant="h5">Pending Approvals</Typography>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -152,7 +161,9 @@ const PendingApproval = () => {
                   borderRadius: "5px",
                   boxShadow: "12%",
                   mb: 2,
-                  backgroundColor: selectedPanels.includes(`panel${index + 1}`) ? "#e0f7fa" : "white",
+                  backgroundColor: selectedPanels.includes(`panel${index + 1}`)
+                    ? "#e0f7fa"
+                    : "white",
                 }}
                 expanded={expanded === `panel${index + 1}`}
                 onChange={handleChange(`panel${index + 1}`)}
@@ -185,12 +196,16 @@ const PendingApproval = () => {
                           <CheckCircleIcon
                             color="success"
                             sx={{ cursor: "pointer" }}
-                            onClick={(event) => handleIconClick(event, name, 'approve')}
+                            onClick={(event) =>
+                              handleIconClick(event, name, "approve")
+                            }
                           />
                           <CancelIcon
                             color="error"
                             sx={{ ml: 1, cursor: "pointer" }}
-                            onClick={(event) => handleIconClick(event, name, 'reject')}
+                            onClick={(event) =>
+                              handleIconClick(event, name, "reject")
+                            }
                           />
                         </>
                       )}
@@ -244,14 +259,17 @@ const PendingApproval = () => {
               <Typography>
                 Page {currentPage} of {totalPages}
               </Typography>
-              <Button disabled={currentPage === totalPages} onClick={handleNextPage}>
+              <Button
+                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
+              >
                 Next
               </Button>
             </Box>
           </Box>
         </Box>
-        <Footer />
       </Box>
+      <Footer />
     </>
   );
 };
