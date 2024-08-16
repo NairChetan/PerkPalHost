@@ -9,6 +9,7 @@
 .calendarImage {
   width: 360px;
   height: 360px;
+  margin-bottom: -29px;
 }
 .calendarright{
   width: 1000px;
