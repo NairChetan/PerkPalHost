@@ -9,7 +9,7 @@ const ExportDataHeader = () => {
       sx={{
         color: "#fff",
         fontWeight: 700,
-        marginBottom: "2rem",
+        marginBottom: "0rem",
         textAlign: "center",
       }}
     >
