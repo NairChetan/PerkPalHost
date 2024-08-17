@@ -105,8 +105,6 @@
 
 // export default Export_Data_Button;
 
-
-
 import React, { useState, useRef } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
@@ -115,6 +113,7 @@ import ExportDataHeader from "./popUp/ExportDataHeader";
 import ExportDataTabs from "./popUp/ExportDataTabs";
 import Dropdown from "./popUp/Dropdown";
 import YearSelector from "./popUp/YearSelector";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const ExportDataButton = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -196,7 +195,7 @@ const ExportDataButton = () => {
             transform: "translate(-50%, -50%)",
             zIndex: "100",
             width: "50vw",
-            height: "70vh",
+            height: "auto",
             background: "#1D1E22",
             borderRadius: "50px",
             padding: "2rem",
@@ -227,25 +226,33 @@ const ExportDataButton = () => {
             variant="contained"
             color="primary"
             sx={{
-              width: "100%",
-              marginTop: "2rem",
-              backgroundColor: "#4CAF50",
+              width: "20%",
+              marginTop: "1rem",
+              backgroundColor: "#303137",
+              borderRadius: "15px", // Button color
               "&:hover": {
-                backgroundColor: "#45A049",
+                backgroundColor: "black", // Hover color
               },
+              display: "flex", // Ensures content is aligned properly
+              justifyContent: "center", // Centers the content horizontally
+              alignItems: "center", // Centers the content vertically
             }}
           >
             Preview
+            <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
+            {/* Added down arrow */}
           </Button>
+
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{
-              width: "100%",
-              marginTop: "1rem",
-              backgroundColor: "#f50057",
+              width: "20%",
+              marginTop: "2rem",
+              backgroundColor: "#4741FC",
+              borderRadius: "15px", // Button color
               "&:hover": {
-                backgroundColor: "#c51162",
+                backgroundColor: "black", // Hover color
               },
             }}
           >
