@@ -1,6 +1,37 @@
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, Button, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
+import Dropdown from "./Dropdown";
+import YearSelector from "./YearSelector";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
+// TabPanel Component for displaying content
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const TabPanel: React.FC<TabPanelProps> = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+// Main ExportDataTabs Component
 const ExportDataTabs = () => {
   const [value, setValue] = useState(0);
 
@@ -9,28 +40,153 @@ const ExportDataTabs = () => {
   };
 
   return (
-<Box sx={{ borderBottom: 1, borderColor: "divider", marginBottom: "1rem" }}>
-  <Tabs
-    value={value}
-    onChange={handleChange}
-    textColor="inherit" // Modified to "inherit" to take the color of the parent, which should be white
-    indicatorColor="primary" // Modified to use a primary color
-    centered
-    sx={{
-      '& .MuiTabs-indicator': {
-        backgroundColor: '#FFFFFF', // Custom white color for the indicator
-      },
-      '& .MuiTab-root': {
-        color: '#FFFFFF', // Custom white color for the text
-      },
-    }}
-  >
-    <Tab label="Chart data" />
-    <Tab label="Leader-board data" />
-    <Tab label="Category data" />
-  </Tabs>
-</Box>
+    <>
+      <Box
+        sx={{ borderBottom: 1, borderColor: "divider", marginBottom: "1rem" }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          indicatorColor="primary"
+          centered
+          sx={{
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#FFFFFF", // Custom white color for the indicator
+            },
+            "& .MuiTab-root": {
+              color: "#FFFFFF", // Custom white color for the text
+            },
+          }}
+        >
+          <Tab label="Chart data" />
+          <Tab label="Leader-board data" />
+          <Tab label="Category data" />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <Dropdown label="Select Chart" options={["Chart 1", "Chart 2"]} />
+        <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
+        <YearSelector />
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            px: "2%",
+            marginTop: "1rem",
+            backgroundColor: "#303137",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+            display: "flex", // Ensures content is aligned properly
+            justifyContent: "center", // Centers the content horizontally
+            alignItems: "center", // Centers the content vertically
+          }}
+        >
+          Preview
+          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
+          {/* Added down arrow */}
+        </Button>
 
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            marginTop: "1.5rem",
+            backgroundColor: "#4741FC",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+          }}
+        >
+          Export
+        </Button>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
+        <YearSelector />
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            px: "2%",
+            marginTop: "1rem",
+            backgroundColor: "#303137",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+            display: "flex", // Ensures content is aligned properly
+            justifyContent: "center", // Centers the content horizontally
+            alignItems: "center", // Centers the content vertically
+          }}
+        >
+          Preview
+          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
+          {/* Added down arrow */}
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            marginTop: "1.5rem",
+            backgroundColor: "#4741FC",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+          }}
+        >
+          Export
+        </Button>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            px: "2%",
+            marginTop: "1rem",
+            backgroundColor: "#303137",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+            display: "flex", // Ensures content is aligned properly
+            justifyContent: "center", // Centers the content horizontally
+            alignItems: "center", // Centers the content vertically
+          }}
+        >
+          Preview
+          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
+          {/* Added down arrow */}
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "25%",
+            marginTop: "1.5rem",
+            backgroundColor: "#4741FC",
+            borderRadius: "15px", // Button color
+            "&:hover": {
+              backgroundColor: "black", // Hover color
+            },
+          }}
+        >
+          Export
+        </Button>
+      </TabPanel>
+    </>
   );
 };
 

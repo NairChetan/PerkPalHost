@@ -32,7 +32,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
             centered
             TabIndicatorProps={{
               style: {
-                display: "none", 
+                display: "none",
               },
             }}
           >
