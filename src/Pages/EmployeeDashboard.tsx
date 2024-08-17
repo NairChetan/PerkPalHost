@@ -1,31 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef, useEffect } from "react";
-import { Box, Container, Button, Typography, Grid } from "@mui/material";
+import React from "react";
+import { Box, Button, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
 
-import DateRangePick from "../Components/Admin_Dashboard/DateRange/DateRangePick";
-import Bar_Chart from "../Components/Admin_Dashboard/Charts/Bar_Chart";
-import DU_chart from "../Components/Admin_Dashboard/Charts/DU_chart";
-import LeaderBoardAdmin from "../Components/Admin_Dashboard/LeaderBoard/LeaderBoardAdmin";
-import ChartTab from "../Components/Admin_Dashboard/Tabs/Chart_tab";
-import { TabContext, TabPanel } from "@mui/lab";
-import Pending_Approval_Button from "../Components/Admin_Dashboard/Button/Pending_Approval_Button";
-import Category_Edit_Button from "../Components/Admin_Dashboard/Button/Category_Edit_Button";
-import Export_Data_Button from "../Components/Admin_Dashboard/Button/exportData/Export_Data_Button";
-import Club_Edit_Button from "../Components/Admin_Dashboard/Button/Club_Edit_Button";
 
-const Admin_Dashboard = () => {
-  const [selectedTab, setSelectedTab] = useState<string>("1");
+import Points from "../Components/EmployeeDashboard/Section1/Points";
+import RedeemablePoints from "../Components/EmployeeDashboard/Section2/RedeemablePoints";
+import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
+import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
+import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
-    setSelectedTab(newValue);
-  };
+EdTabs
 
+
+
+
+
+
+// import Typography from "@mui/material/Typography";
+// import Button from '@mui/material/Button';
+ 
+const EmployeeDashboard = () => {
   return (
     <>
       <Navbar />
-
+ 
       <Grid
         container
         sx={{
@@ -78,39 +77,42 @@ const Admin_Dashboard = () => {
             },
             display: "flex",
             flexDirection: "column",
+            justifyContent:'space-between'
           }}
         >
-          <Typography
-            sx={{
-              width: "100%",
-              height: "7%",
-              fontWeight: 600,
-              fontSize: {
-                xs: "5vw", // Extra small devices (phones, 600px and down)
-                sm: "2.5vw", // Small devices (tablets, 600px and up)
-                md: "2.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1.5vw", // Large devices (large desktops, 1200px and up)
-                xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            Employee Leaderboard
-          </Typography>
           <Box
             sx={{
               width: "100%",
-              height: "93%",
-              backgroundColor: "#4F0A3A",
+              height: "30%",
+              backgroundColor: "#fff",
               display: "flex",
               flexDirection: "row",
               boxShadow: 1,
               borderRadius: 7,
-              overflowY: "auto",
             }}
           >
-            <LeaderBoardAdmin />
+            <Points/>
+          
+          </Box>
+
+          {/* Leaderboard Section */}
+          <Box
+            sx={{
+              width: "100%",
+              height: "65%",
+              backgroundColor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 1,
+              borderRadius: 7,
+            }}
+          >
+            <Leaderboard/>
+            
           </Box>
         </Grid>
+
+        {/* Section 2 starts here */}
         <Grid
           item
           sx={{
@@ -139,14 +141,80 @@ const Admin_Dashboard = () => {
             flexDirection: "column",
             justifyContent: "space-between",
 
-            pt: "3%",
+           
           }}
         >
-          <Pending_Approval_Button />
-          <Category_Edit_Button />
-          <Export_Data_Button />
-          <Club_Edit_Button />
-        </Grid>
+          <Box
+            sx={{
+              width: "100%",
+              height: "35%",
+              backgroundColor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 1,
+              borderRadius: 7,
+            }}
+          >
+            <RedeemablePoints/>
+            
+            
+          </Box>
+
+          {/* Leaderboard Section */}
+          <Box
+            sx={{
+              width: "100%",
+              height: "35%",
+              backgroundColor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: 1,
+              borderRadius: 7,
+            }}
+          >
+            <Box sx={{ width: "90%",
+              height: "90%",
+              display: "flex",
+              position:"relative",
+              left:"5%",
+              top:"5%",
+              flexDirection: "column",
+              borderRadius: 7,}}>
+                <Clubs/>    
+            </Box> 
+          </Box>
+          <Button
+            variant="contained"
+            sx={{
+              px: "5%",
+              width: "100%",
+              height: "25%",
+              backgroundColor: "#ffe1e1", // Default background color
+              display: "flex",
+              alignItems: "center", // Align items vertically center
+              justifyContent: "center", // Center items horizontally
+              borderRadius: 7,
+              color: "#831919",
+              boxShadow: 1,
+              fontWeight: 700,
+              fontSize: {
+                xs: "5.5vw", // Extra small devices (phones, 600px and down)
+                sm: "2.5vw", // Small devices (tablets, 600px and up)
+                md: "2.5vw", // Medium devices (desktops, 900px and up)
+                lg: "1.15vw", // Large devices (large desktops, 1200px and up)
+                xl: "1.15vw", // Extra large devices (larger desktops, 1536px and up)
+              },
+              textAlign: "center", // Center-align text
+              '&:hover': {
+                backgroundColor: "#dba2a2", // Background color on hover
+                color: "#5a1a1a", // Text color on hover (optional)
+              },
+            }}
+          >
+            Redeem Now
+          </Button>
+
+        </Grid>   
         <Grid
           item
           sx={{
@@ -188,17 +256,16 @@ const Admin_Dashboard = () => {
               pb: "2%",
             }}
           >
-            <ChartTab
-              selectedTab={selectedTab}
-              handleTabChange={handleTabChange}
-            />
+            <EdTabs/>
+           
+              
           </Box>
         </Grid>
       </Grid>
-
+ 
       <Footer />
     </>
   );
 };
-
-export default Admin_Dashboard;
+ 
+export default EmployeeDashboard;

@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box} from "@mui/material";
+// import { Typography} from "@mui/material";
 
-import DateRangePick from "../DateRange/DateRangePick";
-import Bar_Chart from "../Charts/Bar_Chart";
+
+import Bar_Chart from "../../Section4/Charts/BarChartEd";
+// import DateRangePick from "../../../Admin_Dashboard/DateRange/DateRangePick";
 
 const chartOptions = {
   responsive: true,
@@ -14,26 +16,28 @@ const chartOptions = {
 
 const chartData = {
   labels: [
-    "Rithik",
-    "bob",
-    "alby",
-    "riya",
-    "tom",
-    "emma",
-    "sanjay",
-    "jhon",
-    "hob",
-    "pappu",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ],
   datasets: [
     {
-      data: [300, 400, 150, 200, 50, 350, 10, 300, 230, 90],
-      backgroundColor: "#a083c9",
+      data: [300, 400, 150, 200, 50, 350, 10, 300, 230, 90,70,65,123],
+      backgroundColor: "#895937",
     },
   ],
 };
 
-const Employee_chart = () => {
+const MonthlyChart = () => {
   return (
     <>
       <Box
@@ -45,7 +49,7 @@ const Employee_chart = () => {
           flexDirection: "row",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             width: "65%",
             height: "100%",
@@ -94,8 +98,8 @@ const Employee_chart = () => {
           >
             Points/Employee
           </Typography>
-        </Box>
-        <Box
+        </Box> */}
+        {/* <Box
           sx={{
             width: "35%",
             height: "100%",
@@ -106,7 +110,7 @@ const Employee_chart = () => {
           }}
         >
           <DateRangePick />
-        </Box>
+        </Box> */}
       </Box>
       <Box
         sx={{
@@ -120,4 +124,5 @@ const Employee_chart = () => {
   );
 };
 
-export default Employee_chart;
+export default MonthlyChart;
+

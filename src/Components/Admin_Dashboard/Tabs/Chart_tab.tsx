@@ -32,7 +32,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
             centered
             TabIndicatorProps={{
               style: {
-                display: "none", // Hide the indicator line
+                display: "none", 
               },
             }}
           >
@@ -50,14 +50,14 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#4f359b" },
+                "&.Mui-selected": { color: "#764832" },
               }}
             />
             <Tab
               label="DU-Data"
               value="2"
               sx={{
-                pr: "1%",
+                pr: "2%",
                 m: 0,
                 fontWeight: 600,
                 fontSize: {
@@ -67,7 +67,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#4f359b " },
+                "&.Mui-selected": { color: "#764832 " },
               }}
             />
           </TabList>
