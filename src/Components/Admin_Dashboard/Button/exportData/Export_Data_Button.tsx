@@ -111,9 +111,6 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import CloseIcon from "@mui/icons-material/Close";
 import ExportDataHeader from "./popUp/ExportDataHeader";
 import ExportDataTabs from "./popUp/ExportDataTabs";
-import Dropdown from "./popUp/Dropdown";
-import YearSelector from "./popUp/YearSelector";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const ExportDataButton = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -196,6 +193,7 @@ const ExportDataButton = () => {
             zIndex: "100",
             width: "50vw",
             height: "auto",
+            maxHeight: "90vh",
             background: "#1D1E22",
             borderRadius: "50px",
             padding: "2rem",
@@ -219,45 +217,6 @@ const ExportDataButton = () => {
 
           <ExportDataHeader />
           <ExportDataTabs />
-          <Dropdown label="Select Chart" options={["Chart 1", "Chart 2"]} />
-          <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
-          <YearSelector />
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "20%",
-              marginTop: "1rem",
-              backgroundColor: "#303137",
-              borderRadius: "15px", // Button color
-              "&:hover": {
-                backgroundColor: "black", // Hover color
-              },
-              display: "flex", // Ensures content is aligned properly
-              justifyContent: "center", // Centers the content horizontally
-              alignItems: "center", // Centers the content vertically
-            }}
-          >
-            Preview
-            <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
-            {/* Added down arrow */}
-          </Button>
-
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "20%",
-              marginTop: "2rem",
-              backgroundColor: "#4741FC",
-              borderRadius: "15px", // Button color
-              "&:hover": {
-                backgroundColor: "black", // Hover color
-              },
-            }}
-          >
-            Export
-          </Button>
         </Box>
       )}
     </>
