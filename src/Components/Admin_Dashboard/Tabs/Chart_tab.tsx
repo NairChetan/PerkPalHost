@@ -32,7 +32,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
             centered
             TabIndicatorProps={{
               style: {
-                display: "none", // Hide the indicator line
+                display: "none",
               },
             }}
           >
@@ -57,7 +57,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
               label="DU-Data"
               value="2"
               sx={{
-                pr: "1%",
+                pr: "2%",
                 m: 0,
                 fontWeight: 600,
                 fontSize: {
