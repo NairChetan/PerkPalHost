@@ -4,7 +4,6 @@ import Dropdown from "./Dropdown";
 import YearSelector from "./YearSelector";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-// TabPanel Component for displaying content
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -31,7 +30,6 @@ const TabPanel: React.FC<TabPanelProps> = (props) => {
   );
 };
 
-// Main ExportDataTabs Component
 const ExportDataTabs = () => {
   const [value, setValue] = useState(0);
 
@@ -56,6 +54,17 @@ const ExportDataTabs = () => {
             },
             "& .MuiTab-root": {
               color: "#FFFFFF", // Custom white color for the text
+              textAlign: "center",
+              maxWidth: {
+                xs: "100px",
+                sm: "150px",
+                md: "300px",
+                lg: "300px",
+                xl: "300px",
+              }, // Set maxWidth for smaller screens
+              whiteSpace: "normal", // Allow wrapping
+              lineHeight: 1.2, // Adjust line height for better readability
+              overflow: "visible", // Prevent text from being cut off
             },
           }}
         >
@@ -72,7 +81,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             px: "2%",
             marginTop: "1rem",
             backgroundColor: "#303137",
@@ -94,7 +103,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             marginTop: "1.5rem",
             backgroundColor: "#4741FC",
             borderRadius: "15px", // Button color
@@ -113,7 +122,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             px: "2%",
             marginTop: "1rem",
             backgroundColor: "#303137",
@@ -135,7 +144,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             marginTop: "1.5rem",
             backgroundColor: "#4741FC",
             borderRadius: "15px", // Button color
@@ -152,7 +161,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             px: "2%",
             marginTop: "1rem",
             backgroundColor: "#303137",
@@ -174,7 +183,7 @@ const ExportDataTabs = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "25%",
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
             marginTop: "1.5rem",
             backgroundColor: "#4741FC",
             borderRadius: "15px", // Button color

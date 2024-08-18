@@ -191,7 +191,13 @@ const ExportDataButton = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: "100",
-            width: "50vw",
+            width: {
+              xs: "90vw", // For extra small screens (mobile)
+              sm: "90vw", // For small screens (small tablets)
+              md: "70vw", // For medium screens (tablets)
+              lg: "50vw", // For large screens (desktops)
+              xl: "50vw", // For extra large screens
+            },
             height: "auto",
             maxHeight: "90vh",
             background: "#1D1E22",
