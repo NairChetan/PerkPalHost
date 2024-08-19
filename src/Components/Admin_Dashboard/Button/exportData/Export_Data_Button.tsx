@@ -105,16 +105,12 @@
 
 // export default Export_Data_Button;
 
-
-
 import React, { useState, useRef } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import CloseIcon from "@mui/icons-material/Close";
 import ExportDataHeader from "./popUp/ExportDataHeader";
 import ExportDataTabs from "./popUp/ExportDataTabs";
-import Dropdown from "./popUp/Dropdown";
-import YearSelector from "./popUp/YearSelector";
 
 const ExportDataButton = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -195,8 +191,15 @@ const ExportDataButton = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: "100",
-            width: "50vw",
-            height: "70vh",
+            width: {
+              xs: "90vw", // For extra small screens (mobile)
+              sm: "90vw", // For small screens (small tablets)
+              md: "70vw", // For medium screens (tablets)
+              lg: "50vw", // For large screens (desktops)
+              xl: "50vw", // For extra large screens
+            },
+            height: "auto",
+            maxHeight: "90vh",
             background: "#1D1E22",
             borderRadius: "50px",
             padding: "2rem",
@@ -220,37 +223,6 @@ const ExportDataButton = () => {
 
           <ExportDataHeader />
           <ExportDataTabs />
-          <Dropdown label="Select Chart" options={["Chart 1", "Chart 2"]} />
-          <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
-          <YearSelector />
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              width: "100%",
-              marginTop: "2rem",
-              backgroundColor: "#4CAF50",
-              "&:hover": {
-                backgroundColor: "#45A049",
-              },
-            }}
-          >
-            Preview
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{
-              width: "100%",
-              marginTop: "1rem",
-              backgroundColor: "#f50057",
-              "&:hover": {
-                backgroundColor: "#c51162",
-              },
-            }}
-          >
-            Export
-          </Button>
         </Box>
       )}
     </>
