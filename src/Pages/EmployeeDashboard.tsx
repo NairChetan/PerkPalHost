@@ -9,12 +9,9 @@ import RedeemablePoints from "../Components/EmployeeDashboard/Section2/Redeemabl
 import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
 import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
-import KnowYourCategory from "../Components/EmployeeDashboard/Section2/KnowYourCategory";
+import KnowYourCategory from "../Components/EmployeeDashboard/Button/KnowYourCategory";
 
 EdTabs
-
-
-
 
 
 

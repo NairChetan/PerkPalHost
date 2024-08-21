@@ -4,11 +4,11 @@ import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.pn
 import CountUp from 'react-countup';
 
 const formatValue = (value: number) => {
-  return value >= 1000 ? `${Math.floor(value / 1000)}k` : value.toString();
+  return value >= 10000 ? `${Math.floor(value / 1000)}k` : value.toString();
 };
 
 const Points: React.FC = () => {
-  const points = 13400; // Example value, can be dynamically set
+  const points = 10000; // Example value, can be dynamically set
 
   return (
     <>
@@ -18,7 +18,7 @@ const Points: React.FC = () => {
             <p style={{ paddingLeft: '40px', fontSize: '15px', fontWeight: '600' }}>Points</p>
           </div>
           <div className='points-img'>
-            {points <= 90000 ? (
+            {points <= 20000 ? (
               <>
                 <p style={{ fontSize: '50px', fontWeight: '700' }}>
                   <CountUp delay={0.2} end={points} formattingFn={formatValue} />
