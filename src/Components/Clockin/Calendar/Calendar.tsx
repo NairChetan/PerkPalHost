@@ -24,7 +24,7 @@ const Calendar: React.FC<CalendarProps> = ({ entries, setSelectedDate }) => {
   const updateCalendar = (date: dayjs.Dayjs) => {
     const startOfMonth = date.startOf('month');
     const endOfMonth = date.endOf('month');
-
+//  Q : what does these two loops do?
     const days: any[] = [];
     for (let i = 0; i < startOfMonth.day(); i++) {
       days.push(null);

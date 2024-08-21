@@ -13,7 +13,10 @@ const Clockin: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>(
     dayjs().format("YYYY-MM-DD")
   );
-
+  // Q : look into axios interceptors
+  // https://axios-http.com/docs/interceptors
+  //  API calls can be moved to different files
+  // api helper functions can be added to reduce code duplications
   useEffect(() => {
     const fetchEntries = async () => {
       try {
@@ -26,6 +29,38 @@ const Clockin: React.FC = () => {
 
     fetchEntries();
   }, []);
+
+  /*
+
+  this can be written as 
+    useEffect(() => {
+    const fetchEntries = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/entries");
+        setEntries(response.data);
+      } catch (error) {
+        console.error("Error fetching entries:", error);
+      }
+    };
+
+    fetchEntries();
+  }, []);
+
+      useEffect(() => {
+
+    fetchEntries();
+  }, []);
+
+      const fetchEntries = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/entries");
+        setEntries(response.data);
+      } catch (error) {
+        console.error("Error fetching entries:", error);
+      }
+    };
+
+  */
 
   const addEntry = async (entry: any) => {
     try {

@@ -11,6 +11,7 @@ export const useFetchPendingApproval = (endURL: string) => {
   const [error, setError] = useState<null | Error>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Q : why useCallback is added here?
   const fetchPendingApproval = useCallback(async () => {
     try {
       setLoading(true);
