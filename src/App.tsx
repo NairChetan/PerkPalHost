@@ -6,6 +6,7 @@ import React from "react";
 // import Clockin from "./Pages/Clockin";
 // import PendingApproval from "./Pages/PendingApproval";
 import Admin_Category from "./Pages/Admin_Category";
+import EmployeeDashboard from "./Pages/EmployeeDashboard";
 
 const AppRoutes: React.FC = () => (
   // <Router>
@@ -17,7 +18,7 @@ const AppRoutes: React.FC = () => (
   //     <Route path="/pending-approval" element={<PendingApproval />} />
   //   </Routes>
   // </Router>
-  <Admin_Category/>
+  <EmployeeDashboard/>
 );
 
 export default AppRoutes;
