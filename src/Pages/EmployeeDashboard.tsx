@@ -9,7 +9,8 @@ import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
 import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
 import KnowYourCategory from "../Components/EmployeeDashboard/Button/KnowYourCategory";
-import Get_Point_Button from "../Components/EmployeeDashboard/Button/Get_Point_Button";
+import LogsAndGetPoints from "../Components/EmployeeDashboard/Button/LogsAndGetPoints";
+
 
 EdTabs;
 
