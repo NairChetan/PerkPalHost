@@ -3,23 +3,24 @@ import { Box, Button, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
 
-
 import Points from "../Components/EmployeeDashboard/Section1/Points";
 import RedeemablePoints from "../Components/EmployeeDashboard/Section2/RedeemablePoints";
 import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
 import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
 import KnowYourCategory from "../Components/EmployeeDashboard/Button/KnowYourCategory";
-import LogsAndGetPoints from "../Components/EmployeeDashboard/Button/LogsAndGetPoints";
+import Get_Point_Button from "../Components/EmployeeDashboard/Button/Get_Point_Button";
 
-EdTabs
+EdTabs;
 
- 
+// import Typography from "@mui/material/Typography";
+// import Button from '@mui/material/Button';
+
 const EmployeeDashboard = () => {
   return (
     <>
       <Navbar />
- 
+
       <Grid
         container
         sx={{
@@ -72,7 +73,7 @@ const EmployeeDashboard = () => {
             },
             display: "flex",
             flexDirection: "column",
-            justifyContent:'space-between'
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -86,8 +87,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Points/>
-          
+            <Points />
           </Box>
 
           {/* Leaderboard Section */}
@@ -102,8 +102,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Leaderboard/>
-            
+            <Leaderboard />
           </Box>
         </Grid>
 
@@ -135,8 +134,6 @@ const EmployeeDashboard = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-
-           
           }}
         >
           <Box
@@ -150,9 +147,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <RedeemablePoints/>
-            
-            
+            <RedeemablePoints />
           </Box>
 
           {/* Leaderboard Section */}
@@ -167,24 +162,26 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Box sx={{ width: "90%",
-              height: "90%",
-              display: "flex",
-              position:"relative",
-              left:"5%",
-              top:"5%",
-              flexDirection: "column",
-              borderRadius: 7,}}>
-                <Clubs/>    
-            </Box> 
+            <Box
+              sx={{
+                width: "90%",
+                height: "90%",
+                display: "flex",
+                position: "relative",
+                left: "5%",
+                top: "5%",
+                flexDirection: "column",
+                borderRadius: 7,
+              }}
+            >
+              <Clubs />
+            </Box>
           </Box>
           <Box sx={{display:'flex',flexDirection:'row',height:"25%",justifyContent:'space-between'}}>
               <KnowYourCategory/>
               <LogsAndGetPoints/>
           </Box>
-        
-
-        </Grid>   
+        </Grid>
         <Grid
           item
           sx={{
@@ -226,16 +223,14 @@ const EmployeeDashboard = () => {
               pb: "2%",
             }}
           >
-            <EdTabs/>
-           
-              
+            <EdTabs />
           </Box>
         </Grid>
       </Grid>
- 
+
       <Footer />
     </>
   );
 };
- 
+
 export default EmployeeDashboard;
