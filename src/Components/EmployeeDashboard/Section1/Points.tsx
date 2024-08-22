@@ -2,6 +2,7 @@ import React from 'react';
 import CountUp from 'react-countup';
 import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.png';
 import './points.css';
+import { PointData } from '../../CustomHooks/CustomHooks';
 
 type PointProp = {
   points: PointData | null;

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 const baseURL = "http://localhost:8080";
 
-type PointData = {
+export type PointData = {
   totalPoints: number;
   redeemablePoints: number;
 };

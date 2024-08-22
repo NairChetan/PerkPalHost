@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Navbar from '../Components/NavBar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import Points from '../Components/EmployeeDashboard/Section1/Points';
@@ -6,8 +6,10 @@ import RedeemablePoints from '../Components/EmployeeDashboard/Section2/Redeemabl
 import Leaderboard from '../Components/EmployeeDashboard/Section1/LeaderBoard';
 import Clubs from '../Components/EmployeeDashboard/Section2/Clubs';
 import EdTabs from '../Components/EmployeeDashboard/Section4/Tabs/EdTabs';
-import KnowYourCategory from '../Components/EmployeeDashboard/Section2/KnowYourCategory';
+
 import { useFetchPoints } from '../Components/CustomHooks/CustomHooks';
+import KnowYourCategory from '../Components/EmployeeDashboard/Button/KnowYourCategory';
+import LogsAndGetPoints from '../Components/EmployeeDashboard/Button/LogsAndGetPoints';
 
 const EmployeeDashboard = () => {
   const { points, loading, error } = useFetchPoints('/api/v1/employee/3/get-points');
@@ -104,7 +106,6 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Leaderboard />
             <Leaderboard />
           </Box>
         </Grid>
