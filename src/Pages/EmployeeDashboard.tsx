@@ -3,30 +3,24 @@ import { Box, Button, Grid } from "@mui/material";
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
 
-
 import Points from "../Components/EmployeeDashboard/Section1/Points";
 import RedeemablePoints from "../Components/EmployeeDashboard/Section2/RedeemablePoints";
 import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
 import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
-import KnowYourCategory from "../Components/EmployeeDashboard/Section2/KnowYourCategory";
+import KnowYourCategory from "../Components/EmployeeDashboard/Button/KnowYourCategory";
 import Get_Point_Button from "../Components/EmployeeDashboard/Button/Get_Point_Button";
 
-EdTabs
-
-
-
-
-
+EdTabs;
 
 // import Typography from "@mui/material/Typography";
 // import Button from '@mui/material/Button';
- 
+
 const EmployeeDashboard = () => {
   return (
     <>
       <Navbar />
- 
+
       <Grid
         container
         sx={{
@@ -79,7 +73,7 @@ const EmployeeDashboard = () => {
             },
             display: "flex",
             flexDirection: "column",
-            justifyContent:'space-between'
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -93,8 +87,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Points/>
-          
+            <Points />
           </Box>
 
           {/* Leaderboard Section */}
@@ -109,8 +102,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Leaderboard/>
-            
+            <Leaderboard />
           </Box>
         </Grid>
 
@@ -142,8 +134,6 @@ const EmployeeDashboard = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-
-           
           }}
         >
           <Box
@@ -157,9 +147,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <RedeemablePoints/>
-            
-            
+            <RedeemablePoints />
           </Box>
 
           {/* Leaderboard Section */}
@@ -174,32 +162,49 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <Box sx={{ width: "90%",
-              height: "90%",
-              display: "flex",
-              position:"relative",
-              left:"5%",
-              top:"5%",
-              flexDirection: "column",
-              borderRadius: 7,}}>
-                <Clubs/>    
-            </Box> 
+            <Box
+              sx={{
+                width: "90%",
+                height: "90%",
+                display: "flex",
+                position: "relative",
+                left: "5%",
+                top: "5%",
+                flexDirection: "column",
+                borderRadius: 7,
+              }}
+            >
+              <Clubs />
+            </Box>
           </Box>
-          <Box sx={{display:'flex',flexDirection:'row',height:"25%",justifyContent:'space-between'}}>
-              <KnowYourCategory/>
-    
-         
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              height: "25%",
+              justifyContent: "space-between",
+            }}
+          >
+            <KnowYourCategory />
 
-            <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between', width: {
-                    xs: "45%", // For extra-small screens
-                    sm: "45%", // For small screens
-                    md: "48.5%", // For medium screens
-                    lg: "35%", // For large screens
-                    xl: "35%", // For extra-large screens
-                  },}}>
-                <Button sx={{
-                   px: "5%",
-                   width: {
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                width: {
+                  xs: "45%", // For extra-small screens
+                  sm: "45%", // For small screens
+                  md: "48.5%", // For medium screens
+                  lg: "35%", // For large screens
+                  xl: "35%", // For extra-large screens
+                },
+              }}
+            >
+              <Button
+                sx={{
+                  px: "5%",
+                  width: {
                     xs: "100%", // For extra-small screens
                     sm: "100%", // For small screens
                     md: "100%", // For medium screens
@@ -213,30 +218,31 @@ const EmployeeDashboard = () => {
                     lg: "45%", // For large screens
                     xl: "45%", // For extra-large screens
                   },
-                   backgroundColor: "#ffc9ce", // Default background color
-                   display: "flex",
-                   alignItems: "center", // Align items vertically center
-                   justifyContent: "center", // Center items horizontally
-                   borderRadius: 15,
-                   color: "#801c26",
-                   boxShadow: 1,
-                   fontWeight: 700,
-                   fontSize: {
-                     xs: "4.7vw", // Extra small devices (phones, 600px and down)
-                     sm: "3vw", // Small devices (tablets, 600px and up)
-                     md: "2.5vw", // Medium devices (desktops, 900px and up)
-                     lg: "1vw", // Large devices (large desktops, 1200px and up)
-                     xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-                   },
-                   textAlign: "center", // Center-align text
-                   '&:hover': {
-                     backgroundColor: "#dba2a2", // Background color on hover
-                     color: "#5a1a1a", // Text color on hover (optional)
-                   },
-                }}>
-                  Logs
-                </Button>
-                {/* <Button
+                  backgroundColor: "#ffc9ce", // Default background color
+                  display: "flex",
+                  alignItems: "center", // Align items vertically center
+                  justifyContent: "center", // Center items horizontally
+                  borderRadius: 15,
+                  color: "#801c26",
+                  boxShadow: 1,
+                  fontWeight: 700,
+                  fontSize: {
+                    xs: "4.7vw", // Extra small devices (phones, 600px and down)
+                    sm: "3vw", // Small devices (tablets, 600px and up)
+                    md: "2.5vw", // Medium devices (desktops, 900px and up)
+                    lg: "1vw", // Large devices (large desktops, 1200px and up)
+                    xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
+                  },
+                  textAlign: "center", // Center-align text
+                  "&:hover": {
+                    backgroundColor: "#dba2a2", // Background color on hover
+                    color: "#5a1a1a", // Text color on hover (optional)
+                  },
+                }}
+              >
+                Logs
+              </Button>
+              {/* <Button
                 
                 sx={{
                   px: "5%",
@@ -274,15 +280,12 @@ const EmployeeDashboard = () => {
                   Get Points
                 </Button> */}
 
-                {/* Modal here */}
+              {/* Modal here */}
 
-                <Get_Point_Button/>
+              <Get_Point_Button />
             </Box>
-         
           </Box>
-        
-
-        </Grid>   
+        </Grid>
         <Grid
           item
           sx={{
@@ -324,16 +327,14 @@ const EmployeeDashboard = () => {
               pb: "2%",
             }}
           >
-            <EdTabs/>
-           
-              
+            <EdTabs />
           </Box>
         </Grid>
       </Grid>
- 
+
       <Footer />
     </>
   );
 };
- 
+
 export default EmployeeDashboard;
