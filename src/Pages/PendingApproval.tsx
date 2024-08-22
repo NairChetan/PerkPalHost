@@ -15,11 +15,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { useFetchPendingApproval } from "../Components/CustomHooks/CustomHooks";
-
 const PendingApproval = () => {
-  const { employeeNameList, participantList, error, loading } =
-    useFetchPendingApproval("employee");
 
   const [expanded, setExpanded] = useState<string | false>(false);
   const [currentPage, setCurrentPage] = useState(1);

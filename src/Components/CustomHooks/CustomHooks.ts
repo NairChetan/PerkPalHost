@@ -1,32 +1,34 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
-const baseURL = "http://localhost:5000/";
-type EmployeeData = {
-    emp_id: number;
-    // Add other fields here if necessary
-  };
-export const useFetchPendingApproval = (endURL: string) => {
-  const [employeeNameList, setEmployeeList] = useState<string[]>([]);
-  const [participantList, setParticipantList] = useState<number[]>([]);
-  const [error, setError] = useState<null | Error>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+import { useState, useEffect } from "react";
 
-  const fetchPendingApproval = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${baseURL}${endURL}`,
-      );
-      const data = response.data;
-      const empid = data.map((data:EmployeeData)=>data.emp_id);
-      setEmployeeList(empid);
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setLoading(false);
-    }
-  });
+const baseURL = "http://localhost:8080";
+
+type PointData = {
+  totalPoints: number;
+  redeemablePoints: number;
+};
+
+export const useFetchPoints = (endUrl: string) => {
+  const [points, setPoints] = useState<PointData | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<null | Error>(null);
+
   useEffect(() => {
-    fetchPendingApproval();
-  }, [endURL,fetchPendingApproval]);
-  return { employeeNameList, participantList, error, loading };
+    const fetchPoints = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseURL}${endUrl}`);
+        const data: PointData = response.data.data; // Adjust based on actual response structure
+        setPoints(data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPoints();
+  }, [endUrl]);
+
+  return { points, loading, error };
 };
