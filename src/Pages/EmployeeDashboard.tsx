@@ -67,9 +67,9 @@ const EmployeeDashboard = () => {
               lg: 0,
               xl: 0,
             },
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -105,6 +105,7 @@ const EmployeeDashboard = () => {
             }}
           >
             <Leaderboard />
+            <Leaderboard />
           </Box>
         </Grid>
 
@@ -133,9 +134,9 @@ const EmployeeDashboard = () => {
               lg: 0,
               xl: 0,
             },
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -166,123 +167,24 @@ const EmployeeDashboard = () => {
           >
             <Box
               sx={{
-                width: '90%',
-                height: '90%',
-                display: 'flex',
-                position: 'relative',
-                left: '5%',
-                top: '5%',
-                flexDirection: 'column',
+                width: "90%",
+                height: "90%",
+                display: "flex",
+                position: "relative",
+                left: "5%",
+                top: "5%",
+                flexDirection: "column",
                 borderRadius: 7,
               }}
             >
               <Clubs />
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              height: '25%',
-              justifyContent: 'space-between',
-            }}
-          >
-            <KnowYourCategory />
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                width: {
-                  xs: '45%',
-                  sm: '45%',
-                  md: '48.5%',
-                  lg: '35%',
-                  xl: '35%',
-                },
-              }}
-            >
-              <Button
-                sx={{
-                  px: '5%',
-                  width: {
-                    xs: '100%',
-                    sm: '100%',
-                    md: '100%',
-                    lg: '100%',
-                    xl: '100%',
-                  },
-                  height: {
-                    xs: '45%',
-                    sm: '45%',
-                    md: '45%',
-                    lg: '45%',
-                    xl: '45%',
-                  },
-                  backgroundColor: '#ffc9ce',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 15,
-                  color: '#801c26',
-                  boxShadow: 1,
-                  fontWeight: 700,
-                  fontSize: {
-                    xs: '4.7vw',
-                    sm: '3vw',
-                    md: '2.5vw',
-                    lg: '1vw',
-                    xl: '1vw',
-                  },
-                  textAlign: 'center',
-                  '&:hover': {
-                    backgroundColor: '#dba2a2',
-                    color: '#5a1a1a',
-                  },
-                }}
-              >
-                Logs
-              </Button>
-              <Button
-                sx={{
-                  px: '5%',
-                  width: '100%',
-                  height: {
-                    xs: '45%',
-                    sm: '45%',
-                    md: '45%',
-                    lg: '45%',
-                    xl: '45%',
-                  },
-                  backgroundColor: '#ffc9ce',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 15,
-                  color: '#801c26',
-                  boxShadow: 1,
-                  fontWeight: 700,
-                  fontSize: {
-                    xs: '4.7vw',
-                    sm: '2.8vw',
-                    md: '2.5vw',
-                    lg: '1vw',
-                    xl: '1vw',
-                  },
-                  textAlign: 'center',
-                  '&:hover': {
-                    backgroundColor: '#dba2a2',
-                    color: '#5a1a1a',
-                  },
-                }}
-              >
-                Get Points
-              </Button>
-            </Box>
+          <Box sx={{display:'flex',flexDirection:'row',height:"25%",justifyContent:'space-between'}}>
+              <KnowYourCategory/>
+              <LogsAndGetPoints/>
           </Box>
         </Grid>
-
         <Grid
           item
           sx={{

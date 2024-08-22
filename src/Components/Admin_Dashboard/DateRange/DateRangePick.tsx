@@ -17,7 +17,7 @@ const DateRangePick: React.FC = () => {
   const [range, setRange] = useState<DateRange[]>([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 30),
       key: "selection",
     },
   ]);
