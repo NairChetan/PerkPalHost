@@ -10,6 +10,7 @@ import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
 import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
 import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
 import KnowYourCategory from "../Components/EmployeeDashboard/Section2/KnowYourCategory";
+import Get_Point_Button from "../Components/EmployeeDashboard/Button/Get_Point_Button";
 
 EdTabs
 
@@ -235,7 +236,7 @@ const EmployeeDashboard = () => {
                 }}>
                   Logs
                 </Button>
-                <Button
+                {/* <Button
                 
                 sx={{
                   px: "5%",
@@ -271,9 +272,11 @@ const EmployeeDashboard = () => {
                 }}
                 >
                   Get Points
-                </Button>
+                </Button> */}
 
                 {/* Modal here */}
+
+                <Get_Point_Button/>
             </Box>
          
           </Box>
