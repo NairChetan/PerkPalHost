@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Button,} from "@mui/material";
 const LogsAndGetPoints = () => {
+  
   return (
     <>
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between', width: {
