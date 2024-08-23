@@ -2,8 +2,26 @@
 import React from "react";
 import {Button, Box, Typography } from "@mui/material";
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
+import { UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
+import { loginRequest } from "../../auth/auth-config";
+
 
 const LoginForm: React.FC = () => {
+  const { instance } = useMsal();
+
+  
+ 
+  const activeAccount = instance.getActiveAccount();
+
+  const handleLoginRedirect = () => {
+      instance
+          .loginRedirect({
+              ...loginRequest,
+              prompt: 'create',
+          })
+          .catch((error: any) => console.log(error));
+  };
+
   return (
     <Box
     sx={{
@@ -22,8 +40,8 @@ const LoginForm: React.FC = () => {
     <Typography variant="h6" sx={{ mb: 2 }}>
       Sign In Using Microsoft
     </Typography>
-
-    <Button
+<UnauthenticatedTemplate>
+    <Button onClick={handleLoginRedirect}
       fullWidth
       variant="contained"
       startIcon={<MicrosoftIcon />}
@@ -42,6 +60,7 @@ const LoginForm: React.FC = () => {
     >
       Sign in with Microsoft
     </Button>
+    </UnauthenticatedTemplate>
   </Box>
   );
 };
