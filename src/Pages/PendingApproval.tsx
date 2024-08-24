@@ -18,7 +18,7 @@ import {
 import { useFetchParticipation } from "../Components/CustomHooks/CustomHooks";
 
 const PendingApproval = () => {
-  const { participation, loading, error } = useFetchParticipation("/api/v1/participation/pendingapprovalfetch");
+  const { participation, loading, error } = useFetchParticipation("/api/v1/participation/pending-approval?pageSize=10");
 
   const [expanded, setExpanded] = useState<string | false>(false);
   const [currentPage, setCurrentPage] = useState(1);
