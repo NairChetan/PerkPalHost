@@ -16,7 +16,6 @@ import {
   useMsal,
 } from "@azure/msal-react";
 import LogIn_Page from "../Pages/LogIn_Page";
-import { loginRequest } from "../auth/auth-config";
 
 const AppRoutes: React.FC = () => {
   const { instance } = useMsal();
@@ -24,15 +23,6 @@ const AppRoutes: React.FC = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const activeAccount = instance.getActiveAccount();
   console.log(activeAccount);
-
-  const handleLoginRedirect = () => {
-    instance
-      .loginRedirect({
-        ...loginRequest,
-        prompt: "create",
-      })
-      .catch((error: any) => console.log(error));
-  };
 
   useEffect(() => {
     if (activeAccount) {
