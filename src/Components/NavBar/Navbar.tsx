@@ -14,6 +14,13 @@ const Navbar = () => {
   const activeAccount = instance.getActiveAccount();
 
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    clubName: "",
+    photoUrl: "",
+    duName: "", // Added to store duName for consistency
+  });
 
   const handleLogoutRedirect = async () => {
     try {
@@ -22,34 +29,32 @@ const Navbar = () => {
       setTimeout(() => {
         window.location.reload();
       }, 2000); // Increase delay to 2 seconds
-      // Clear all items from localStorage
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
   useEffect(() => {
-    const fetchAvatar = async () => {
-      try {
-        const response = await axios.get("URL_TO_YOUR_AVATAR_IMAGE", {
-          responseType: "blob",
-        });
-        const imageUrl = URL.createObjectURL(response.data);
-        setAvatarSrc(imageUrl);
-      } catch (error) {
-        console.error("Error fetching the avatar image:", error);
-      }
-    };
+    // Fetch data from localStorage
+    const storedFirstName = localStorage.getItem("firstName") || "";
+    const storedLastName = localStorage.getItem("lastName") || "";
+    const storedClubName = localStorage.getItem("clubName") || "";
+    const storedPhotoUrl = localStorage.getItem("photoUrl") || "";
+    const storedDuName = localStorage.getItem("duName") || ""; // Fetch duName
 
-    fetchAvatar();
-  }, []);
+    setUserData({
+      firstName: storedFirstName,
+      lastName: storedLastName,
+      clubName: storedClubName,
+      photoUrl: storedPhotoUrl,
+      duName: storedDuName, // Store in state
+    });
 
-  // Dummy data for now
-  const userData = {
-    name: "Alby Kennady",
-    membershipStatus: "Gold Member",
-    email: "alby.kennady@experionglobal.com",
-  };
+    // Set avatar image
+    if (storedPhotoUrl) {
+      setAvatarSrc(storedPhotoUrl);
+    }
+  }, []); // Empty dependency array for initial load
 
   return (
     <>
@@ -124,7 +129,7 @@ const Navbar = () => {
                 },
               }}
             >
-              {userData.name}
+              {`${userData.firstName} ${userData.lastName}`}
             </Typography>
             <Typography
               sx={{
@@ -145,7 +150,7 @@ const Navbar = () => {
                 },
               }}
             >
-              {userData.membershipStatus}
+              {userData.clubName} Club
             </Typography>
             <Typography
               sx={{
@@ -166,7 +171,7 @@ const Navbar = () => {
                 },
               }}
             >
-              {userData.email}
+              {userData.duName} {/* Using state value */}
             </Typography>
           </Box>
 
