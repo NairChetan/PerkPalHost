@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useFetchCategories, useFetchActivities, useSubmitParticipation } from '../../../CustomHooks/CustomHooks'; // Assuming these hooks are in a hooks.js file
 import styles from './NewEntry.module.css';
 import { LuSave } from "react-icons/lu";
-import { colors } from '@mui/material';
 
-interface NewEntryProps {
-  addEntry: (entry: any) => void;
-}
+const NewEntry = ({ addEntry }) => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  console.log(selectedCategory);
 
-const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
   const [proof, setProof] = useState<File | null>(null);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
+  const { activities, loading: activitiesLoading, error: activitiesError } = useFetchActivities(selectedCategory);
+  const { submitParticipation } = useSubmitParticipation();
+    console.log(activities);
+
+  useEffect(() => {
+    if (categoriesError) setError(categoriesError);
+    if (activitiesError) setError(activitiesError);
+  }, [categoriesError, activitiesError]);
 
   const formik = useFormik({
     initialValues: {
@@ -25,30 +36,40 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
       category: Yup.string().required('Category is required'),
       activity: Yup.string().required('Activity is required'),
       description: Yup.string().required('Description is required'),
-      duration: Yup.string()
-        .matches(/^\d+:\d{2}$/, 'Duration must be in HH:MM format')
-        .required('Required'),
-    }),
+      duration: Yup.number()
+      .typeError('Duration must be a number')
+      .positive('Duration must be greater than zero')
+      .integer('Duration must be an integer')
+      .required('Duration is required'),
+}),
     onSubmit: async (values, { resetForm }) => {
-      const entry = {
-        ...values,
-        date: new Date().toISOString(),
-        status: 'Pending',
-        proof: proof ? proof.name : null,
-      };
+      setLoading(true);
+      setError(null);
 
       try {
-        const response = await axios.post('http://localhost:3000/entries', entry);
-        addEntry(response.data);
+        const entry = {
+          categoryName: values.category,
+          activityName: values.activity,
+          description: values.description,
+          duration: values.duration,
+          proofUrl: proof ? proof.name : null,
+          createdBy: 3,  
+          employeeEmpId: 3, 
+        };
+
+        await submitParticipation(entry);
+        addEntry(entry);
         resetForm();
         setProof(null);
-      } catch (error) {
-        console.error('Error saving entry:', error);
+      } catch (err) {
+        setError('Failed to submit participation. Please try again.');
+      } finally {
+        setLoading(false);
       }
     },
   });
 
-  const handleProofChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProofChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setProof(e.target.files[0]);
       formik.setFieldValue('proof', e.target.files[0]);
@@ -57,10 +78,10 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
 
   return (
     <div className={styles.container}>
-       <div className={styles.headingContainer}>
+      <div className={styles.headingContainer}>
         <div>
           <h3 className={styles.heading}>Clock in your points!</h3>
-          <p className={styles.paraghraph}>Log in your activity here to avail points</p> 
+          <p className={styles.paraghraph}>Log in your activity here to avail points</p>
         </div>
         <img
           src="../../../src/assets/images/cheer 1.png"
@@ -68,19 +89,26 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
           className={styles.headingImage}
         />
       </div>
-      
-       
+
+      {loading && <p className={styles.loading}>Submitting your entry...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <select
           className={styles.input}
           name="category"
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.handleChange(e);
+            setSelectedCategory(e.target.value);
+          }}
           onBlur={formik.handleBlur}
           value={formik.values.category}
+          disabled={categoriesLoading}
         >
           <option value="" label="Select category" />
-          <option value="Training Programs" label="Training Programs" />
-          <option value="Skill Matrix" label="Skill Matrix" />
+          {(categories || []).map((category) => (
+            <option key={category.categoryName} value={category.categoryName}>{category.categoryName}</option>
+          ))}
         </select>
         {formik.touched.category && formik.errors.category ? (
           <div className={styles.error}>{formik.errors.category}</div>
@@ -92,18 +120,12 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.activity}
-          disabled={formik.values.category === ''}
+          disabled={formik.values.category === '' || activitiesLoading}
         >
           <option value="" label="Select activity" />
-          {formik.values.category === 'Training Programs' && (
-            <>
-              <option value="Facilitating Training Programs" label="Facilitating Training Programs" />
-              <option value="Participation In Training Programs" label="Participation In Training Programs" />
-            </>
-          )}
-          {formik.values.category === 'Skill Matrix' && (
-            <option value="External Certification Updates" label="External Certification Updates" />
-          )}
+          {(activities || []).map((activity) => (
+            <option key={activity.activityName} value={activity.activityName}>{activity.activityName}</option>
+          ))}
         </select>
         {formik.touched.activity && formik.errors.activity ? (
           <div className={styles.error}>{formik.errors.activity}</div>
@@ -122,15 +144,18 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
           <div className={styles.error}>{formik.errors.description}</div>
         ) : null}
 
-        <input
-          className={styles.input}
-          name="duration"
-          type="text"
-          placeholder="Hours Completed"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.duration}
-        />
+    <input
+    className={styles.input}
+    name="duration"
+    type="number"
+    placeholder="Duration in minutes"
+    onChange={(e) => {
+        const value = e.target.value;
+        formik.setFieldValue('duration', value ? parseInt(value, 10) : ''); // Convert value to number
+    }}
+    onBlur={formik.handleBlur}
+    value={formik.values.duration}
+    />
         {formik.touched.duration && formik.errors.duration ? (
           <div className={styles.error}>{formik.errors.duration}</div>
         ) : null}
@@ -146,7 +171,7 @@ const NewEntry: React.FC<NewEntryProps> = ({ addEntry }) => {
           Attach supporting documents here
         </label>
 
-        <button type="submit" className={styles.submit}>
+        <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit
         </button>
       </form>
