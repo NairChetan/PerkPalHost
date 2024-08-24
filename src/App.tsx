@@ -7,8 +7,10 @@ import Clockin from "./Pages/Clockin";
 import PendingApproval from "./Pages/PendingApproval";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { loginRequest } from "./auth/auth-config";
+import SendSecretKeyToBackend from "./auth/SendSecretKeytoBackend";
 
 function App() {
+
 
 
   const { instance } = useMsal();
@@ -30,13 +32,14 @@ function App() {
         window.location.reload();
 };
   return (
+
       <div className="card">
           <AuthenticatedTemplate>
               {activeAccount ? (
                   <>
-                  <EmployeeDashboard/>
+                  {/* <SendSecretKeyToBackend/> */}
                   {/* <button onClick={handleLogoutRedirect}>Logout</button><p>You are signed in!</p> */}
-                  {/* <Admin_Dashboard /> */}
+                  <Admin_Dashboard />
                   </>
               ) : null}
           </AuthenticatedTemplate>
@@ -51,17 +54,17 @@ function App() {
   );    
 }
 
-// const AppRoutes: React.FC = () => (
+const AppRoutes: React.FC = () => (
 
-//   <Router>
-//     <Routes>
-//       <Route path="/" element={<LogIn_Page/>} />
-//       <Route path="/admin-dashboard" element={<Admin_Dashboard />} />
-//       <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
-//       <Route path="/clockin" element={<Clockin />} />
-//       <Route path="/pending-approval" element={<PendingApproval />} />
-//     </Routes>
-//   </Router>
-// );
+  <Router>
+    <Routes>
+      <Route path="/" element={<LogIn_Page/>} />
+      <Route path="/admin-dashboard" element={<Admin_Dashboard />} />
+      <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+      <Route path="/clockin" element={<Clockin />} />
+      <Route path="/pending-approval" element={<PendingApproval />} />
+    </Routes>
+  </Router>
+);
 
 export default App;
