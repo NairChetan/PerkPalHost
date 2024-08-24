@@ -15,7 +15,6 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-
 const PendingApproval = () => {
 
   const [expanded, setExpanded] = useState<string | false>(false);
