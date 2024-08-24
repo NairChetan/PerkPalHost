@@ -1,107 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import Box from "@mui/system/Box";
-// import Avatar from "@mui/material/Avatar";
-// import Typography from "@mui/material/Typography";
-// import axios from "axios";
-// import backgroundImage from "../../assets/Images/Sin City Red.jpg";
-// import logo from "../../assets/Icons/perkpal  white logo.png";
-
-// const Navbar = () => {
-//   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
-//   const [userData, setUserData] = useState({
-//     name: "",
-//     membershipStatus: "",
-//     email: "",
-//   });
-
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const [avatarResponse, userResponse] = await Promise.all([
-//           axios.get("URL_TO_YOUR_AVATAR_IMAGE", { responseType: "blob" }),
-//           axios.get("URL_TO_FETCH_USER_DATA"),
-//         ]);
-
-//         const avatarUrl = URL.createObjectURL(avatarResponse.data);
-//         setAvatarSrc(avatarUrl);
-
-//         setUserData({
-//           name: userResponse.data.name,
-//           membershipStatus: userResponse.data.membershipStatus,
-//           email: userResponse.data.email,
-//         });
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, []);
-
-//   return (
-//     <>
-//       <Box
-//         sx={{
-//           display: "flex",
-//           justifyContent: "space-between",
-//           alignItems: "center",
-//           width: "100%",
-//           height: "12vh",
-//           px: "5%",
-//           backgroundImage: `url(${backgroundImage})`,
-//           backgroundSize: "cover",
-//           backgroundPosition: "center",
-//         }}
-//       >
-//         <Box
-//           component="img"
-//           src={logo}
-//           alt="PerkPal Logo"
-//           sx={{
-//             width: "auto",
-//             height: "100%",
-//             objectFit: "contain",
-//           }}
-//         />
-//         <Box
-//           sx={{
-//             display: "flex",
-//             alignItems: "center",
-//           }}
-//         >
-//           {avatarSrc && (
-//             <Avatar
-//               src={avatarSrc}
-//               alt="User Avatar"
-//               sx={{
-//                 width: "8vh",
-//                 height: "8vh",
-//                 mr: 2, // Adds margin-right space between the avatar and the text
-//               }}
-//             />
-//           )}
-//           <Box>
-//             <Typography
-//               variant="h6"
-//               sx={{ color: "white", fontWeight: "bold" }}
-//             >
-//               {userData.name}
-//             </Typography>
-//             <Typography variant="body2" sx={{ color: "gold" }}>
-//               {userData.membershipStatus}
-//             </Typography>
-//             <Typography variant="body2" sx={{ color: "white" }}>
-//               {userData.email}
-//             </Typography>
-//           </Box>
-//         </Box>
-//       </Box>
-//     </>
-//   );
-// };
-
-// export default Navbar;
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Box from "@mui/system/Box";
@@ -110,9 +6,27 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import backgroundImage from "../../assets/Images/Sin City Red.jpg";
 import logo from "../../assets/Icons/perkpal  white logo.png";
+import { useMsal } from "@azure/msal-react";
+import { Button } from "@mui/material";
 
 const Navbar = () => {
+  const { instance } = useMsal();
+  const activeAccount = instance.getActiveAccount();
+
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+
+  const handleLogoutRedirect = async () => {
+    try {
+      localStorage.clear();
+      await instance.logoutRedirect({ postLogoutRedirectUri: "/" });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Increase delay to 2 seconds
+      // Clear all items from localStorage
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -147,13 +61,7 @@ const Navbar = () => {
           width: "100%",
           height: "12vh",
           pl: "5%",
-          pr: {
-            xs: "0%", // Displays block on extra-small devices
-            sm: "2%", // Displays inline on small devices and up
-            md: "4%", // Displays inline on medium devices and up
-            lg: "3%", // Displays inline on large devices and up
-            xl: "3%", // Displays inline on extra-large devices and up
-          },
+          pr: "1%",
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -182,7 +90,7 @@ const Navbar = () => {
               sx={{
                 width: "8vh",
                 height: "8vh",
-                mr: 2, // Adds margin-right space between the avatar and the text
+                mr: 1, // Adds margin-right space between the avatar and the text
               }}
             />
           )}
@@ -193,6 +101,7 @@ const Navbar = () => {
               display: "flex",
               flexDirection: "column",
               width: "100%",
+              mr: 1,
             }}
           >
             <Typography
@@ -260,6 +169,35 @@ const Navbar = () => {
               {userData.email}
             </Typography>
           </Box>
+
+          <Button
+            variant="outlined"
+            onClick={handleLogoutRedirect}
+            sx={{
+              color: "#fff", // Font color
+              borderColor: "#fff", // Border color
+              fontSize: {
+                xs: "0.4rem", // Font size for extra-small screens
+                sm: "0.4rem", // Font size for small screens
+                md: ".5rem", // Font size for medium screens
+                lg: ".7rem", // Font size for large screens
+                xl: "1rem", // Font size for extra-large screens
+              },
+              padding: {
+                xs: "2px 2px", // Smaller horizontal padding for extra-small screens
+                sm: "2px 6px", // Smaller horizontal padding for small screens
+                md: "4px 8px", // Smaller horizontal padding for medium screens
+                lg: "4px 12px", // Padding for large screens
+                xl: "4px 16px", // Padding for extra-large screens
+              },
+              "&:hover": {
+                color: "#111",
+                borderColor: "#111", // Keeps border color white on hover
+              },
+            }}
+          >
+            LogOut
+          </Button>
         </Box>
       </Box>
     </>

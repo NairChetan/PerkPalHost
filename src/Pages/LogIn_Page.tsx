@@ -7,10 +7,12 @@ import bgText2 from "../assets/Images/experion (2).png";
 import logo from "../assets/Images/perkpal  white logo 1.png";
 import LoginForm from "../Components/LogIn_Page/LoginForm";
 import styles from "../Components/LogIn_Page/LogIn_Page.module.css"; // Import the CSS module
+import { UnauthenticatedTemplate } from "@azure/msal-react";
 
 const LogIn_Page = () => {
   return (
     <>
+    <UnauthenticatedTemplate>
       <Box
         component="section"
         sx={{
@@ -195,6 +197,7 @@ const LogIn_Page = () => {
           <LoginForm />
         </Box>
       </Box>
+      </UnauthenticatedTemplate>
     </>
   );
 };
