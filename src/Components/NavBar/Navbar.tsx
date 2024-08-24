@@ -15,11 +15,17 @@ const Navbar = () => {
 
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
 
-  const handleLogoutRedirect = () => {
-    instance.logoutRedirect({
-      postLogoutRedirectUri: "/",
-    });
-    window.location.reload();
+  const handleLogoutRedirect = async () => {
+    try {
+      localStorage.clear();
+      await instance.logoutRedirect({ postLogoutRedirectUri: "/" });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Increase delay to 2 seconds
+      // Clear all items from localStorage
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   useEffect(() => {
