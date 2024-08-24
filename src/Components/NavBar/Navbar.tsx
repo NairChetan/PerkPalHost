@@ -110,9 +110,21 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import backgroundImage from "../../assets/Images/Sin City Red.jpg";
 import logo from "../../assets/Icons/perkpal  white logo.png";
+import { useMsal } from "@azure/msal-react";
 
 const Navbar = () => {
+  const { instance } = useMsal();
+  const activeAccount = instance.getActiveAccount();
+
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+
+  const handleLogoutRedirect = () => {
+    instance
+        .logoutRedirect({
+            postLogoutRedirectUri:'/',
+        })
+        window.location.reload();
+};
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -260,6 +272,7 @@ const Navbar = () => {
               {userData.email}
             </Typography>
           </Box>
+            <button onClick={handleLogoutRedirect}>Logout</button><p>You are signed in!</p>
         </Box>
       </Box>
     </>
