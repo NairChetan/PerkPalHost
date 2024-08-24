@@ -1,22 +1,20 @@
-import { Box,Grid } from "@mui/material";
-import Navbar from "../Components/NavBar/Navbar";
-import Footer from "../Components/Footer/Footer";
+import { Box, Grid } from '@mui/material';
+import Navbar from '../Components/NavBar/Navbar';
+import Footer from '../Components/Footer/Footer';
+import Points from '../Components/EmployeeDashboard/Section1/Points';
+import RedeemablePoints from '../Components/EmployeeDashboard/Section2/RedeemablePoints';
+import Leaderboard from '../Components/EmployeeDashboard/Section1/LeaderBoard';
+import Clubs from '../Components/EmployeeDashboard/Section2/Clubs';
+import EdTabs from '../Components/EmployeeDashboard/Section4/Tabs/EdTabs';
 
-import Points from "../Components/EmployeeDashboard/Section1/Points";
-import RedeemablePoints from "../Components/EmployeeDashboard/Section2/RedeemablePoints";
-import Leaderboard from "../Components/EmployeeDashboard/Section1/LeaderBoard";
-import Clubs from "../Components/EmployeeDashboard/Section2/Clubs";
-import EdTabs from "../Components/EmployeeDashboard/Section4/Tabs/EdTabs";
-import KnowYourCategory from "../Components/EmployeeDashboard/Button/KnowYourCategory";
-import LogsAndGetPoints from "../Components/EmployeeDashboard/Button/LogsAndGetPoints";
-
-
-EdTabs;
-
-// import Typography from "@mui/material/Typography";
-// import Button from '@mui/material/Button';
+import { useFetchPoints } from '../Components/CustomHooks/CustomHooks';
+import KnowYourCategory from '../Components/EmployeeDashboard/Button/KnowYourCategory';
+import LogsAndGetPoints from '../Components/EmployeeDashboard/Button/LogsAndGetPoints';
 
 const EmployeeDashboard = () => {
+  const { points, loading, error } = useFetchPoints('/api/v1/employee/3/get-points');
+  console.log(points);
+
   return (
     <>
       <Navbar />
@@ -24,25 +22,25 @@ const EmployeeDashboard = () => {
       <Grid
         container
         sx={{
-          width: "100%",
+          width: '100%',
           height: {
-            xs: "auto", // For extra-small screens
-            sm: "auto", // For small screens
-            md: "auto", // For medium screens
-            lg: "78vh", // For large screens
-            xl: "78vh", // For extra-large screens
+            xs: 'auto',
+            sm: 'auto',
+            md: 'auto',
+            lg: '78vh',
+            xl: '78vh',
           },
-          backgroundColor: "#f3f3f3",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
+          backgroundColor: '#f3f3f3',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           px: {
-            xs: "4%", // Padding x for extra-small screens
-            sm: "3%", // Padding x for small screens
-            md: "3%", // Padding x for medium screens
-            lg: "2%", // Padding x for large screens
-            xl: "2%", // Padding x for extra-large screens
+            xs: '4%',
+            sm: '3%',
+            md: '3%',
+            lg: '2%',
+            xl: '2%',
           },
           m: 0,
         }}
@@ -51,25 +49,25 @@ const EmployeeDashboard = () => {
           item
           sx={{
             width: {
-              xs: "100%", // For extra-small screens
-              sm: "48.5%", // For small screens
-              md: "48.5%", // For medium screens
-              lg: "23%", // For large screens
-              xl: "23%", // For extra-large screens
+              xs: '100%',
+              sm: '48.5%',
+              md: '48.5%',
+              lg: '23%',
+              xl: '23%',
             },
             height: {
-              xs: "88vh", // For extra-small screens
-              sm: "88vh", // For small screens
-              md: "88vh", // For medium screens
-              lg: "90%", // For large screens
-              xl: "90%", // For extra-large screens
+              xs: '88vh',
+              sm: '88vh',
+              md: '88vh',
+              lg: '90%',
+              xl: '90%',
             },
             mt: {
-              xs: "3%", // For extra-small screens
-              sm: "3%", // For small screens
-              md: "3%", // For medium screens
-              lg: 0, // For large screens
-              xl: 0, // For extra-large screens
+              xs: '3%',
+              sm: '3%',
+              md: '3%',
+              lg: 0,
+              xl: 0,
             },
             display: "flex",
             flexDirection: "column",
@@ -78,26 +76,32 @@ const EmployeeDashboard = () => {
         >
           <Box
             sx={{
-              width: "100%",
-              height: "30%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "row",
+              width: '100%',
+              height: '30%',
+              backgroundColor: '#fff',
+              display: 'flex',
+              flexDirection: 'row',
               boxShadow: 1,
               borderRadius: 7,
             }}
           >
-            <Points />
+            {loading ? (
+              <p>Loading points...</p>
+            ) : error ? (
+              <p>Error fetching points: {error.message}</p>
+            ) : (
+              <Points points={points} />
+            )}
           </Box>
 
           {/* Leaderboard Section */}
           <Box
             sx={{
-              width: "100%",
-              height: "65%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
+              width: '100%',
+              height: '65%',
+              backgroundColor: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
             }}
@@ -111,25 +115,25 @@ const EmployeeDashboard = () => {
           item
           sx={{
             width: {
-              xs: "100%", // For extra-small screens
-              sm: "48.5%", // For small screens
-              md: "48.5%", // For medium screens
-              lg: "20%", // For large screens
-              xl: "20%", // For extra-large screens
+              xs: '100%',
+              sm: '48.5%',
+              md: '48.5%',
+              lg: '20%',
+              xl: '20%',
             },
             height: {
-              xs: "88vh", // For extra-small screens
-              sm: "88vh", // For small screens
-              md: "88vh", // For medium screens
-              lg: "90%", // For large screens
-              xl: "90%", // For extra-large screens
+              xs: '88vh',
+              sm: '88vh',
+              md: '88vh',
+              lg: '90%',
+              xl: '90%',
             },
             mt: {
-              xs: "3%", // For extra-small screens
-              sm: "3%", // For small screens
-              md: "3%", // For medium screens
-              lg: 0, // For large screens
-              xl: 0, // For extra-large screens
+              xs: '3%',
+              sm: '3%',
+              md: '3%',
+              lg: 0,
+              xl: 0,
             },
             display: "flex",
             flexDirection: "column",
@@ -138,26 +142,26 @@ const EmployeeDashboard = () => {
         >
           <Box
             sx={{
-              width: "100%",
-              height: "35%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
+              width: '100%',
+              height: '35%',
+              backgroundColor: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
             }}
           >
-            <RedeemablePoints />
+            <RedeemablePoints points = {points} />
           </Box>
 
-          {/* Leaderboard Section */}
+          {/* Clubs Section */}
           <Box
             sx={{
-              width: "100%",
-              height: "35%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
+              width: '100%',
+              height: '35%',
+              backgroundColor: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
             }}
@@ -174,7 +178,7 @@ const EmployeeDashboard = () => {
                 borderRadius: 7,
               }}
             >
-              <Clubs />
+              <Clubs points = {points}/>
             </Box>
           </Box>
           <Box sx={{display:'flex',flexDirection:'row',height:"25%",justifyContent:'space-between'}}>
@@ -186,41 +190,41 @@ const EmployeeDashboard = () => {
           item
           sx={{
             width: {
-              xs: "100%", // For extra-small screens
-              sm: "100%", // For small screens
-              md: "100%", // For medium screens
-              lg: "52%", // For large screens
-              xl: "52%", // For extra-large screens
+              xs: '100%',
+              sm: '100%',
+              md: '100%',
+              lg: '52%',
+              xl: '52%',
             },
             height: {
-              xs: "auto", // For extra-small screens
-              sm: "88vh", // For small screens
-              md: "88vh", // For medium screens
-              lg: "90%", // For large screens
-              xl: "90%", // For extra-large screens
+              xs: 'auto',
+              sm: '88vh',
+              md: '88vh',
+              lg: '90%',
+              xl: '90%',
             },
             mt: {
-              xs: "3%", // For extra-small screens
-              sm: "3%", // For small screens
-              md: "3%", // For medium screens
-              lg: 0, // For large screens
-              xl: 0, // For extra-large screens
+              xs: '3%',
+              sm: '3%',
+              md: '3%',
+              lg: 0,
+              xl: 0,
             },
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
           <Box
             sx={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "#fff",
-              display: "flex",
-              flexDirection: "column",
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
-              pb: "2%",
+              pb: '2%',
             }}
           >
             <EdTabs />
