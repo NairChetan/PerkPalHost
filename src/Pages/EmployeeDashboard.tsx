@@ -151,7 +151,7 @@ const EmployeeDashboard = () => {
               borderRadius: 7,
             }}
           >
-            <RedeemablePoints />
+            <RedeemablePoints points = {points} />
           </Box>
 
           {/* Clubs Section */}
@@ -178,7 +178,7 @@ const EmployeeDashboard = () => {
                 borderRadius: 7,
               }}
             >
-              <Clubs />
+              <Clubs points = {points}/>
             </Box>
           </Box>
           <Box sx={{display:'flex',flexDirection:'row',height:"25%",justifyContent:'space-between'}}>

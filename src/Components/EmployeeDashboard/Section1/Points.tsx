@@ -37,7 +37,6 @@ const Points: React.FC<PointProp> = ({ points }) => {
         </div>
       </div>
       <div>
-        <p>Redeemable Points: {redeemablePoints}</p>
       </div>
     </div>
   );
