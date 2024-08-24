@@ -7,7 +7,7 @@ import Clockin from "./Pages/Clockin";
 import PendingApproval from "./Pages/PendingApproval";
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { loginRequest } from "./auth/auth-config";
-import SendSecretKeyToBackend from "./auth/SendSecretKeytoBackend";
+
 
 function App() {
 
