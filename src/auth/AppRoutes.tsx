@@ -28,20 +28,35 @@ const AppRoutes: React.FC = () => {
     if (activeAccount) {
       const fetchRole = async () => {
         try {
+          // Call the new API endpoint for employee details
           const response = await axios.get(
-            "http://localhost:8080/api/v1/employee/role",
+            "http://localhost:8080/api/v1/employee/login-info",
             {
               params: { email: activeAccount.username }, // Pass email as query parameter
             }
           );
 
           // Destructure the data according to the response format
-          const { id, roleName } = response.data.data;
+          const {
+            id,
+            roleName,
+            firstName,
+            lastName,
+            duName,
+            photoUrl,
+            clubName,
+          } = response.data.data;
 
           setRole(roleName.toLowerCase()); // Ensure role is lowercase for consistency
 
-          // Store employee ID directly in localStorage
+          // Store employee details directly in localStorage
           localStorage.setItem("employeeId", id.toString());
+          localStorage.setItem("role", roleName.toLowerCase());
+          localStorage.setItem("firstName", firstName);
+          localStorage.setItem("lastName", lastName);
+          localStorage.setItem("duName", duName);
+          localStorage.setItem("photoUrl", photoUrl);
+          localStorage.setItem("clubName", clubName);
         } catch (error) {
           console.error("Error fetching role:", error);
         } finally {
