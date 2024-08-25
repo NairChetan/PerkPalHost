@@ -1,29 +1,19 @@
-import '../../EmployeeDashboard/Section1/points.css';
-import React, { useState, useEffect } from 'react';
-import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.png';
+import React from 'react';
 import CountUp from 'react-countup';
-import axios from 'axios';
+import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.png';
+import './points.css';
+import { PointData } from '../../CustomHooks/CustomHooks';
 
-const formatValue = (value: number) => {
-  return value >= 10000 ? `${Math.floor(value / 1000)}k` : value.toString();
+type PointProp = {
+  points: PointData | null;
 };
 
-const Points: React.FC = () => {
-  const [points, setPoints] = useState<number>(0);
+const Points: React.FC<PointProp> = ({ points }) => {
+  if (!points) {
+    return <p>No data available</p>; // Handle loading or error states if needed
+  }
 
-  useEffect(() => {
-    const fetchPoints = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/v1/employee');
-        const employeeData = response.data; // Adjust based on your API response structure
-        setPoints(employeeData.totalPoints);
-      } catch (error) {
-        console.error('Error fetching points:', error);
-      }
-    };
-
-    fetchPoints();
-  }, []);
+  const { totalPoints, redeemablePoints } = points;
 
   return (
     <div className='points-card'>
@@ -32,10 +22,10 @@ const Points: React.FC = () => {
           <p style={{ paddingLeft: '40px', fontSize: '15px', fontWeight: '600' }}>Points</p>
         </div>
         <div className='points-img'>
-          {points <= 20000 ? (
+          {totalPoints <= 90000 ? (
             <>
               <p style={{ fontSize: '50px', fontWeight: '700' }}>
-                <CountUp delay={0.2} end={points} formattingFn={formatValue} />
+                <CountUp delay={0.2} end={totalPoints} />
               </p>
               <img className='reward-icon' src={rewardsimg} alt='Reward Icon' />
             </>
@@ -45,6 +35,8 @@ const Points: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
+      <div>
       </div>
     </div>
   );
