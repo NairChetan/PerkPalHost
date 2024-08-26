@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 
 import DateRangePick from "../DateRange/DateRangePick";
 import Bar_Chart from "../Charts/Bar_Chart";
+import React, { useState, useEffect } from "react";
+import { addDays } from "date-fns";
 
 const chartOptions = {
   responsive: true,
@@ -35,6 +37,15 @@ const chartData = {
 };
 
 const DU_chart = () => {
+  // State to manage the selected date range
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(addDays(new Date(), 30));
+
+  // Callback to update the date range when it changes
+  const handleDateRangeChange = (start: Date, end: Date) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
   return (
     <>
       <Box
@@ -106,7 +117,7 @@ const DU_chart = () => {
             justifyContent: "flex-end",
           }}
         >
-          <DateRangePick />
+          <DateRangePick onDateRangeChange={handleDateRangeChange} />
         </Box>
       </Box>
       <Box
