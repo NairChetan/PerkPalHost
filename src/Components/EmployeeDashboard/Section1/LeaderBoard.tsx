@@ -56,7 +56,7 @@ const Leaderboard: React.FC = () => {
       }}
     >
       <Typography variant="h6" component="div" gutterBottom>
-        Meet Our Stars!
+        Stars This Year!
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <ScrollBox>
