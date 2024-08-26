@@ -6,9 +6,6 @@ import NewEntry from '../Section2/GetPoints/NewEntry';
 import { Link } from 'react-router-dom';
 
 const LogsAndGetPoints = () => {
-<<<<<<< HEAD
-  
-=======
 
 
   const [open, setOpen] = useState<boolean>(false);
@@ -17,7 +14,6 @@ const LogsAndGetPoints = () => {
       setOpen(false);
     };
 
->>>>>>> 8986e29a0f090a8b8ad42109675c844680d941f7
   return (
     <>
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between', width: {
