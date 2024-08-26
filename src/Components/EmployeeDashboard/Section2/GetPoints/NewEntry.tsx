@@ -46,8 +46,7 @@ const NewEntry = ({ addEntry }) => {
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       setError(null);
-
-      const employeeId = localStorage.getItem("employeeId");
+      const employeelocal = localStorage.getItem("employeeId");
       try {
         const entry = {
           categoryName: values.category,
@@ -55,8 +54,8 @@ const NewEntry = ({ addEntry }) => {
           description: values.description,
           duration: values.duration,
           proofUrl: proof ? proof.name : null,
-          createdBy: employeeId,  
-          employeeEmpId: employeeId, 
+          createdBy: employeelocal,  
+          employeeEmpId: employeelocal, 
         };
 
         await submitParticipation(entry);
