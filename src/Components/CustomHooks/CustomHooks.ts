@@ -1,19 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
- 
-const baseURL = "http://localhost:8080";
- 
-=======
 
 const baseURL = "http://localhost:8080";
 
->>>>>>> 2dcb3154d346ba0ea2af2d02565d67d053cecdaf
 export type PointData = {
   totalPoints: number;
   redeemablePoints: number;
 };
-<<<<<<< HEAD
 
 export type categoryNameFetch ={
   categoryName : string;
@@ -26,7 +19,6 @@ export type ActivityFiltered={
 
 }
  
-=======
 export type participationDataForPendingApproval = {
   employeeFirstName: string;
   employeeLastName: string;
@@ -36,16 +28,12 @@ export type participationDataForPendingApproval = {
   description: string;
 };
 
->>>>>>> 2dcb3154d346ba0ea2af2d02565d67d053cecdaf
 export const useFetchPoints = (endUrl: string) => {
   const [points, setPoints] = useState<PointData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | Error>(null);
-<<<<<<< HEAD
  
-=======
 
->>>>>>> 2dcb3154d346ba0ea2af2d02565d67d053cecdaf
   useEffect(() => {
     const fetchPoints = async () => {
       try {
@@ -59,7 +47,6 @@ export const useFetchPoints = (endUrl: string) => {
         setLoading(false);
       }
     };
-<<<<<<< HEAD
  
     fetchPoints();
   }, [endUrl]);
@@ -129,41 +116,11 @@ export const useFetchActivities = (categoryName: string) => {
         await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
       } catch (err) {
         setError(err);
-=======
-
-    fetchPoints();
-  }, [endUrl]);
-
-  return { points, loading, error };
-};
-export const useFetchParticipation = (endUrl: string) => {
-  const [participation, setParticipation] = useState<
-    participationDataForPendingApproval[] | null
-  >([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
-  useEffect(() => {
-    const fetchParticipation = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${baseURL}${endUrl}`);
-        const data: participationDataForPendingApproval[] = response.data.data;
-        setParticipation(data);
-      } catch (err) {
-        setError(err as Error);
->>>>>>> 2dcb3154d346ba0ea2af2d02565d67d053cecdaf
       } finally {
         setLoading(false);
       }
     };
-<<<<<<< HEAD
   
     return { submitParticipation, loading, error };
   };
   
-=======
-    fetchParticipation();
-  }, [endUrl]);
-  return { participation, loading, error };
-};
->>>>>>> 2dcb3154d346ba0ea2af2d02565d67d053cecdaf

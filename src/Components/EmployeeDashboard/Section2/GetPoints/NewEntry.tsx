@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useFetchCategories, useFetchActivities, useSubmitParticipation } from '../../../CustomHooks/CustomHooks'; // Assuming these hooks are in a hooks.js file
 import styles from './NewEntry.module.css';
 import { LuSave } from "react-icons/lu";
+import NewCategoryRequest from '../../Button/NewCategoryRequest';
 
 const NewEntry = ({ addEntry }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -170,6 +171,7 @@ const NewEntry = ({ addEntry }) => {
           />
           Attach supporting documents here
         </label>
+        <NewCategoryRequest/>
 
         <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit
