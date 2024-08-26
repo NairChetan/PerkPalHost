@@ -56,7 +56,7 @@ const Leaderboard: React.FC = () => {
       }}
     >
       <Typography variant="h6" component="div" gutterBottom>
-        Meet Our Stars!
+        Stars This Year!
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <ScrollBox>
@@ -81,7 +81,7 @@ const Leaderboard: React.FC = () => {
               <Typography variant="body1">{user.fullName}</Typography>
               <Typography variant="body2">{user.departmentName}</Typography>
             </Box>
-            <Typography variant="h6">{user.totalPoints}</Typography>
+            <Typography variant="h6">{Math.round(user.totalPoints)}</Typography>
           </Box>
         ))}
       </ScrollBox>
