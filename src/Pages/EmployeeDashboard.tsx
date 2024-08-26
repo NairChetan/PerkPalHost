@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { Box, Grid } from "@mui/material";
-import Navbar from "../Components/NavBar/Navbar";
-import Footer from "../Components/Footer/Footer";
-=======
 import { Box, Grid } from '@mui/material';
 import Navbar from '../Components/NavBar/Navbar';
 import Footer from '../Components/Footer/Footer';
@@ -12,7 +6,6 @@ import RedeemablePoints from '../Components/EmployeeDashboard/Section2/Redeemabl
 import Leaderboard from '../Components/EmployeeDashboard/Section1/LeaderBoard';
 import Clubs from '../Components/EmployeeDashboard/Section2/Clubs';
 import EdTabs from '../Components/EmployeeDashboard/Section4/Tabs/EdTabs';
->>>>>>> cd55e25a80b3f4459c316c90a3a1d93cd58b2827
 
 import { useFetchPoints } from '../Components/CustomHooks/CustomHooks';
 import KnowYourCategory from '../Components/EmployeeDashboard/Button/KnowYourCategory';
@@ -226,12 +219,13 @@ const EmployeeDashboard = () => {
             sx={{
               width: '100%',
               height: '100%',
+            
               backgroundColor: '#fff',
               display: 'flex',
               flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
-              pb: '2%',
+              pb: '4%',
             }}
           >
             <EdTabs />
