@@ -81,7 +81,7 @@ const Leaderboard: React.FC = () => {
               <Typography variant="body1">{user.fullName}</Typography>
               <Typography variant="body2">{user.departmentName}</Typography>
             </Box>
-            <Typography variant="h6">{user.totalPoints}</Typography>
+            <Typography variant="h6">{Math.round(user.totalPoints)}</Typography>
           </Box>
         ))}
       </ScrollBox>
