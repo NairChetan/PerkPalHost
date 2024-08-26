@@ -124,3 +124,42 @@ export const useFetchActivities = (categoryName: string) => {
     return { submitParticipation, loading, error };
   };
   
+  export const useFetchParticipation = (url: string) => {
+    const [participation, setParticipation] = useState<any[]>([]);
+    const [pagination, setPagination] = useState<{ totalPages: number; totalElements: number; size: number; number: number } | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+   
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${baseURL}${url}`);
+          console.log(response);
+          setParticipation(response.data.data.content);
+          setPagination({
+            totalPages: response.data.data.totalPages,
+            totalElements: response.data.data.totalElements,
+            size: response.data.data.size,
+            number: response.data.data.number
+          });
+          setLoading(false);
+        } catch (err) {
+          if (axios.isAxiosError(err) && err.response) {
+            // Log detailed error information
+            console.error("Error response data:", err.response.data);
+            console.error("Error response status:", err.response.status);
+            console.error("Error response headers:", err.response.headers);
+          } else {
+            // Log the error message
+            console.error("Error message:", err.message);
+          }
+          setError("Failed to fetch data.");
+          setLoading(false);
+        }
+      };
+   
+      fetchData();
+    }, [url]);
+   
+    return { participation, pagination, loading, error };
+  };

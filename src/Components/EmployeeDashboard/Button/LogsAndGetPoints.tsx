@@ -1,12 +1,9 @@
-import React from 'react'
-import { Box, Button,} from "@mui/material";
+import { Box, Button} from "@mui/material";
 import  { useState,  useRef } from 'react';
 import {IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import CloseIcon from "@mui/icons-material/Close";
 import NewEntry from '../Section2/GetPoints/NewEntry';
-
-
+import { Link } from 'react-router-dom';
 
 const LogsAndGetPoints = () => {
 
@@ -26,7 +23,10 @@ const LogsAndGetPoints = () => {
                     lg: "35%", // For large screens
                     xl: "35%", // For extra-large screens
                   },}}>
-                <Button sx={{
+                <Button
+                  component={Link}
+                  to="/clockin"
+                 sx={{
                    px: "5%",
                    width: {
                     xs: "100%", // For extra-small screens
