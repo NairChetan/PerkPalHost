@@ -355,7 +355,7 @@ const LeaderBoardAdmin = () => {
         </Typography>
       ) : (
         <ScrollBox>
-          {filteredData.slice(0, 7).map((user, index) => (
+          {filteredData.map((user, index) => (
             <Box
               key={index}
               sx={{
