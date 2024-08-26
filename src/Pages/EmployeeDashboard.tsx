@@ -6,15 +6,17 @@ import RedeemablePoints from '../Components/EmployeeDashboard/Section2/Redeemabl
 import Leaderboard from '../Components/EmployeeDashboard/Section1/LeaderBoard';
 import Clubs from '../Components/EmployeeDashboard/Section2/Clubs';
 import EdTabs from '../Components/EmployeeDashboard/Section4/Tabs/EdTabs';
-
+import {useState,useEffect} from 'react';
 import { useFetchPoints } from '../Components/CustomHooks/CustomHooks';
 import KnowYourCategory from '../Components/EmployeeDashboard/Button/KnowYourCategory';
 import LogsAndGetPoints from '../Components/EmployeeDashboard/Button/LogsAndGetPoints';
 
 const EmployeeDashboard = () => {
-  const { points, loading, error } = useFetchPoints('/api/v1/employee/3/get-points');
+  const localemp = localStorage.getItem("employeeId");
+  const [refresh,setRefresh] = useState<number>(0);
+  useEffect(()=>setRefresh(prev=>prev+1),[]);
+  const { points, loading, error } = useFetchPoints(`/api/v1/employee/${localemp}/get-points`,refresh);
   console.log(points);
-
   return (
     <>
       <Navbar />
@@ -219,12 +221,13 @@ const EmployeeDashboard = () => {
             sx={{
               width: '100%',
               height: '100%',
+            
               backgroundColor: '#fff',
               display: 'flex',
               flexDirection: 'column',
               boxShadow: 1,
               borderRadius: 7,
-              pb: '2%',
+              pb: '4%',
             }}
           >
             <EdTabs />
