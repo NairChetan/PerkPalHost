@@ -1,65 +1,22 @@
-// import React, { useState } from "react";
-// import { Box, Typography, Avatar, TextField } from "@mui/material";
+// import React, { useState, useEffect } from "react";
+// import {
+//   Box,
+//   Typography,
+//   Avatar,
+//   TextField,
+//   CircularProgress,
+// } from "@mui/material";
 // import { styled } from "@mui/system";
+// import axios from "axios"; // Import Axios for data fetching
 
-// const leaderboardData = [
-//   {
-//     rank: "1",
-//     name: "Sanjay Nair",
-//     points: 3150,
-//     du: "DU 2",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "2",
-//     name: "Alby Kennady",
-//     points: 3150,
-//     du: "DU 2",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "3",
-//     name: "John Doe",
-//     points: 3000,
-//     du: "DU 1",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "4",
-//     name: "Jane Smith",
-//     points: 2900,
-//     du: "DU 3",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "5",
-//     name: "User Five",
-//     points: 2800,
-//     du: "DU 2",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "6",
-//     name: "User Six",
-//     points: 2700,
-//     du: "DU 4",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "7",
-//     name: "User Seven",
-//     points: 2600,
-//     du: "DU 5",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-//   {
-//     rank: "8",
-//     name: "User Eight",
-//     points: 2500,
-//     du: "DU 6",
-//     avatar: "https://via.placeholder.com/40",
-//   },
-// ];
+// // Define the interface for the leaderboard data structure
+// interface LeaderboardUser {
+//   rank: string;
+//   name: string;
+//   points: number;
+//   du: string;
+//   avatar: string;
+// }
 
 // const ScrollBox = styled(Box)({
 //   flexGrow: 1,
@@ -83,8 +40,36 @@
 
 // const LeaderBoardAdmin = () => {
 //   const [search, setSearch] = useState("");
+//   const [leaderboardData, setLeaderboardData] = useState<LeaderboardUser[]>([]); // Use the defined interface here
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
 
-//   // Filter data based on search input
+//   useEffect(() => {
+//     const fetchLeaderboardData = async () => {
+//       try {
+//         const response = await axios.get("YOUR_API_ENDPOINT_HERE"); // Replace with your API endpoint
+
+//         const rankedData = response.data.map(
+//           (item: any, index: number): LeaderboardUser => ({
+//             rank: (index + 1).toString(),
+//             name: item.employeeName,
+//             points: item.totalPoints,
+//             du: item.departmentUnit,
+//             avatar: item.profileImage,
+//           })
+//         );
+
+//         setLeaderboardData(rankedData);
+//         setLoading(false);
+//       } catch (err) {
+//         setError("Failed to load leaderboard data.");
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchLeaderboardData();
+//   }, []);
+
 //   const filteredData = leaderboardData.filter((user) =>
 //     [user.name, user.rank, user.du, user.points.toString()].some((field) =>
 //       field.toLowerCase().includes(search.toLowerCase())
@@ -99,13 +84,12 @@
 //         padding: 2,
 //         color: "white",
 //         width: "100%",
-//         height: "100%", // Adjusted height to make it smaller
+//         height: "100%",
 //         margin: "0 auto",
 //         display: "flex",
 //         flexDirection: "column",
 //       }}
 //     >
-//       {/* Search Field */}
 //       <TextField
 //         label="Search"
 //         variant="outlined"
@@ -117,7 +101,7 @@
 //           backgroundColor: "white",
 //           borderRadius: 5,
 //           "& .MuiInputLabel-root": {
-//             color: "#111", // Default label color
+//             color: "#111",
 //           },
 //           "& .MuiOutlinedInput-root": {
 //             "& fieldset": {
@@ -138,45 +122,63 @@
 //             },
 //           },
 //           "& .MuiInputLabel-root.Mui-focused": {
-//             color: "gray", // Color when focused
+//             color: "gray",
 //             borderRadius: 5,
 //           },
 //         }}
 //       />
-//       <ScrollBox>
-//         {filteredData.slice(0, 7).map((user, index) => (
-//           <Box
-//             key={index}
-//             sx={{
-//               display: "flex",
-//               alignItems: "center",
-//               backgroundColor: "#5D1049",
-//               borderRadius: 2,
-//               padding: 1,
-//               marginBottom: 1,
-//             }}
-//           >
-//             <Typography
-//               variant="h6"
+
+//       {loading ? (
+//         <Box
+//           sx={{
+//             display: "flex",
+//             justifyContent: "center",
+//             alignItems: "center",
+//             height: "100%",
+//           }}
+//         >
+//           <CircularProgress color="inherit" />
+//         </Box>
+//       ) : error ? (
+//         <Typography variant="h6" color="error" sx={{ textAlign: "center" }}>
+//           {error}
+//         </Typography>
+//       ) : (
+//         <ScrollBox>
+//           {filteredData.slice(0, 7).map((user, index) => (
+//             <Box
+//               key={index}
 //               sx={{
-//                 pr: "5%",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 backgroundColor: "#5D1049",
+//                 borderRadius: 2,
+//                 padding: 1,
+//                 marginBottom: 1,
 //               }}
 //             >
-//               {user.rank}
-//             </Typography>
-//             <Avatar
-//               src={user.avatar}
-//               alt={user.name}
-//               sx={{ width: 40, height: 40, marginRight: 2 }}
-//             />
-//             <Box sx={{ flexGrow: 1 }}>
-//               <Typography variant="body1">{user.name}</Typography>
-//               <Typography variant="body2">{user.du}</Typography>
+//               <Typography
+//                 variant="h6"
+//                 sx={{
+//                   pr: "5%",
+//                 }}
+//               >
+//                 {user.rank}
+//               </Typography>
+//               <Avatar
+//                 src={user.avatar}
+//                 alt={user.name}
+//                 sx={{ width: 40, height: 40, marginRight: 2 }}
+//               />
+//               <Box sx={{ flexGrow: 1 }}>
+//                 <Typography variant="body1">{user.name}</Typography>
+//                 <Typography variant="body2">{user.du}</Typography>
+//               </Box>
+//               <Typography variant="h6">{user.points}</Typography>
 //             </Box>
-//             <Typography variant="h6">{user.points}</Typography>
-//           </Box>
-//         ))}
-//       </ScrollBox>
+//           ))}
+//         </ScrollBox>
+//       )}
 //     </Box>
 //   );
 // };
@@ -195,12 +197,13 @@ import { styled } from "@mui/system";
 import axios from "axios"; // Import Axios for data fetching
 
 // Define the interface for the leaderboard data structure
-interface LeaderboardUser {
-  rank: string;
-  name: string;
-  points: number;
-  du: string;
-  avatar: string;
+interface EmployeeSummary {
+  employeeId: number;
+  firstName: string;
+  lastName: string;
+  duDepartmentName: string;
+  totalPoints: number;
+  photoUrl: string;
 }
 
 const ScrollBox = styled(Box)({
@@ -225,22 +228,39 @@ const ScrollBox = styled(Box)({
 
 const LeaderBoardAdmin = () => {
   const [search, setSearch] = useState("");
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardUser[]>([]); // Use the defined interface here
+  const [leaderboardData, setLeaderboardData] = useState<EmployeeSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        const response = await axios.get("YOUR_API_ENDPOINT_HERE"); // Replace with your API endpoint
+        // Get the current year
+        const currentYear = new Date().getFullYear();
 
+        // Set the date range from January 1st to December 31st of the current year
+        const initialDate = `${currentYear}-01-01T00:00:00`;
+        const endDate = `${currentYear}-12-31T23:59:59`;
+        // Replace with your API endpoint
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/employee/api/v1/employees/by-points",
+          {
+            params: {
+              initialDate,
+              endDate,
+            },
+          }
+        );
+
+        // Map API response to component state
         const rankedData = response.data.map(
-          (item: any, index: number): LeaderboardUser => ({
-            rank: (index + 1).toString(),
-            name: item.employeeName,
-            points: item.totalPoints,
-            du: item.departmentUnit,
-            avatar: item.profileImage,
+          (item: any): EmployeeSummary => ({
+            employeeId: item.employeeId,
+            firstName: item.firstName,
+            lastName: item.lastName,
+            duDepartmentName: item.duDepartmentName,
+            totalPoints: Math.round(item.totalPoints),
+            photoUrl: item.photoUrl,
           })
         );
 
@@ -255,10 +275,14 @@ const LeaderBoardAdmin = () => {
     fetchLeaderboardData();
   }, []);
 
+  // Filter data based on search input
   const filteredData = leaderboardData.filter((user) =>
-    [user.name, user.rank, user.du, user.points.toString()].some((field) =>
-      field.toLowerCase().includes(search.toLowerCase())
-    )
+    [
+      user.firstName,
+      user.lastName,
+      user.duDepartmentName,
+      user.totalPoints.toString(),
+    ].some((field) => field.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
@@ -275,6 +299,7 @@ const LeaderBoardAdmin = () => {
         flexDirection: "column",
       }}
     >
+      {/* Search Field */}
       <TextField
         label="Search"
         variant="outlined"
@@ -286,7 +311,7 @@ const LeaderBoardAdmin = () => {
           backgroundColor: "white",
           borderRadius: 5,
           "& .MuiInputLabel-root": {
-            color: "#111",
+            color: "#111", // Default label color
           },
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
@@ -307,7 +332,7 @@ const LeaderBoardAdmin = () => {
             },
           },
           "& .MuiInputLabel-root.Mui-focused": {
-            color: "gray",
+            color: "gray", // Color when focused
             borderRadius: 5,
           },
         }}
@@ -348,18 +373,20 @@ const LeaderBoardAdmin = () => {
                   pr: "5%",
                 }}
               >
-                {user.rank}
+                {index + 1} {/* Adjust to show rank */}
               </Typography>
               <Avatar
-                src={user.avatar}
-                alt={user.name}
+                src={user.photoUrl}
+                alt={`${user.firstName} ${user.lastName}`}
                 sx={{ width: 40, height: 40, marginRight: 2 }}
               />
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="body1">{user.name}</Typography>
-                <Typography variant="body2">{user.du}</Typography>
+                <Typography variant="body1">
+                  {user.firstName} {user.lastName}
+                </Typography>
+                <Typography variant="body2">{user.duDepartmentName}</Typography>
               </Box>
-              <Typography variant="h6">{user.points}</Typography>
+              <Typography variant="h6">{user.totalPoints}</Typography>
             </Box>
           ))}
         </ScrollBox>
