@@ -28,7 +28,7 @@ export type participationDataForPendingApproval = {
   description: string;
 };
 
-export const useFetchPoints = (endUrl: string) => {
+export const useFetchPoints = (endUrl: string,refresh:number) => {
   const [points, setPoints] = useState<PointData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | Error>(null);
@@ -49,7 +49,7 @@ export const useFetchPoints = (endUrl: string) => {
     };
  
     fetchPoints();
-  }, [endUrl]);
+  }, [endUrl,refresh]);
  
   return { points, loading, error };
 };
