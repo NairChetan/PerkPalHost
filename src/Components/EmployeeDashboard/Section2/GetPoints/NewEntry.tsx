@@ -47,6 +47,7 @@ const NewEntry = ({ addEntry }) => {
       setLoading(true);
       setError(null);
 
+      const employeeId = localStorage.getItem("employeeId");
       try {
         const entry = {
           categoryName: values.category,
@@ -54,8 +55,8 @@ const NewEntry = ({ addEntry }) => {
           description: values.description,
           duration: values.duration,
           proofUrl: proof ? proof.name : null,
-          createdBy: 3,  
-          employeeEmpId: 3, 
+          createdBy: employeeId,  
+          employeeEmpId: employeeId, 
         };
 
         await submitParticipation(entry);
@@ -171,7 +172,7 @@ const NewEntry = ({ addEntry }) => {
           />
           Attach supporting documents here
         </label>
-        <NewCategoryRequest/>
+        {/* <NewCategoryRequest/> */}
 
         <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit

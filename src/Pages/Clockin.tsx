@@ -41,7 +41,6 @@ const Clockin: React.FC = () => {
       <Navbar />
       <div className={styles.clockinContainer}>
         <UserLogin entries={entries} selectedDate={selectedDate} />
-        {/* <NewEntry addEntry={addEntry} /> */}
         <Calendar entries={entries} setSelectedDate={setSelectedDate} />
       </div>
       <Footer />
