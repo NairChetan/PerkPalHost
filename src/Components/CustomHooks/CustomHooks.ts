@@ -124,7 +124,7 @@ export const useFetchActivities = (categoryName: string) => {
     return { submitParticipation, loading, error };
   };
   
-  export const useFetchParticipation = (url: string) => {
+  export const useFetchParticipation = (url: string,refreshPage:number) => {
     const [participation, setParticipation] = useState<any[]>([]);
     const [pagination, setPagination] = useState<{ totalPages: number; totalElements: number; size: number; number: number } | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -159,7 +159,36 @@ export const useFetchActivities = (categoryName: string) => {
       };
    
       fetchData();
-    }, [url]);
+    }, [url,refreshPage]);
    
     return { participation, pagination, loading, error };
+  };
+  export const usePostApprovalStatus = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+  
+    const postApprovalStatus = async (id: number, status: string, remarks: string | null) => {
+      try {
+        setLoading(true);
+        const response = await axios.put(`${baseURL}/api/v1/participation/approval-status-remark/${id}`, {
+          approvalStatus: status,
+          remarks: remarks
+        });
+        setLoading(false);
+        return response.data;
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          console.error("Error response data:", err.response.data);
+          console.error("Error response status:", err.response.status);
+          console.error("Error response headers:", err.response.headers);
+        } else {
+          console.error("Error message:", err.message);
+        }
+        setError("Failed to post approval status.");
+        setLoading(false);
+        throw err;
+      }
+    };
+  
+    return { postApprovalStatus, loading, error };
   };
