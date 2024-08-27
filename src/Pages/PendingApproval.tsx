@@ -8,26 +8,18 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {
-  Typography,
-  Button,
-  Grid,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material";
+import { Typography, Button, Grid, Checkbox, FormControlLabel, CircularProgress } from "@mui/material";
 import RemarksModal from "../Components/PendingApproval/RemarksModal"; // Adjust the path accordingly
-import {
-  useFetchParticipation,
-  usePostApprovalStatus,
-} from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
+import { useFetchParticipation, usePostApprovalStatus } from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
 
 const PendingApproval = () => {
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
   const [pageSize] = useState(4); // Page size
-  const[refreshPage,setRefreshPage] = useState<number>(0);
+  const [refreshPage, setRefreshPage] = useState<number>(0);
   const { participation, pagination, loading, error } = useFetchParticipation(
-    `/api/v1/participation/pending-approval?pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=participationDate&sortDir=desc`
-  ,refreshPage);
+    `/api/v1/participation/pending-approval?pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=participationDate&sortDir=desc`,
+    refreshPage
+  );
   const { postApprovalStatus } = usePostApprovalStatus(); // Custom hook for posting
 
   const totalPages = pagination ? pagination.totalPages : 1;
@@ -36,21 +28,22 @@ const PendingApproval = () => {
   const [selectedPanels, setSelectedPanels] = useState<number[]>([]); // Track selected panels by id
   const [selectAll, setSelectAll] = useState(false);
   const [remarksModalOpen, setRemarksModalOpen] = useState(false);
-  const [selectedParticipation, setSelectedParticipation] = useState<
-    number | null
-  >(null);
-
+  const [selectedParticipation, setSelectedParticipation] = useState<number | null>(null);
+  const [actionLoading, setActionLoading] = useState<boolean>(false); // State for action loading
 
   const handleChange = (panelId: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? `panel${panelId}` : false);
   };
 
   const handleApprove = async (id: number) => {
+    setActionLoading(true); // Start loading animation
     try {
       await postApprovalStatus(id, "approved", null);
-      // Optionally refetch participation data here if needed
+      setRefreshPage((prev) => prev + 1); // Refresh page after action
     } catch (error) {
       console.error("Approval failed", error);
+    } finally {
+      setActionLoading(false); // Stop loading animation
     }
   };
 
@@ -61,12 +54,15 @@ const PendingApproval = () => {
 
   const handleSubmitRemarks = async (remarks: string) => {
     if (selectedParticipation !== null) {
+      setActionLoading(true); // Start loading animation
       try {
         await postApprovalStatus(selectedParticipation, "rejected", remarks);
-        // Optionally refetch participation data here if needed
+        setRefreshPage((prev) => prev + 1); // Refresh page after action
         setRemarksModalOpen(false); // Close modal after submission
       } catch (error) {
         console.error("Rejection failed", error);
+      } finally {
+        setActionLoading(false); // Stop loading animation
       }
     }
   };
@@ -79,15 +75,13 @@ const PendingApproval = () => {
     event.stopPropagation(); // Prevents the accordion from expanding
     if (action === "approve") {
       handleApprove(id);
-      setRefreshPage((prev)=>prev+1);
     } else if (action === "reject") {
       handleReject(id);
-      setRefreshPage((prev)=>prev+1)
     }
   };
 
   const handleSelectAll = () => {
-    const allPanelIds = (participation || []).map(item => item.id);
+    const allPanelIds = (participation || []).map((item) => item.id);
     if (selectAll) {
       setSelectedPanels([]); // Deselect all
     } else {
@@ -112,8 +106,12 @@ const PendingApproval = () => {
     setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
   };
 
-  if (loading) {
-    return <Typography>Loading...</Typography>;
+  if (loading || actionLoading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
@@ -207,6 +205,9 @@ const PendingApproval = () => {
                     <Grid item xs={12} sm={2} textAlign="center">
                       <Typography>{item.duration} minutes</Typography>
                     </Grid>
+                    <Grid item xs={12} sm={2} textAlign="center">
+                      <Typography>{new Date(item.participationDate).toLocaleDateString("en-GB")}</Typography>
+                    </Grid>
                     <Grid item xs={12} sm={1} textAlign="right">
                       {expanded !== `panel${item.id}` && (
                         <>
@@ -265,23 +266,37 @@ const PendingApproval = () => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "center",
+                alignItems: "center",
                 width: "100%",
                 mt: 2,
               }}
             >
-              <Button disabled={currentPage === 0} onClick={handlePrevPage}>
+              <Button
+                variant="contained"
+                onClick={handlePrevPage}
+                disabled={currentPage === 0}
+                sx={{ mr: 1 }}
+              >
                 Previous
               </Button>
-              <Typography>
+              <Typography variant="body1">
                 Page {currentPage + 1} of {totalPages}
               </Typography>
-              <Button onClick={handleNextPage}>Next</Button>
+              <Button
+                variant="contained"
+                onClick={handleNextPage}
+                disabled={currentPage + 1 >= totalPages}
+                sx={{ ml: 1 }}
+              >
+                Next
+              </Button>
             </Box>
           </Box>
         </Box>
       </Box>
       <Footer />
+
       <RemarksModal
         open={remarksModalOpen}
         onClose={() => setRemarksModalOpen(false)}
