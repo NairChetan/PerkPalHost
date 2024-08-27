@@ -16,6 +16,7 @@ import {
   useMsal,
 } from "@azure/msal-react";
 import LogIn_Page from "../Pages/LogIn_Page";
+import Admin_Category from "../Pages/Admin_Category";
 
 const AppRoutes: React.FC = () => {
   const { instance } = useMsal();
@@ -83,6 +84,7 @@ const AppRoutes: React.FC = () => {
               <>
                 <Route path="/admin-dashboard" element={<Admin_Dashboard />} />
                 <Route path="/pending-approval" element={<PendingApproval />} />
+                <Route path="/category-edit" element={<Admin_Category />} />
                 <Route path="*" element={<Navigate to="/admin-dashboard" />} />
               </>
             )}

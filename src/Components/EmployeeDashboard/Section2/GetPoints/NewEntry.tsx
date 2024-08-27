@@ -63,7 +63,7 @@ const NewEntry = ({ addEntry }) => {
         resetForm();
         setProof(null);
       } catch (err) {
-        setError('Failed to submit participation. Please try again.');
+        setError('');
       } finally {
         setLoading(false);
       }
