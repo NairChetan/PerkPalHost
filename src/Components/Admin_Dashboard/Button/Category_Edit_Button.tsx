@@ -1,7 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import CategoriesTable from "../../Admin_Category/CategoriesTable";
 import { Link } from "react-router-dom";
 
 const Category_Edit_Button = () => {
