@@ -1,12 +1,14 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { Link } from "react-router-dom";
 
 const Pending_Approval_Button = () => {
   return (
     <>
       <Button
         variant="contained"
+        component={Link}
+        to="/pending-approval"
         sx={{
           px: "5%",
           width: "100%",
