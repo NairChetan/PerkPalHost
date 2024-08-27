@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -28,7 +28,7 @@ const CategoryRequest = () => {
       expanded={expanded === `panel${id}`}
       sx={{
         backgroundColor: "#797878",
-        color:"white",
+        color: "white",
         borderRadius: "20px",
         marginBottom: "10px",
         "&:before": {
@@ -37,16 +37,12 @@ const CategoryRequest = () => {
       }}
     >
       <AccordionSummary
-  sx={{
-    justifyContent: "flex-start",
-    alignItems: "center",  // Vertically centers content in the row
-   
-  }}
->
-        <IconButton
-          onClick={handleExpandClick(`panel${id}`)}
-          color="inherit"
-        >
+        sx={{
+          justifyContent: "flex-start",
+          alignItems: "center", // Vertically centers content in the row
+        }}
+      >
+        <IconButton onClick={handleExpandClick(`panel${id}`)} color="inherit">
           <ExpandMoreIcon />
         </IconButton>
         <Typography sx={{ width: "30%", flexShrink: 1, marginLeft: "8px" }}>
@@ -55,16 +51,18 @@ const CategoryRequest = () => {
         <Typography sx={{ width: "30%", flexShrink: 0 }}>Category</Typography>
         <Typography sx={{ width: "30%", flexShrink: 0 }}>Activity</Typography>
         <IconButton color="success" sx={{ padding: 0 }}>
-           <CheckCircleIcon   sx={{ fontSize: 28}}  />
+          <CheckCircleIcon sx={{ fontSize: 28 }} />
         </IconButton>
-        <IconButton color="error" >
-          <CancelIcon    sx={{ fontSize: 28}}/>
+        <IconButton color="error">
+          <CancelIcon sx={{ fontSize: 28 }} />
         </IconButton>
       </AccordionSummary>
       <AccordionDetails>
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box width="45%">
-            <Typography variant="body1">Description of the category request goes here.</Typography>
+            <Typography variant="body1">
+              Description of the category request goes here.
+            </Typography>
           </Box>
           <Box width="45%">
             <TextField label="Set Points" variant="outlined" fullWidth />

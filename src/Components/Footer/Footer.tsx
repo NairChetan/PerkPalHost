@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/system/Box";
 import backgroundImage from "../../assets/Images/Sin City Red.jpg";
 import exp_logo from "../../assets/Images/Group 32 (1).png";

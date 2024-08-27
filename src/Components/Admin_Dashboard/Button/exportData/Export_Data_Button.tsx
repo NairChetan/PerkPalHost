@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import CloseIcon from "@mui/icons-material/Close";
