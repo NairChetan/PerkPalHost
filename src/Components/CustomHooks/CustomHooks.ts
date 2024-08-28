@@ -106,16 +106,34 @@ export const useFetchActivities = (categoryName: string) => {
     return { activities, loading, error };
 };
 
+  // export const useSubmitParticipation = () => {
+  //   const [loading, setLoading] = useState(false);
+  //   const [error, setError] = useState(null);
+  
+  //   const submitParticipation = async (participationData :string) => {
+  //     try {
+  //       setLoading(true);
+  //       await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
+  //     } catch (err) {
+  //       setError(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  
+  //   return { submitParticipation, loading, error };
+  // };
+
   export const useSubmitParticipation = () => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
   
-    const submitParticipation = async (participationData :string) => {
+    const submitParticipation = async (participationData: object) => {
       try {
         setLoading(true);
         await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
-      } catch (err) {
-        setError(err);
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'An error occurred');
       } finally {
         setLoading(false);
       }

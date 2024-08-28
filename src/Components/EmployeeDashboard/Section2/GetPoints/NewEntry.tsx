@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useFetchCategories, useFetchActivities, useSubmitParticipation } from '../../../CustomHooks/CustomHooks'; // Assuming these hooks are in a hooks.js file
+import { useFetchCategories, useFetchActivities, useSubmitParticipation } from '../../../CustomHooks/CustomHooks';
 import styles from './NewEntry.module.css';
 import { LuSave } from "react-icons/lu";
-import NewCategoryRequest from '../../Button/NewCategoryRequest';
 
-const NewEntry = ({ addEntry }) => {
+const NewEntry = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
-  console.log(selectedCategory);
-
   const [proof, setProof] = useState<File | null>(null);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
   const { activities, loading: activitiesLoading, error: activitiesError } = useFetchActivities(selectedCategory);
-  const { submitParticipation } = useSubmitParticipation();
-    console.log(activities);
+  const { submitParticipation, loading: submitLoading, error: submitError } = useSubmitParticipation();
 
   useEffect(() => {
     if (categoriesError) setError(categoriesError);
@@ -39,11 +34,11 @@ const NewEntry = ({ addEntry }) => {
       activity: Yup.string().required('Activity is required'),
       description: Yup.string().required('Description is required'),
       duration: Yup.number()
-      .typeError('Duration must be a number')
-      .positive('Duration must be greater than zero')
-      .integer('Duration must be an integer')
-      .required('Duration is required'),
-}),
+        .typeError('Duration must be a number')
+        .positive('Duration must be greater than zero')
+        .integer('Duration must be an integer')
+        .required('Duration is required'),
+    }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       setError(null);
@@ -55,18 +50,19 @@ const NewEntry = ({ addEntry }) => {
           description: values.description,
           duration: values.duration,
           proofUrl: proof ? proof.name : null,
-          createdBy: employeelocal,  
-          employeeEmpId: employeelocal , 
+          createdBy: employeelocal,
+          employeeEmpId: employeelocal,
         };
 
         await submitParticipation(entry);
-        addEntry(entry);
+        // Optionally: handle success action here
         resetForm();
         setProof(null);
-      } catch (err) {
-        setError('');
-      } finally {
         setSuccessMessage('Submitted Successfully');
+      } catch (err) {
+        console.log(err);
+        setError('Error submitting your entry');
+      } finally {
         setLoading(false);
       }
     },
@@ -95,6 +91,7 @@ const NewEntry = ({ addEntry }) => {
 
       {loading && <p className={styles.loading}>Submitting your entry...</p>}
       {error && <p className={styles.error}>{error}</p>}
+      {successMessage && <p className={styles.success}>{successMessage}</p>}
 
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <select
@@ -147,18 +144,18 @@ const NewEntry = ({ addEntry }) => {
           <div className={styles.error}>{formik.errors.description}</div>
         ) : null}
 
-    <input
-    className={styles.input}
-    name="duration"
-    type="number"
-    placeholder="Duration in minutes"
-    onChange={(e) => {
-        const value = e.target.value;
-        formik.setFieldValue('duration', value ? parseInt(value, 10) : ''); // Convert value to number
-    }}
-    onBlur={formik.handleBlur}
-    value={formik.values.duration}
-    />
+        <input
+          className={styles.input}
+          name="duration"
+          type="number"
+          placeholder="Duration in minutes"
+          onChange={(e) => {
+            const value = e.target.value;
+            formik.setFieldValue('duration', value ? parseInt(value, 10) : '');
+          }}
+          onBlur={formik.handleBlur}
+          value={formik.values.duration}
+        />
         {formik.touched.duration && formik.errors.duration ? (
           <div className={styles.error}>{formik.errors.duration}</div>
         ) : null}
@@ -173,9 +170,8 @@ const NewEntry = ({ addEntry }) => {
           />
           Attach supporting documents here
         </label>
-      {/* <NewCategoryRequest/> */}
 
-        <button type="submit" className={styles.submit} disabled={loading}>
+        <button type="submit" className={styles.submit} disabled={loading || submitLoading}>
           <LuSave className={styles.icon} /> Submit
         </button>
       </form>
