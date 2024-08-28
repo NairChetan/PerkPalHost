@@ -30,7 +30,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
               <th>Category</th>
               <th>Activity</th>
               <th>Description</th>
-              <th>Duration (Hrs)</th>
+              <th>Duration (Min)</th>
               <th>Remarks</th>
               <th>Status</th>
               <th>Proof</th>

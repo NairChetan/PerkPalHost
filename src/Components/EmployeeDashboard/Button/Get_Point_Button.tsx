@@ -4,9 +4,11 @@ import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import NewEntry from "../Section2/GetPoints/NewEntry";
 
+
 const Category_Request_Button = () => {
   const [open, setOpen] = useState<boolean>(false);
   const refOne = useRef<HTMLDivElement>(null);
+  
 
   const handleClose = () => {
     setOpen(false);
