@@ -1,6 +1,7 @@
 
 .Log{
     text-align: left;
+    padding-bottom: 5px;
   }
   .table {
       width: 100%;
@@ -24,6 +25,13 @@
   
   
     /* Responsive */
+
+    /* Responsive */
+.tableWrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 30vh; /* Adjust this height as needed */
+}
     @media (max-width: 769px) {
       .tableWrapper {
         overflow-x: auto;

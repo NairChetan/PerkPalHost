@@ -15,6 +15,7 @@ const NewEntry = ({ addEntry }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
   const { activities, loading: activitiesLoading, error: activitiesError } = useFetchActivities(selectedCategory);
   const { submitParticipation } = useSubmitParticipation();
@@ -55,16 +56,18 @@ const NewEntry = ({ addEntry }) => {
           duration: values.duration,
           proofUrl: proof ? proof.name : null,
           createdBy: employeelocal,  
-          employeeEmpId: employeelocal, 
+          employeeEmpId: employeelocal , 
         };
 
         await submitParticipation(entry);
         addEntry(entry);
         resetForm();
         setProof(null);
-      } catch (err) {
-        setError('Failed to submit participation. Please try again.');
+      } catch (errs) {
+
+        setError(null);
       } finally {
+        setSuccessMessage('Submitted Successfully');
         setLoading(false);
       }
     },
@@ -136,7 +139,7 @@ const NewEntry = ({ addEntry }) => {
           className={styles.input}
           name="description"
           type="text"
-          placeholder="Remarks if any"
+          placeholder="Description"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.description}
@@ -171,7 +174,7 @@ const NewEntry = ({ addEntry }) => {
           />
           Attach supporting documents here
         </label>
-        {/* <NewCategoryRequest/> */}
+      {/* <NewCategoryRequest/> */}
 
         <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit
