@@ -8,13 +8,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Typography, Button, Grid, Checkbox, FormControlLabel, CircularProgress } from "@mui/material";
+import { Typography, Button, Grid, Checkbox, FormControlLabel, CircularProgress, MenuItem, Select } from "@mui/material";
 import RemarksModal from "../Components/PendingApproval/RemarksModal"; // Adjust the path accordingly
 import { useFetchParticipation, usePostApprovalStatus } from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
 
 const PendingApproval = () => {
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
-  const [pageSize] = useState(4); // Page size
+  const [pageSize, setPageSize] = useState(4); // Default page size is 4
   const [refreshPage, setRefreshPage] = useState<number>(0);
   const { participation, pagination, loading, error } = useFetchParticipation(
     `/api/v1/participation/pending-approval?pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=participationDate&sortDir=desc`,
@@ -38,7 +38,8 @@ const PendingApproval = () => {
   const handleApprove = async (id: number) => {
     setActionLoading(true); // Start loading animation
     try {
-      await postApprovalStatus(id, "approved", null);
+      const currentDate = new Date().toISOString(); // Generate the current date and time
+      await postApprovalStatus(id, "approved", null, currentDate); // Pass current date
       setRefreshPage((prev) => prev + 1); // Refresh page after action
     } catch (error) {
       console.error("Approval failed", error);
@@ -56,7 +57,8 @@ const PendingApproval = () => {
     if (selectedParticipation !== null) {
       setActionLoading(true); // Start loading animation
       try {
-        await postApprovalStatus(selectedParticipation, "rejected", remarks);
+        const currentDate = new Date().toISOString(); 
+        await postApprovalStatus(selectedParticipation, "rejected", remarks,currentDate);
         setRefreshPage((prev) => prev + 1); // Refresh page after action
         setRemarksModalOpen(false); // Close modal after submission
       } catch (error) {
@@ -104,6 +106,11 @@ const PendingApproval = () => {
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
+  };
+
+  const handlePageSizeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPageSize(event.target.value as number);
+    setCurrentPage(0); // Reset to first page when page size changes
   };
 
   if (loading || actionLoading) {
@@ -169,6 +176,30 @@ const PendingApproval = () => {
                 label="Select All"
               />
             </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                width: "100%",
+                mb: 2,
+              }}
+            >
+              <Typography variant="body1" sx={{ mr: 2,mt:2 }}>
+                Show:
+              </Typography>
+              <Select
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                sx={{ width: 80 }}
+              >
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+              </Select>
+            </Box>
+
             {participation?.map((item) => (
               <Accordion
                 key={item.id}
@@ -231,72 +262,56 @@ const PendingApproval = () => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
-                    {item.description || "No additional details"}
-                  </Typography>
-                  {expanded === `panel${item.id}` && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        mt: 2,
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        color="success"
-                        sx={{ ml: 1 }}
-                        onClick={() => handleApprove(item.id)}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        sx={{ ml: 1 }}
-                        onClick={() => handleReject(item.id)}
-                      >
-                        Reject
-                      </Button>
-                    </Box>
-                  )}
+                  <Typography>Description: {item.description}</Typography>
+                  <Typography>Proof URL: {item.proofUrl}</Typography>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ mr: 1 }}
+                    onClick={() => handleApprove(item.id)}
+                  >
+                    Approve
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleReject(item.id)}
+                  >
+                    Reject
+                  </Button>
                 </AccordionDetails>
               </Accordion>
             ))}
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
+                justifyContent: "space-between",
                 mt: 2,
+                width: "100%",
               }}
             >
               <Button
                 variant="contained"
                 onClick={handlePrevPage}
                 disabled={currentPage === 0}
-                sx={{ mr: 1 }}
               >
-                Previous
+                Previous Page
               </Button>
-              <Typography variant="body1">
-                Page {currentPage + 1} of {totalPages}
+              <Typography>
+                Page {currentPage+1} of {totalPages}
               </Typography>
               <Button
                 variant="contained"
                 onClick={handleNextPage}
-                disabled={currentPage + 1 >= totalPages}
-                sx={{ ml: 1 }}
+                disabled={currentPage === totalPages - 1}
               >
-                Next
+                Next Page
               </Button>
             </Box>
           </Box>
         </Box>
       </Box>
       <Footer />
-
       <RemarksModal
         open={remarksModalOpen}
         onClose={() => setRemarksModalOpen(false)}

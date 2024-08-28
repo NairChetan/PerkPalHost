@@ -167,12 +167,13 @@ export const useFetchActivities = (categoryName: string) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
   
-    const postApprovalStatus = async (id: number, status: string, remarks: string | null) => {
+    const postApprovalStatus = async (id: number, status: string, remarks: string | null,approvalDate:string) => {
       try {
         setLoading(true);
         const response = await axios.put(`${baseURL}/api/v1/participation/approval-status-remark/${id}`, {
           approvalStatus: status,
-          remarks: remarks
+          remarks: remarks,
+          approvalDate: approvalDate
         });
         setLoading(false);
         return response.data;
