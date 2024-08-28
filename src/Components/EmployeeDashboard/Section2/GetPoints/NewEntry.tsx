@@ -63,9 +63,8 @@ const NewEntry = ({ addEntry }) => {
         addEntry(entry);
         resetForm();
         setProof(null);
-      } catch (errs) {
-
-        setError(null);
+      } catch (err) {
+        setError('');
       } finally {
         setSuccessMessage('Submitted Successfully');
         setLoading(false);

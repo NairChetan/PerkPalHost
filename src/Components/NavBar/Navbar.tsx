@@ -1,17 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/system/Box";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
 import backgroundImage from "../../assets/Images/Sin City Red.jpg";
 import logo from "../../assets/Icons/perkpal  white logo.png";
 import { useMsal } from "@azure/msal-react";
 import { Button } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 const Navbar = () => {
   const { instance } = useMsal();
   const activeAccount = instance.getActiveAccount();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
   const [userData, setUserData] = useState({
@@ -31,6 +32,19 @@ const Navbar = () => {
       }, 2000); // Increase delay to 2 seconds
     } catch (error) {
       console.error("Logout failed:", error);
+    }
+  };
+
+  const handleHomeClick = () => {
+    const role = localStorage.getItem("role");
+
+    // Redirect based on the role
+    if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else if (role === "employee") {
+      navigate("/employee-dashboard");
+    } else {
+      navigate("/"); // Default redirect
     }
   };
 
@@ -88,6 +102,19 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
+          <Typography
+            sx={{
+              color: "#fff", // Set the font color
+              mr: 2, // Adds margin-right space between the avatar and the text
+            }}
+          >
+            <HomeIcon
+              sx={{ fontSize: "40px" }} // Adjust the fontSize for the icon
+              onClick={handleHomeClick} // Add the click handler
+              style={{ cursor: "pointer" }} // Optional: Show a pointer cursor
+            />{" "}
+          </Typography>
+
           {avatarSrc && (
             <Avatar
               src={avatarSrc}
@@ -174,7 +201,6 @@ const Navbar = () => {
               {userData.duName} {/* Using state value */}
             </Typography>
           </Box>
-
           <Button
             variant="outlined"
             onClick={handleLogoutRedirect}

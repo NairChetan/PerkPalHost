@@ -1,4 +1,4 @@
-import { Tabs, Tab, Box, Button, IconButton, Typography } from "@mui/material";
+import { Tabs, Tab, Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import YearSelector from "./YearSelector";
