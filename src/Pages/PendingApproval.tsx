@@ -38,7 +38,8 @@ const PendingApproval = () => {
   const handleApprove = async (id: number) => {
     setActionLoading(true); // Start loading animation
     try {
-      await postApprovalStatus(id, "approved", null);
+      const currentDate = new Date().toISOString(); // Generate the current date and time
+      await postApprovalStatus(id, "approved", null, currentDate); // Pass current date
       setRefreshPage((prev) => prev + 1); // Refresh page after action
     } catch (error) {
       console.error("Approval failed", error);
@@ -56,7 +57,8 @@ const PendingApproval = () => {
     if (selectedParticipation !== null) {
       setActionLoading(true); // Start loading animation
       try {
-        await postApprovalStatus(selectedParticipation, "rejected", remarks);
+        const currentDate = new Date().toISOString(); 
+        await postApprovalStatus(selectedParticipation, "rejected", remarks,currentDate);
         setRefreshPage((prev) => prev + 1); // Refresh page after action
         setRemarksModalOpen(false); // Close modal after submission
       } catch (error) {
@@ -260,7 +262,7 @@ const PendingApproval = () => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>Remarks: {item.remarks}</Typography>
+                  <Typography>Description: {item.description}</Typography>
                   <Typography>Proof URL: {item.proofUrl}</Typography>
                   <Button
                     variant="contained"
