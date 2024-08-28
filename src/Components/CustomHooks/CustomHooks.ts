@@ -192,3 +192,59 @@ export const useFetchActivities = (categoryName: string) => {
   
     return { postApprovalStatus, loading, error };
   };
+
+  
+  export const useFetchUserLoginsByEmployee = (employeeId: string) => {
+    const [userLogins, setUserLogins] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<Error | null>(null);
+  
+    useEffect(() => {
+      if (!employeeId) return;
+  
+      const fetchUserLogins = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(`${baseURL}/api/v1/participation/date?employeeId=${employeeId}`);
+          setUserLogins(response.data);
+        } catch (err) {
+          setError(err as Error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchUserLogins();
+    }, [employeeId]);
+  
+    return { userLogins, loading, error };
+  };
+  
+
+ 
+export const useFetchUserLoginsByDate = (selectedDate: string, employeeId: string) => {
+    const [userLogins, setUserLogins] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<Error | null>(null);
+
+    useEffect(() => {
+        if (!selectedDate || !employeeId) return;
+
+        const fetchUserLogins = async () => {
+            try {
+                setLoading(true);
+               
+                const response = await axios.get(`${baseURL}/api/v1/participation/date/${selectedDate}?employeeId=${employeeId}`);
+                setUserLogins(response.data);
+            } catch (err) {
+                setError(err as Error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserLogins();
+    }, [selectedDate, employeeId]);
+
+    return { userLogins, loading, error };
+};
