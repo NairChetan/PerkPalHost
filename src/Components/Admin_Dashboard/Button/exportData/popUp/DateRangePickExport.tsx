@@ -6,17 +6,22 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { Box } from "@mui/material";
 import format from "date-fns/format";
 
+// DateRange interface representing the selected date range
 interface DateRange {
   startDate: Date;
   endDate: Date;
   key: string;
 }
 
-interface DateRangePickProps {
-  onDateRangeChange: (startDate: Date, endDate: Date) => void; // Callback to pass the date range to the parent
+// Updated DateRangePickExportProps interface with Date type for startDate and endDate
+interface DateRangePickExportProps {
+  onDateRangeChange: (startDate: Date, endDate: Date) => void; // Updated callback to pass Date objects to the parent
 }
 
-const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
+const DateRangePickExport: React.FC<DateRangePickExportProps> = ({
+  onDateRangeChange,
+}) => {
+  // Initialize the state with the default date range
   const [range, setRange] = useState<DateRange[]>([
     {
       startDate: addDays(new Date(), -30),
@@ -35,7 +40,7 @@ const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
   }, []);
 
   useEffect(() => {
-    // Pass the initial default dates to the parent when the component mounts
+    // Pass the initial default dates (Date objects) to the parent when the component mounts
     onDateRangeChange(range[0].startDate, range[0].endDate);
   }, []);
 
@@ -55,7 +60,7 @@ const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
           key: selection.key || "selection", // Provide a default value if key is undefined
         },
       ]);
-      // Pass the updated dates to the parent component
+      // Pass the Date objects to the parent component
       onDateRangeChange(selection.startDate!, selection.endDate!);
     }
   };
@@ -77,28 +82,34 @@ const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
           />
         )}
 
-        <input
+        <Box
+          component="input"
           value={`${format(range[0].startDate, "MMM/dd")} to ${format(
             range[0].endDate,
             "MMM/dd"
           )}`}
           readOnly
-          style={{
-            width: "10vw",
-            minWidth: "10vw",
+          sx={{
+            width: {
+              xs: "95%", // 0px - 600px
+              sm: "36%", // 600px - 900px
+              md: "27%", // 900px - 1200px
+              lg: "26.5%", // 1200px - 1536px
+              xl: "23%", // 1536px and up
+            },
+            minWidth: "15px", // Ensure a minimum width on small screens
             margin: 0,
             padding: "8px",
             border: "1px solid #ccc",
-            borderRadius: "4px",
+            borderRadius: "15px", // Border radius updated to 15px
             fontSize: "16px",
-            backgroundColor: "#f9f9f9",
+            backgroundColor: "#303137", // Background color updated
+            color: "#fff", // Text color updated
             boxSizing: "content-box",
             cursor: "pointer",
             overflow: "hidden",
             textAlign: "center",
-            color: "#06c",
           }}
-          className="inputBox"
           onClick={() => setOpen((open) => !open)}
         />
         {open && (
@@ -128,4 +139,4 @@ const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
   );
 };
 
-export default DateRangePick;
+export default DateRangePickExport;
