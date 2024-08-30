@@ -1,18 +1,21 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import React from "react";
 
 interface DropdownProps {
   label: string;
   options: string[];
+  value: string; // Current selected value
+  onChange: (event: SelectChangeEvent<string>) => void; // Handler for value change
 }
 
-const Dropdown = ({ label, options }: DropdownProps) => {
-  const [value, setValue] = useState("");
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setValue(event.target.value as string);
-  };
-
+const Dropdown = ({ label, options, value, onChange }: DropdownProps) => {
   return (
     <Box sx={{ marginBottom: "1rem" }}>
       <FormControl
@@ -35,7 +38,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
             color: "#fff", // Set label color to white for better contrast
             top: "50%", // Vertically center the label text
             transform: "translateY(-50%)", // Adjust to keep it centered
-            paddingLeft: "2%", // Add 5% left padding to the label text
+            paddingLeft: "2%", // Add 2% left padding to the label text
             "&.Mui-focused, &.MuiFormLabel-filled": {
               top: "0", // Adjusts the position when focused or filled
               transform: "translate(10px, -10px) scale(.75)", // Moved the label up a little more after click
@@ -46,7 +49,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
         </InputLabel>
         <Select
           value={value}
-          onChange={handleChange}
+          onChange={onChange} // Use the onChange prop passed from the parent
           label={label}
           size="small"
           sx={{

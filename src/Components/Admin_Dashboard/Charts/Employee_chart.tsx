@@ -58,7 +58,6 @@ const Employee_chart: React.FC = () => {
             },
           }
         );
-
         // Extract data for chart
         const labels = response.data.map((item: any) => item.firstName);
         const data = response.data.map((item: any) => item.totalPoints);
