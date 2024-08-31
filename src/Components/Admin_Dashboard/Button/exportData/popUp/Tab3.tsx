@@ -1,55 +1,3 @@
-// import { Button } from "@mui/material";
-// import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; // Correct import
-
-// const Tab3 = () => {
-//   // Shared button styles
-//   const buttonStyles = {
-//     width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" }, // Responsive width
-//     backgroundColor: "#303137", // Default background color
-//     borderRadius: "15px", // Rounded corners
-//     "&:hover": {
-//       backgroundColor: "black", // Background color on hover
-//     },
-//   };
-
-//   return (
-//     <>
-//       {/* Preview Button */}
-//       <Button
-//         variant="contained"
-//         color="primary"
-//         sx={{
-//           ...buttonStyles, // Apply shared styles
-//           px: "2%", // Padding on the x-axis
-//           marginTop: "1rem", // Margin at the top
-//           display: "flex", // Flexbox layout
-//           justifyContent: "center", // Center content horizontally
-//           alignItems: "center", // Center content vertically
-//         }}
-//       >
-//         Preview
-//         <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
-//         {/* Icon with a small left margin */}
-//       </Button>
-
-//       {/* Export Button */}
-//       <Button
-//         variant="contained"
-//         color="primary"
-//         sx={{
-//           ...buttonStyles, // Apply shared styles
-//           backgroundColor: "#4741FC", // Override background color
-//           marginTop: "1.5rem", // Margin at the top
-//         }}
-//       >
-//         Export
-//       </Button>
-//     </>
-//   );
-// };
-
-// export default Tab3;
-
 import React, { useState } from "react";
 import {
   Button,
@@ -64,6 +12,7 @@ import {
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios";
+import * as XLSX from "xlsx"; // Import xlsx for Excel export
 
 const Tab3 = () => {
   const [categories, setCategories] = useState<any[]>([]); // State to store API data
@@ -71,6 +20,7 @@ const Tab3 = () => {
   const [error, setError] = useState<string | null>(null); // State to manage error
   const [showData, setShowData] = useState(false); // State to toggle data visibility
 
+  // Function to fetch categories from the API
   const fetchCategories = async () => {
     if (!showData) {
       // Only fetch data if not already shown
@@ -88,6 +38,34 @@ const Tab3 = () => {
       }
     }
     setShowData(!showData); // Toggle the visibility state
+  };
+
+  // Function to handle export button click
+  const handleExport = async () => {
+    try {
+      // Fetch data from the API
+      const response = await axios.get("http://localhost:8080/api/v1/category");
+      const categories = response.data.data;
+
+      // Transform data into a format suitable for Excel
+      const dataForExcel = categories.flatMap((category: any) =>
+        category.activities.map((activity: any) => ({
+          Category: category.categoryName,
+          Activity: activity.activityName,
+          Weightage: activity.weightagePerHour,
+        }))
+      );
+
+      // Create a new workbook and add the data to it
+      const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Categories");
+
+      // Export the workbook as an Excel file
+      XLSX.writeFile(workbook, "categories.xlsx");
+    } catch (err) {
+      setError("Failed to export data.");
+    }
   };
 
   return (
@@ -111,7 +89,7 @@ const Tab3 = () => {
         }}
         onClick={fetchCategories} // Call API and toggle data visibility on button click
       >
-        {showData ? "Hide Preview" : "Preview"}{" "}
+        {showData ? "Hide Data" : "Preview"}{" "}
         {/* Change button text based on state */}
         <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />
       </Button>
@@ -129,6 +107,7 @@ const Tab3 = () => {
           },
           marginTop: "1.5rem",
         }}
+        onClick={handleExport} // Export data as Excel when clicked
       >
         Export
       </Button>
