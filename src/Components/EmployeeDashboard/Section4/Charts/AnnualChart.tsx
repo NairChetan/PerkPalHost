@@ -1,8 +1,6 @@
-import { Box} from "@mui/material";
-// import {Typography } from "@mui/material";
-
+import { Box } from "@mui/material";
+import { useState, useEffect } from "react";
 import Bar_Chart from "../../Section4/Charts/BarChartEd";
-// import DateRangePick from "../../../Admin_Dashboard/DateRange/DateRangePick";
 
 const chartOptions = {
   responsive: true,
@@ -13,25 +11,50 @@ const chartOptions = {
   },
 };
 
-const chartData = {
-  labels: [
-    "2020",
-    "2021",
-    "2022",
-    "2023",
-    "2024",
-    "2025",
-    
-  ],
-  datasets: [
-    {
-      data: [1500, 570, 1000, 2000, 900,1800],
-      backgroundColor: "#a083c9",
-    },
-  ],
-};
-
 const AnnualChart = () => {
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: "#a083c9",
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const empid = localStorage.getItem("employeeId");
+
+      if (!empid) {
+        console.error('Employee ID not found in localStorage');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/v1/employee/employee/${empid}/points/last-four-years`);
+        const data = await response.json();
+
+        const labels = data.map((item) => item.year.toString());
+        const points = data.map((item) => item.pointsAccumulated);
+
+        setChartData({
+          labels: labels,
+          datasets: [
+            {
+              data: points,
+              backgroundColor: "#a083c9",
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <Box
@@ -43,68 +66,7 @@ const AnnualChart = () => {
           flexDirection: "row",
         }}
       >
-        {/* <Box
-          sx={{
-            width: "65%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            pl: "4%",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              height: "60%",
-              width: "100%",
-              fontWeight: "bold", // Makes the text bold
-              textAlign: "start", // Centers the text
-              fontSize: {
-                xs: "6vw", // Extra small devices (phones, 600px and down)
-                sm: "4vw", // Small devices (tablets, 600px and up)
-                md: "3vw", // Medium devices (desktops, 900px and up)
-                lg: "2vw", // Large devices (large desktops, 1200px and up)
-                xl: "2.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            Annual Performance
-          </Typography>
-          <Typography
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              height: "40%",
-              width: "100%",
-              fontWeight: "bold", // Makes the text bold
-              textAlign: "start", // Centers the text
-              fontSize: {
-                xs: "3vw", // Extra small devices (phones, 600px and down)
-                sm: "2vw", // Small devices (tablets, 600px and up)
-                md: "1.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1vw", // Large devices (large desktops, 1200px and up)
-                xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            Points/Year
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "35%",
-            height: "100%",
-            display: "flex",
-            padding: "0%",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <DateRangePick />
-        </Box> */}
+        {/* Optional: Add other components or elements here */}
       </Box>
       <Box
         sx={{

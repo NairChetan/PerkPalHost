@@ -8,98 +8,122 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {
-  Typography,
-  Button,
-  Grid,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material";
-import { useFetchPendingApproval } from "../Components/CustomHooks/CustomHooks";
+import { Typography, Button, Grid, Checkbox, FormControlLabel, CircularProgress, MenuItem, Select } from "@mui/material";
+import RemarksModal from "../Components/PendingApproval/RemarksModal"; // Adjust the path accordingly
+import { useFetchParticipation, usePostApprovalStatus } from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
 
 const PendingApproval = () => {
-  const { employeeNameList, participantList, error, loading } =
-    useFetchPendingApproval("employee");
+  const [currentPage, setCurrentPage] = useState(0); // Start with page 0
+  const [pageSize, setPageSize] = useState(4); // Default page size is 4
+  const [refreshPage, setRefreshPage] = useState<number>(0);
+  const { participation, pagination, loading, error } = useFetchParticipation(
+    `/api/v1/participation/pending-approval?pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=participationDate&sortDir=desc`,
+    refreshPage
+  );
+  const { postApprovalStatus } = usePostApprovalStatus(); // Custom hook for posting
+
+  const totalPages = pagination ? pagination.totalPages : 1;
 
   const [expanded, setExpanded] = useState<string | false>(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of accordion items per page
-  const [selectedPanels, setSelectedPanels] = useState<string[]>([]);
+  const [selectedPanels, setSelectedPanels] = useState<number[]>([]); // Track selected panels by id
   const [selectAll, setSelectAll] = useState(false);
+  const [remarksModalOpen, setRemarksModalOpen] = useState(false);
+  const [selectedParticipation, setSelectedParticipation] = useState<number | null>(null);
+  const [actionLoading, setActionLoading] = useState<boolean>(false); // State for action loading
 
-  const handleChange =
-    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-
-  const handleApprove = (name: string) => {
-    console.log(`${name} approved`);
+  const handleChange = (panelId: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? `panel${panelId}` : false);
   };
 
-  const handleReject = (name: string) => {
-    console.log(`${name} rejected`);
+  const handleApprove = async (id: number) => {
+    setActionLoading(true); // Start loading animation
+    try {
+      const currentDate = new Date().toISOString(); // Generate the current date and time
+      await postApprovalStatus(id, "approved", null, currentDate); // Pass current date
+      setRefreshPage((prev) => prev + 1); // Refresh page after action
+    } catch (error) {
+      console.error("Approval failed", error);
+    } finally {
+      setActionLoading(false); // Stop loading animation
+    }
+  };
+
+  const handleReject = (id: number) => {
+    setSelectedParticipation(id);
+    setRemarksModalOpen(true);
+  };
+
+  const handleSubmitRemarks = async (remarks: string) => {
+    if (selectedParticipation !== null) {
+      setActionLoading(true); // Start loading animation
+      try {
+        const currentDate = new Date().toISOString(); 
+        await postApprovalStatus(selectedParticipation, "rejected", remarks,currentDate);
+        setRefreshPage((prev) => prev + 1); // Refresh page after action
+        setRemarksModalOpen(false); // Close modal after submission
+      } catch (error) {
+        console.error("Rejection failed", error);
+      } finally {
+        setActionLoading(false); // Stop loading animation
+      }
+    }
   };
 
   const handleIconClick = (
     event: React.MouseEvent,
-    name: string,
+    id: number,
     action: "approve" | "reject"
   ) => {
     event.stopPropagation(); // Prevents the accordion from expanding
     if (action === "approve") {
-      handleApprove(name);
+      handleApprove(id);
     } else if (action === "reject") {
-      handleReject(name);
+      handleReject(id);
     }
   };
 
   const handleSelectAll = () => {
-    const allPanels = names.map((_, index) => `panel${index + 1}`);
+    const allPanelIds = (participation || []).map((item) => item.id);
     if (selectAll) {
-      setSelectedPanels([]);
+      setSelectedPanels([]); // Deselect all
     } else {
-      setSelectedPanels(allPanels);
+      setSelectedPanels(allPanelIds); // Select all panels
     }
     setSelectAll(!selectAll);
   };
 
-  const handleSelectPanel = (panel: string) => {
-    if (selectedPanels.includes(panel)) {
-      setSelectedPanels(selectedPanels.filter((item) => item !== panel));
+  const handleSelectPanel = (panelId: number) => {
+    if (selectedPanels.includes(panelId)) {
+      setSelectedPanels(selectedPanels.filter((id) => id !== panelId));
     } else {
-      setSelectedPanels([...selectedPanels, panel]);
+      setSelectedPanels([...selectedPanels, panelId]);
     }
   };
 
-  const names = [
-    "Alby Kennady",
-    "Rithik Ramachandran",
-    "Sarath Sasi",
-    "Sanjay Nair",
-    "John Doe",
-    "Jane Smith",
-    "Ajin KJ",
-    "Sahir Nisar",
-    "Sreeson N",
-    "Vibijith Kongat",
-    "Abhiram S Anand",
-  ];
-  const totalPages = Math.ceil(names.length / itemsPerPage);
-
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = names.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageSizeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPageSize(event.target.value as number);
+    setCurrentPage(0); // Reset to first page when page size changes
+  };
+
+  if (loading || actionLoading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return <Typography>Error: {error}</Typography>;
+  }
 
   return (
     <>
@@ -118,7 +142,6 @@ const PendingApproval = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            //p: { xs: 2, sm: 4 },
           }}
         >
           <Box
@@ -153,58 +176,84 @@ const PendingApproval = () => {
                 label="Select All"
               />
             </Box>
-            {currentItems.map((name, index) => (
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                width: "100%",
+                mb: 2,
+              }}
+            >
+              <Typography variant="body1" sx={{ mr: 2,mt:2 }}>
+                Show:
+              </Typography>
+              <Select
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                sx={{ width: 80 }}
+              >
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+              </Select>
+            </Box>
+
+            {participation?.map((item) => (
               <Accordion
-                key={index}
+                key={item.id}
                 sx={{
                   width: "100%",
                   borderRadius: "5px",
                   boxShadow: "12%",
                   mb: 2,
-                  backgroundColor: selectedPanels.includes(`panel${index + 1}`)
+                  backgroundColor: selectedPanels.includes(item.id)
                     ? "#e0f7fa"
                     : "white",
                 }}
-                expanded={expanded === `panel${index + 1}`}
-                onChange={handleChange(`panel${index + 1}`)}
+                expanded={expanded === `panel${item.id}`}
+                onChange={handleChange(item.id)}
               >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls={`panel${index + 1}bh-content`}
-                  id={`panel${index + 1}bh-header`}
-                  onClick={() => handleSelectPanel(`panel${index + 1}`)}
+                  aria-controls={`panel${item.id}-content`}
+                  id={`panel${item.id}-header`}
+                  onClick={() => handleSelectPanel(item.id)}
                 >
                   <Grid container alignItems="center">
                     <Grid item xs={12} sm={3}>
-                      <Typography>{name}</Typography>
+                      <Typography>
+                        {item.employeeFirstName} {item.employeeLastName}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>emp{index + 1}</Typography>
+                      <Typography>EmpId:{item.employeeId}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>ILP Mentorship</Typography>
+                      <Typography>{item.activityName}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>10 hours</Typography>
+                      <Typography>{item.duration} minutes</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>10-08-2024</Typography>
+                      <Typography>{new Date(item.participationDate).toLocaleDateString("en-GB")}</Typography>
                     </Grid>
                     <Grid item xs={12} sm={1} textAlign="right">
-                      {expanded !== `panel${index + 1}` && (
+                      {expanded !== `panel${item.id}` && (
                         <>
                           <CheckCircleIcon
                             color="success"
                             sx={{ cursor: "pointer" }}
                             onClick={(event) =>
-                              handleIconClick(event, name, "approve")
+                              handleIconClick(event, item.id, "approve")
                             }
                           />
                           <CancelIcon
                             color="error"
                             sx={{ ml: 1, cursor: "pointer" }}
                             onClick={(event) =>
-                              handleIconClick(event, name, "reject")
+                              handleIconClick(event, item.id, "reject")
                             }
                           />
                         </>
@@ -213,35 +262,23 @@ const PendingApproval = () => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
-                    Details about {name}'s ILP Mentorship program.
-                  </Typography>
-                  {expanded === `panel${index + 1}` && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        mt: 2,
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        color="success"
-                        sx={{ ml: 1 }}
-                        onClick={() => handleApprove(name)}
-                      >
-                        Agree
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        sx={{ ml: 1 }}
-                        onClick={() => handleReject(name)}
-                      >
-                        Reject
-                      </Button>
-                    </Box>
-                  )}
+                  <Typography>Description: {item.description}</Typography>
+                  <Typography>Proof URL: {item.proofUrl}</Typography>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ mr: 1 }}
+                    onClick={() => handleApprove(item.id)}
+                  >
+                    Approve
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleReject(item.id)}
+                  >
+                    Reject
+                  </Button>
                 </AccordionDetails>
               </Accordion>
             ))}
@@ -249,27 +286,37 @@ const PendingApproval = () => {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                width: "100%",
                 mt: 2,
+                width: "100%",
               }}
             >
-              <Button disabled={currentPage === 1} onClick={handlePrevPage}>
-                Previous
+              <Button
+                variant="contained"
+                onClick={handlePrevPage}
+                disabled={currentPage === 0}
+              >
+                Previous Page
               </Button>
               <Typography>
-                Page {currentPage} of {totalPages}
+                Page {currentPage+1} of {totalPages}
               </Typography>
               <Button
-                disabled={currentPage === totalPages}
+                variant="contained"
                 onClick={handleNextPage}
+                disabled={currentPage === totalPages - 1}
               >
-                Next
+                Next Page
               </Button>
             </Box>
           </Box>
         </Box>
       </Box>
       <Footer />
+      <RemarksModal
+        open={remarksModalOpen}
+        onClose={() => setRemarksModalOpen(false)}
+        onSubmit={handleSubmitRemarks}
+      />
     </>
   );
 };
