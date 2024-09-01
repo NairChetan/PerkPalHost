@@ -32,7 +32,7 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedDate }) => {
     }
 
     setCalendarDays(days);
-    console.log("Calendar updated:", days); // Log to see if calendar days are being generated
+    console.log("Calendar updated:", days);
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedDate }) => {
     if (date) {
       setCurrentDate(date);
       setSelectedDate(date.format('YYYY-MM-DD'));
-      console.log("Selected Date changed in Calendar:", setSelectedDate);
+      console.log("Selected Date changed in Calendar:", date.format('YYYY-MM-DD'));
     } else {
       console.log("Date is null in handleDateChange");
     }
@@ -96,16 +96,23 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedDate }) => {
                   if (day) {
                     const formattedDate = day.format('YYYY-MM-DD');
                     setSelectedDate(formattedDate);
-                    console.log("Date clicked in calendar:", formattedDate); // Log the clicked date
+                    console.log("Date clicked in calendar:", formattedDate);
                   } else {
-                    console.log("Clicked on an empty day slot"); // Log for empty slots
+                    console.log("Clicked on an empty day slot");
                   }
                 }}
               >
                 {day ? (
                   <>
                     <div>{day.date()}</div>
-                    <div className={styles.entryCount}>{getEntryCountForDate(day)}</div>
+                    <div
+                      className={styles.entryCount}
+                      style={{
+                        visibility: getEntryCountForDate(day) > 0 ? 'visible' : 'hidden'
+                      }}
+                    >
+                      {getEntryCountForDate(day)}
+                    </div>
                   </>
                 ) : (
                   <div></div>
