@@ -135,9 +135,11 @@ const Tab3 = () => {
                 category.activities.map((activity: any, index: number) => (
                   <TableRow key={activity.id}>
                     {/* Display category name only for the first activity of each category */}
-                    <TableCell>
-                      {index === 0 ? category.categoryName : ""}
-                    </TableCell>
+                    {index === 0 && (
+                      <TableCell rowSpan={category.activities.length}>
+                        {category.categoryName}
+                      </TableCell>
+                    )}
                     <TableCell>{activity.activityName}</TableCell>
                     <TableCell>{activity.weightagePerHour}</TableCell>
                   </TableRow>
