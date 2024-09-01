@@ -1,9 +1,7 @@
-import { Box} from "@mui/material";
-// import { Typography} from "@mui/material";
-
-
+import React, { useEffect, useState } from 'react';
+import { Box } from "@mui/material";
 import Bar_Chart from "../../Section4/Charts/BarChartEd";
-// import DateRangePick from "../../../Admin_Dashboard/DateRange/DateRangePick";
+import axios from 'axios';
 
 const chartOptions = {
   responsive: true,
@@ -14,30 +12,60 @@ const chartOptions = {
   },
 };
 
-const chartData = {
-  labels: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ],
-  datasets: [
-    {
-      data: [300, 400, 150, 200, 50, 350, 10, 300, 230, 90,70,65,123],
-      backgroundColor: "#895937",
-    },
-  ],
-};
-
 const MonthlyChart = () => {
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: "#895937",
+    }],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const empid = localStorage.getItem("employeeId");
+
+      if (!empid) {
+        console.error('Employee ID not found in localStorage');
+        return;
+      }
+
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/employee/${empid}/points/current-year-per-month`);
+        const data = response.data;
+
+        const labels = [];
+        const dataPoints = new Array(12).fill(0); // Initialize with zeroes for each month
+
+        data.forEach(item => {
+          const monthIndex = item.month - 1; // Adjust for zero-based index
+          labels[monthIndex] = getMonthName(item.month); // Set label
+          dataPoints[monthIndex] = item.pointsAccumulated; // Set data
+        });
+
+        setChartData({
+          labels: labels,
+          datasets: [{
+            data: dataPoints,
+            backgroundColor: "#895937",
+          }],
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getMonthName = (monthNumber) => {
+    const monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return monthNames[monthNumber - 1];
+  };
+
   return (
     <>
       <Box
@@ -49,68 +77,7 @@ const MonthlyChart = () => {
           flexDirection: "row",
         }}
       >
-        {/* <Box
-          sx={{
-            width: "65%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            pl: "4%",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              height: "60%",
-              width: "100%",
-              fontWeight: "bold", // Makes the text bold
-              textAlign: "start", // Centers the text
-              fontSize: {
-                xs: "4vw", // Extra small devices (phones, 600px and down)
-                sm: "3.5vw", // Small devices (tablets, 600px and up)
-                md: "3vw", // Medium devices (desktops, 900px and up)
-                lg: "2vw", // Large devices (large desktops, 1200px and up)
-                xl: "2.15vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            Employee Performance
-          </Typography>
-          <Typography
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              height: "40%",
-              width: "100%",
-              fontWeight: "bold", // Makes the text bold
-              textAlign: "start", // Centers the text
-              fontSize: {
-                xs: "3vw", // Extra small devices (phones, 600px and down)
-                sm: "2vw", // Small devices (tablets, 600px and up)
-                md: "1.5vw", // Medium devices (desktops, 900px and up)
-                lg: "1vw", // Large devices (large desktops, 1200px and up)
-                xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-              },
-            }}
-          >
-            Points/Employee
-          </Typography>
-        </Box> */}
-        {/* <Box
-          sx={{
-            width: "35%",
-            height: "100%",
-            display: "flex",
-            padding: "0%",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <DateRangePick />
-        </Box> */}
+        {/* Optional: Add other components or elements here */}
       </Box>
       <Box
         sx={{
@@ -125,4 +92,3 @@ const MonthlyChart = () => {
 };
 
 export default MonthlyChart;
-
