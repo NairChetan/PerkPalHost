@@ -267,3 +267,68 @@ export const useFetchUserLoginsByDate = (selectedDate: string, employeeId: strin
 
     return { userLogins, loading, error };
 };
+
+export const useEditParticipationEntry = (id: number) => {
+  const [entry, setEntry] = useState<any | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchEntry = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseURL}/api/v1/participation/userLog/${id}`);
+        setEntry(response.data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEntry();
+  }, [id]);
+
+  const updateEntry = async (updatedData: { description: string, duration: number, proofUrl: string | null }) => {
+    try {
+      setLoading(true);
+      await axios.put(`${baseURL}/api/v1/participation/userLog/${id}`, updatedData);
+      setLoading(false);
+      return true; // Return true if update is successful
+    } catch (err) {
+      setError(err as Error);
+      setLoading(false);
+      return false; // Return false if update fails
+    }
+  };
+
+  return { entry, updateEntry, loading, error };
+};
+
+
+export const useDeleteParticipation = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const deleteParticipation = async (id: number) => {
+    try {
+      setLoading(true);
+      await axios.delete(`${baseURL}/api/v1/participation/${id}`);
+      setLoading(false);
+      return true; // Return true if deletion is successful
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      } else {
+        console.error("Error message:", err.message);
+      }
+      setError("Failed to delete participation entry.");
+      setLoading(false);
+      return false; // Return false if deletion fails
+    }
+  };
+
+  return { deleteParticipation, loading, error };
+};

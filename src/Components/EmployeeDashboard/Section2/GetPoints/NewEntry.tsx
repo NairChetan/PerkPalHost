@@ -27,7 +27,7 @@ const NewEntry = () => {
       activity: '',
       description: '',
       duration: '',
-      proof: null,
+      proof: '',
     },
     validationSchema: Yup.object({
       category: Yup.string().required('Category is required'),
@@ -43,22 +43,39 @@ const NewEntry = () => {
       setLoading(true);
       setError(null);
       const employeelocal = localStorage.getItem("employeeId");
-      try {
-        const entry = {
-          categoryName: values.category,
-          activityName: values.activity,
-          description: values.description,
-          duration: values.duration,
-          proofUrl: proof ? proof.name : null,
-          createdBy: employeelocal,
-          employeeEmpId: employeelocal,
-        };
 
-        await submitParticipation(entry);
-        // Optionally: handle success action here
-        resetForm();
-        setProof(null);
-        setSuccessMessage('Submitted Successfully');
+      try {
+        // Cloudinary upload
+        const formData = new FormData();
+        formData.append('file', proof!);
+        formData.append('upload_preset', 'Proof_preset');  // Replace with your Cloudinary upload preset
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/drflngubf/image/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+        
+
+        const result = await response.json();
+        console.log('Proof URL:', result.secure_url);
+        if (response.ok) {
+          const entry = {
+            categoryName: values.category,
+            activityName: values.activity,
+            description: values.description,
+            duration: values.duration,
+            proofUrl: result.secure_url,
+            createdBy: employeelocal,
+            employeeEmpId: employeelocal,
+          };
+          console.log("pro",entry.proofUrl);
+
+          await submitParticipation(entry);
+          resetForm();
+          setSuccessMessage('Submitted Successfully');
+        } else {
+          setError('Error uploading proof: ' + result.error.message);
+        }
       } catch (err) {
         console.log(err);
         setError('Error submitting your entry');
@@ -68,16 +85,15 @@ const NewEntry = () => {
     },
   });
 
-  const handleProofChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setProof(e.target.files[0]);
-      formik.setFieldValue('proof', e.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setProof(event.target.files[0]);
     }
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.headingContainer}>
+     <div className={styles.headingContainer}>
         <div>
           <h3 className={styles.heading}>Clock in your points!</h3>
           <p className={styles.paraghraph}>Log in your activity here to avail points</p>
@@ -159,18 +175,13 @@ const NewEntry = () => {
         {formik.touched.duration && formik.errors.duration ? (
           <div className={styles.error}>{formik.errors.duration}</div>
         ) : null}
-
-        <label className={styles.fileLabel}>
-          <input
-            className={styles.fileInput}
-            name="proof"
-            type="file"
-            accept=".jpg,.pdf"
-            onChange={handleProofChange}
-          />
-          Attach supporting documents here
-        </label>
-
+        <h5>Upload Proof</h5>
+        <input
+          accept="image/*"
+          type="file"
+          onChange={handleFileChange}
+        />
+        
         <button type="submit" className={styles.submit} disabled={loading || submitLoading}>
           <LuSave className={styles.icon} /> Submit
         </button>

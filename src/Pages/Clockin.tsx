@@ -16,8 +16,9 @@ const Clockin: React.FC = () => {
     <>
       <Navbar />
       <div className={styles.clockinContainer}>
-      <UserLogin selectedDate={selectedDate} setSelectedDate={""} />
-        <Calendar setSelectedDate={setSelectedDate} />  
+      <Calendar setSelectedDate={setSelectedDate} />  
+      <UserLogin selectedDate={selectedDate}  />
+        
       </div>
       <Footer />
     </>
