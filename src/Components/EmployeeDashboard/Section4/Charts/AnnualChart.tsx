@@ -23,10 +23,18 @@ const AnnualChart = () => {
   });
 
   useEffect(() => {
-    // Fetch the data from the API
-    fetch("http://localhost:8080/api/v1/employee/employee/2/points/last-four-years")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      const empid = localStorage.getItem("employeeId");
+
+      if (!empid) {
+        console.error('Employee ID not found in localStorage');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/v1/employee/employee/${empid}/points/last-four-years`);
+        const data = await response.json();
+
         const labels = data.map((item) => item.year.toString());
         const points = data.map((item) => item.pointsAccumulated);
 
@@ -39,8 +47,12 @@ const AnnualChart = () => {
             },
           ],
         });
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -53,7 +65,9 @@ const AnnualChart = () => {
           display: "flex",
           flexDirection: "row",
         }}
-      ></Box>
+      >
+        {/* Optional: Add other components or elements here */}
+      </Box>
       <Box
         sx={{
           width: "100%",
