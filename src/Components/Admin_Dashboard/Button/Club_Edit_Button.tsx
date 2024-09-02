@@ -131,6 +131,22 @@ const Club_Edit_Button = () => {
             borderRadius: "50px",
             padding: "2rem",
             overflowY: "auto",
+
+            // Custom scrollbar styles
+            "&::-webkit-scrollbar": {
+              width: "7px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "#2c2c2c",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#6c6c6c",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#9c9c9c",
+            },
           }}
           ref={refOne}
         >
@@ -177,13 +193,13 @@ const Club_Edit_Button = () => {
                           onChange={(e) =>
                             handleInputChange(index, "club", e.target.value)
                           }
-                          sx={{ 
+                          sx={{
                             input: { color: "#fff" },
                             "& .MuiOutlinedInput-root": {
                               "& fieldset": { borderColor: "#fff" },
                               "&:hover fieldset": { borderColor: "#fff" },
                               "&.Mui-focused fieldset": { borderColor: "#fff" },
-                            }
+                            },
                           }}
                           variant="outlined"
                         />
@@ -195,13 +211,13 @@ const Club_Edit_Button = () => {
                           onChange={(e) =>
                             handleInputChange(index, "initial", e.target.value)
                           }
-                          sx={{ 
+                          sx={{
                             input: { color: "#fff" },
                             "& .MuiOutlinedInput-root": {
                               "& fieldset": { borderColor: "#fff" },
                               "&:hover fieldset": { borderColor: "#fff" },
                               "&.Mui-focused fieldset": { borderColor: "#fff" },
-                            }
+                            },
                           }}
                           variant="outlined"
                         />
@@ -213,21 +229,19 @@ const Club_Edit_Button = () => {
                           onChange={(e) =>
                             handleInputChange(index, "final", e.target.value)
                           }
-                          sx={{ 
+                          sx={{
                             input: { color: "#fff" },
                             "& .MuiOutlinedInput-root": {
                               "& fieldset": { borderColor: "#fff" },
                               "&:hover fieldset": { borderColor: "#fff" },
                               "&.Mui-focused fieldset": { borderColor: "#fff" },
-                            }
+                            },
                           }}
                           variant="outlined"
                         />
                       </TableCell>
                       <TableCell>
-                        <IconButton
-                          onClick={() => handleSaveRow(index, row)}
-                        >
+                        <IconButton onClick={() => handleSaveRow(index, row)}>
                           <SaveIcon sx={{ color: "#fff" }} />
                         </IconButton>
                       </TableCell>
