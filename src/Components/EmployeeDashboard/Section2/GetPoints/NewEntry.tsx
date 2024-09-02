@@ -4,17 +4,19 @@ import * as Yup from 'yup';
 import { useFetchCategories, useFetchActivities, useSubmitParticipation } from '../../../CustomHooks/CustomHooks';
 import styles from './NewEntry.module.css';
 import { LuSave } from "react-icons/lu";
+import { Modal } from '@mui/material';
 
 const NewEntry = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [proof, setProof] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [openLoadingPopup, setOpenLoadingPopup] = useState(false); // New state for loading popup
+  const [openSuccessPopup, setOpenSuccessPopup] = useState(false); // New state for success popup
 
   const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
   const { activities, loading: activitiesLoading, error: activitiesError } = useFetchActivities(selectedCategory);
-  const { submitParticipation, loading: submitLoading, error: submitError } = useSubmitParticipation();
+  const { submitParticipation } = useSubmitParticipation();
 
   useEffect(() => {
     if (categoriesError) setError(categoriesError);
@@ -40,8 +42,8 @@ const NewEntry = () => {
         .required('Duration is required'),
     }),
     onSubmit: async (values, { resetForm }) => {
-      setLoading(true);
       setError(null);
+      setOpenLoadingPopup(true); // Show loading popup
       const employeelocal = localStorage.getItem("employeeId");
 
       try {
@@ -54,10 +56,8 @@ const NewEntry = () => {
           method: 'POST',
           body: formData,
         });
-        
 
         const result = await response.json();
-        console.log('Proof URL:', result.secure_url);
         if (response.ok) {
           const entry = {
             categoryName: values.category,
@@ -68,19 +68,19 @@ const NewEntry = () => {
             createdBy: employeelocal,
             employeeEmpId: employeelocal,
           };
-          console.log("pro",entry.proofUrl);
 
           await submitParticipation(entry);
           resetForm();
-          setSuccessMessage('Submitted Successfully');
+          setOpenLoadingPopup(false); // Close loading popup
+          setOpenSuccessPopup(true); // Show success popup
         } else {
           setError('Error uploading proof: ' + result.error.message);
+          setOpenLoadingPopup(false); // Close loading popup
         }
       } catch (err) {
         console.log(err);
         setError('Error submitting your entry');
-      } finally {
-        setLoading(false);
+        setOpenLoadingPopup(false); // Close loading popup
       }
     },
   });
@@ -91,9 +91,15 @@ const NewEntry = () => {
     }
   };
 
+  const handleCloseSuccessPopup = () => {
+    setOpenSuccessPopup(false);
+    
+    
+  };
+
   return (
     <div className={styles.container}>
-     <div className={styles.headingContainer}>
+      <div className={styles.headingContainer}>
         <div>
           <h3 className={styles.heading}>Clock in your points!</h3>
           <p className={styles.paraghraph}>Log in your activity here to avail points</p>
@@ -105,9 +111,7 @@ const NewEntry = () => {
         />
       </div>
 
-      {loading && <p className={styles.loading}>Submitting your entry...</p>}
       {error && <p className={styles.error}>{error}</p>}
-      {successMessage && <p className={styles.success}>{successMessage}</p>}
 
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <select
@@ -181,11 +185,35 @@ const NewEntry = () => {
           type="file"
           onChange={handleFileChange}
         />
-        
-        <button type="submit" className={styles.submit} disabled={loading || submitLoading}>
+
+        <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit
         </button>
       </form>
+
+      {/* Loading Popup */}
+      <Modal
+        open={openLoadingPopup}
+        className={styles.popup}
+      >
+        <div className={styles.popupContent}>
+          <div className={styles.loader}></div>
+          <p>Submitting...</p>
+        </div>
+      </Modal>
+
+      {/* Success Popup */}
+      <Modal
+        open={openSuccessPopup}
+        onClose={handleCloseSuccessPopup}
+        className={styles.popup}
+      >
+        <div className={styles.popupContent}>
+          <h3>Success!</h3>
+          <p>Submitted Successfully</p>
+          <button onClick={handleCloseSuccessPopup}>Close</button>
+        </div>
+      </Modal>
     </div>
   );
 };

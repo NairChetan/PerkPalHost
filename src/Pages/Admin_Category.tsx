@@ -16,7 +16,7 @@ const Admin_Category = () => {
        <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '80%', margin: 'auto' }}>
   {/* Left side content with column flex */}
   <Box display="flex" flexDirection="column" alignItems="flex-start">
-    <Typography variant="h5" component="h1" style={{ fontWeight: 'bold', marginTop: '16px' }}>
+    <Typography variant="h5" component="h1" style={{ fontWeight: 'bold', marginTop: '54px' ,marginLeft:'-81px'}}>
       Categories
     </Typography>
   </Box>

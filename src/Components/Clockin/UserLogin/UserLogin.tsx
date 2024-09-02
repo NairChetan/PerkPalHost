@@ -144,6 +144,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
       }
       setMessageOpen(true);
       setConfirmOpen(false);
+      window.location.reload();
     }
   };
 
