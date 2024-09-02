@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,40 +9,88 @@ import {
   Paper,
   IconButton,
   TablePagination,
-  Box
+  Box,
+  CircularProgress,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-
-interface Category {
-  activity: string;
-  category: string;
-  description: string;
-  pointsPerHour: number;
-}
-
-const categories: Category[] = [
-  { activity: 'Facilitating Trainings Programs', category: 'ILP', description: 'training program for employees', pointsPerHour: 5 },
-  { activity: 'Business Orientation Buddies', category: 'Training Programs', description: 'Mentor trainees during ILP', pointsPerHour: 10 },
-  { activity: 'E-Learning', category: 'E-Learning Hours', description: 'Studying external course', pointsPerHour: 1 },
-  { activity: 'Skill Matrix', category: 'External Certification updates', description: 'training program for employees', pointsPerHour: 5 },
-  { activity: 'ILP', category: 'Participation in Weekly trainer connects/ Guidance to trainers', description: 'Mentor trainees during ILP', pointsPerHour: 2 },
-  { activity: 'Training Programs', category: 'Participation in Trainings Programs', description: 'training program for employees', pointsPerHour: 0.5 },
-];
-
+import { useFetchActivitiesForAdmin } from '../CustomHooks/CustomHooks'; // Adjust the import path
+import { useDeleteActivity } from '../CustomHooks/CustomHooks'; // Adjust the import path
+import AddNewActivity from '../Admin_Category/Button/AddNewActivity';
 const CategoriesTable: React.FC = () => {
-  const [page, setPage] = React.useState(0);
+  const { activities, loading, error } = useFetchActivitiesForAdmin();
+  const { deleteActivity, loading: deleteLoading, error: deleteError } = useDeleteActivity();
+  const [page, setPage] = useState(0);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const rowsPerPage = 4;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  return (
+  const handleDeleteClick = (id: number) => {
+    setSelectedId(id);
+    setDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedId !== null) {
+      const success = await deleteActivity(selectedId);
+      setDialogOpen(false);
+      if (success) {
+        setSnackbarOpen(true); // Show success message
+      }
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  if (loading) return (
     <Box
       sx={{
         height: '70vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  );
+
+  if (error) return (
+    <Box
+      sx={{
+        height: '70vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
+      }}
+    >
+      <Typography color="error">{error}</Typography>
+    </Box>
+  );
+
+  return (
+    <Box
+      sx={{
+        height: '60vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -74,7 +122,7 @@ const CategoriesTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categories.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+            {activities?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => (
               <TableRow
                 key={index}
                 sx={{
@@ -82,26 +130,26 @@ const CategoriesTable: React.FC = () => {
                   backgroundColor: index % 2 === 0 ? '#ffffff' : '#f5f5f5'
                 }}
               >
-                <TableCell sx={{ padding: '8px' }}>{row.activity}</TableCell>
-                <TableCell sx={{ padding: '8px' }}>{row.category}</TableCell>
+                <TableCell sx={{ padding: '8px' }}>{row.activityName}</TableCell>
+                <TableCell sx={{ padding: '8px' }}>{row.categoryName}</TableCell>
                 <TableCell sx={{ padding: '8px' }}>{row.description}</TableCell>
-                <TableCell sx={{ padding: '8px' }}>{row.pointsPerHour}</TableCell>
+                <TableCell sx={{ padding: '8px' }}>{row.weightagePerHour}</TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
                   <IconButton size="small" sx={{ color: "#616161" }}>
                     <EditIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
-                  <IconButton size="small" sx={{ color: "#616161" }}>
+                  <IconButton size="small" sx={{ color: "#616161" }} onClick={() => handleDeleteClick(row.id)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
               </TableRow>
             ))}
             <TableRow sx={{ height: '10px', backgroundColor: '#ffffff' }}>
-              <TableCell colSpan={6}   align="center" sx={{ padding: '3px' }} >
+              <TableCell colSpan={6} align="center" sx={{ padding: '3px' }}>
                 <IconButton color="primary" size="small">
-                  <AddIcon fontSize="small" />
+                  <AddNewActivity/>
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -111,12 +159,42 @@ const CategoriesTable: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[]}
         component="div"
-        count={categories.length}
+        count={activities ? activities.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
-        sx={{ backgroundColor: '#fffff', width: '100%',overflow:'hidden' }}
+        sx={{ backgroundColor: '#fffff', width: '100%', overflow: 'hidden' }}
       />
+      
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      >
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this activity?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleConfirmDelete} color="error" disabled={deleteLoading}>
+            {deleteLoading ? <CircularProgress size={20} /> : 'Delete'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar for Success */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success">
+          Activity deleted successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

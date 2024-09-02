@@ -332,3 +332,62 @@ export const useDeleteParticipation = () => {
 
   return { deleteParticipation, loading, error };
 };
+
+
+export const useFetchActivitiesForAdmin = () => {
+  const [activities, setActivities] = useState<any | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseURL}/api/v1/activity`);
+        setActivities(response.data.data); // Adjust based on actual response structure
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          console.error("Error response data:", err.response.data);
+          console.error("Error response status:", err.response.status);
+          console.error("Error response headers:", err.response.headers);
+        } else {
+          console.error("Error message:", err.message);
+        }
+        setError("Failed to fetch activities.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivities();
+  }, []);
+
+  return { activities, loading, error };
+};
+
+export const useDeleteActivity = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const deleteActivity = async (id: number) => {
+    try {
+      setLoading(true);
+      await axios.delete(`${baseURL}/api/v1/activity/${id}`);
+      setLoading(false);
+      return true; // Return true if deletion is successful
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      } else {
+        console.error("Error message:", err.message);
+      }
+      setError("Failed to delete activity.");
+      setLoading(false);
+      return false; // Return false if deletion fails
+    }
+  };
+
+  return { deleteActivity, loading, error };
+};
