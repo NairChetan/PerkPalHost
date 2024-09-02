@@ -8,9 +8,21 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Typography, Button, Grid, Checkbox, FormControlLabel, CircularProgress, MenuItem, Select } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Grid,
+  Checkbox,
+  FormControlLabel,
+  CircularProgress,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import RemarksModal from "../Components/PendingApproval/RemarksModal"; // Adjust the path accordingly
-import { useFetchParticipation, usePostApprovalStatus } from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
+import {
+  useFetchParticipation,
+  usePostApprovalStatus,
+} from "../Components/CustomHooks/CustomHooks"; // Adjust the path accordingly
 
 const PendingApproval = () => {
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
@@ -28,12 +40,16 @@ const PendingApproval = () => {
   const [selectedPanels, setSelectedPanels] = useState<number[]>([]); // Track selected panels by id
   const [selectAll, setSelectAll] = useState(false);
   const [remarksModalOpen, setRemarksModalOpen] = useState(false);
-  const [selectedParticipation, setSelectedParticipation] = useState<number | null>(null);
+  const [selectedParticipation, setSelectedParticipation] = useState<
+    number | null
+  >(null);
   const [actionLoading, setActionLoading] = useState<boolean>(false); // State for action loading
 
-  const handleChange = (panelId: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpanded(isExpanded ? `panel${panelId}` : false);
-  };
+  const handleChange =
+    (panelId: number) =>
+    (_event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? `panel${panelId}` : false);
+    };
 
   const handleApprove = async (id: number) => {
     setActionLoading(true); // Start loading animation
@@ -57,8 +73,13 @@ const PendingApproval = () => {
     if (selectedParticipation !== null) {
       setActionLoading(true); // Start loading animation
       try {
-        const currentDate = new Date().toISOString(); 
-        await postApprovalStatus(selectedParticipation, "rejected", remarks,currentDate);
+        const currentDate = new Date().toISOString();
+        await postApprovalStatus(
+          selectedParticipation,
+          "rejected",
+          remarks,
+          currentDate
+        );
         setRefreshPage((prev) => prev + 1); // Refresh page after action
         setRemarksModalOpen(false); // Close modal after submission
       } catch (error) {
@@ -108,14 +129,23 @@ const PendingApproval = () => {
     setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
   };
 
-  const handlePageSizeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
     setPageSize(event.target.value as number);
     setCurrentPage(0); // Reset to first page when page size changes
   };
 
   if (loading || actionLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -177,29 +207,6 @@ const PendingApproval = () => {
               />
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "100%",
-                mb: 2,
-              }}
-            >
-              <Typography variant="body1" sx={{ mr: 2,mt:2 }}>
-                Show:
-              </Typography>
-              <Select
-                value={pageSize}
-                onChange={handlePageSizeChange}
-                sx={{ width: 80 }}
-              >
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={8}>8</MenuItem>
-                <MenuItem value={12}>12</MenuItem>
-                <MenuItem value={16}>16</MenuItem>
-              </Select>
-            </Box>
-
             {participation?.map((item) => (
               <Accordion
                 key={item.id}
@@ -237,7 +244,11 @@ const PendingApproval = () => {
                       <Typography>{item.duration} minutes</Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
-                      <Typography>{new Date(item.participationDate).toLocaleDateString("en-GB")}</Typography>
+                      <Typography>
+                        {new Date(item.participationDate).toLocaleDateString(
+                          "en-GB"
+                        )}
+                      </Typography>
                     </Grid>
                     <Grid item xs={12} sm={1} textAlign="right">
                       {expanded !== `panel${item.id}` && (
@@ -298,7 +309,7 @@ const PendingApproval = () => {
                 Previous Page
               </Button>
               <Typography>
-                Page {currentPage+1} of {totalPages}
+                Page {currentPage + 1} of {totalPages}
               </Typography>
               <Button
                 variant="contained"
