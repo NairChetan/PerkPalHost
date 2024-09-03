@@ -16,7 +16,7 @@ const Admin_Category = () => {
        <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '80%', margin: 'auto' }}>
   {/* Left side content with column flex */}
   <Box display="flex" flexDirection="column" alignItems="flex-start">
-    <Typography variant="h5" component="h1" style={{ fontWeight: 'bold', marginTop: '54px' ,marginLeft:'-81px'}}>
+    <Typography variant="h5" component="h1" style={{ fontWeight: 'bold', marginTop: '54px' ,marginLeft:'-81px',width:'100px'}}>
       Categories
     </Typography>
   </Box>
@@ -25,7 +25,7 @@ const Admin_Category = () => {
   <img
     src="../../src/assets/images/united 1.png"
     alt="Celebration Icon"
-    style={{ width: '100px', height: '100px' }}
+    style={{ width: '100px', height: '100px' ,marginTop:'10px'}}
   />
 </Box>
 

@@ -27,6 +27,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useFetchActivitiesForAdmin } from '../CustomHooks/CustomHooks'; // Adjust the import path
 import { useDeleteActivity } from '../CustomHooks/CustomHooks'; // Adjust the import path
 import AddNewActivity from '../Admin_Category/Button/AddNewActivity';
+import UpdateActivityButton from './Button/UpdateActivityButton';
+import { color } from '@mui/system';
 const CategoriesTable: React.FC = () => {
   const { activities, loading, error } = useFetchActivitiesForAdmin();
   const { deleteActivity, loading: deleteLoading, error: deleteError } = useDeleteActivity();
@@ -43,6 +45,7 @@ const CategoriesTable: React.FC = () => {
   const handleDeleteClick = (id: number) => {
     setSelectedId(id);
     setDialogOpen(true);
+    
   };
 
   const handleConfirmDelete = async () => {
@@ -53,6 +56,7 @@ const CategoriesTable: React.FC = () => {
         setSnackbarOpen(true); // Show success message
       }
     }
+    window.location.reload();
   };
 
   const handleCloseSnackbar = () => {
@@ -136,7 +140,7 @@ const CategoriesTable: React.FC = () => {
                 <TableCell sx={{ padding: '8px' }}>{row.weightagePerHour}</TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
                   <IconButton size="small" sx={{ color: "#616161" }}>
-                    <EditIcon fontSize="small" />
+                    <UpdateActivityButton/>
                   </IconButton>
                 </TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
@@ -147,7 +151,7 @@ const CategoriesTable: React.FC = () => {
               </TableRow>
             ))}
             <TableRow sx={{ height: '10px', backgroundColor: '#ffffff' }}>
-              <TableCell colSpan={6} align="center" sx={{ padding: '3px' }}>
+              <TableCell colSpan={6} align="right" sx={{ paddingTop: '3px',paddingRight:'50px' }}>
                 <IconButton color="primary" size="small">
                   <AddNewActivity/>
                 </IconButton>

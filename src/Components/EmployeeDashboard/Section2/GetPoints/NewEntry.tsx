@@ -27,6 +27,7 @@ const NewEntry = () => {
     initialValues: {
       category: '',
       activity: '',
+      participationDate: ' ',
       description: '',
       duration: '',
       proof: '',
@@ -35,6 +36,7 @@ const NewEntry = () => {
       category: Yup.string().required('Category is required'),
       activity: Yup.string().required('Activity is required'),
       description: Yup.string().required('Description is required'),
+      participationDate: Yup.string().required('Participation Date is required'),
       duration: Yup.number()
         .typeError('Duration must be a number')
         .positive('Duration must be greater than zero')
@@ -62,6 +64,7 @@ const NewEntry = () => {
           const entry = {
             categoryName: values.category,
             activityName: values.activity,
+            participationDate: values.participationDate,
             description: values.description,
             duration: values.duration,
             proofUrl: result.secure_url,
@@ -93,8 +96,7 @@ const NewEntry = () => {
 
   const handleCloseSuccessPopup = () => {
     setOpenSuccessPopup(false);
-    
-    
+
   };
 
   return (
@@ -149,6 +151,19 @@ const NewEntry = () => {
         </select>
         {formik.touched.activity && formik.errors.activity ? (
           <div className={styles.error}>{formik.errors.activity}</div>
+        ) : null}
+        
+        <input
+          className={styles.input}
+          name="participationDate"
+          type="date"
+          placeholder="Participation Date YYYY-MM-DD"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.participationDate}
+        />
+        {formik.touched.participationDate && formik.errors.participationDate ? (
+          <div className={styles.error}>{formik.errors.participationDate}</div>
         ) : null}
 
         <input

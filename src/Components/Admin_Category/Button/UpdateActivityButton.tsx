@@ -2,10 +2,12 @@ import { Box, Button} from "@mui/material";
 import  { useState,  useRef } from 'react';
 import {IconButton } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
-import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import NewActivity from "./NewActivity";
+import { padding } from "@mui/system";
+import UpdateActivity from "./UpdateActivity";
 
-const AddNewActivity = () => {
+const UpdateActivityButton = () => {
 
 
   const [open, setOpen] = useState<boolean>(false);
@@ -13,6 +15,7 @@ const AddNewActivity = () => {
   const handleClose = () => {
       setOpen(false);
     };
+  
 
   return (
     <>
@@ -28,6 +31,7 @@ const AddNewActivity = () => {
                   onClick={() => setOpen((open) => !open)} 
                 sx={{
                   px: "5%",
+                  marginLeft:'-21px',
                   width:'100%',
                   height: {
                     xs: "45%", // For extra-small screens
@@ -57,7 +61,7 @@ const AddNewActivity = () => {
                    },
                 }}
                 >
-                 <AddIcon fontSize="small" />
+                 <EditIcon fontSize="small"  />
                 </Button>
 
                 {/* Modal here */}
@@ -104,7 +108,7 @@ const AddNewActivity = () => {
           >
             <CloseIcon />
           </IconButton>
-          <NewActivity/>
+          <UpdateActivity/>
         </Box>
       )}
          </Box>
@@ -113,4 +117,4 @@ const AddNewActivity = () => {
   )
 }
 
-export default AddNewActivity
+export default UpdateActivityButton
