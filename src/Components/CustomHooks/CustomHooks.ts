@@ -56,29 +56,35 @@ export const useFetchPoints = (endUrl: string,refresh:number) => {
 
 
 
-export const useFetchCategories = (endUrl: string) => {
-    const [categories, setCategories] = useState<categoryNameFetch| null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
-  
-    useEffect(() => {
-      const fetchCategories = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(`${baseURL}${endUrl}`);
-          setCategories(response.data.data);
-        } catch (err) {
-          setError(err as Error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      
-      fetchCategories();
-    }, [endUrl]);
-  
-    return { categories, loading, error };
+interface Category {
+  id: number;
+  categoryName: string;
 }
+
+export const useFetchCategories = (endUrl: string) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseURL}${endUrl}`);
+        setCategories(response.data.data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [endUrl]);
+
+  return { categories, loading, error };
+};
+
 
 
 export const useFetchActivities = (categoryName: string) => {
@@ -344,7 +350,7 @@ export const useFetchActivitiesForAdmin = () => {
       try {
         setLoading(true);
         const response = await axios.get(`${baseURL}/api/v1/activity`);
-        setActivities(response.data.data); // Adjust based on actual response structure
+        setActivities(response.data.data); 
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           console.error("Error response data:", err.response.data);
@@ -390,4 +396,80 @@ export const useDeleteActivity = () => {
   };
 
   return { deleteActivity, loading, error };
+};
+
+
+
+export const useAddNewActivityForAdmin = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const addNewActivity = async (activityData: {
+    activityName: string;
+    categoryId: number;
+    description: string;
+    createdBy:number;
+    weightagePerHour: number;
+  }) => {
+    try {
+      setLoading(true);
+      await axios.post(`${baseURL}/api/v1/activity`, activityData);
+      setSuccess(true); // Set success state to true if the activity was added successfully
+      setLoading(false);
+      return true; // Return true if the addition is successful
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      } else {
+        console.error("Error message:", err.message);
+      }
+      setError("Failed to add new activity.");
+      setLoading(false);
+      setSuccess(false); // Set success state to false if there was an error
+      return false; // Return false if the addition fails
+    }
+  };
+
+  return { addNewActivity, loading, error, success };
+};
+
+
+export const useUpdateActivityForAdmin = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const updateActivity = async (
+    id: number,
+    updatedActivityData: {
+      description: string;
+      updatedBy: number;
+      weightagePerHour: number;
+    }
+  ) => {
+    try {
+      setLoading(true);
+      await axios.put(`${baseURL}/api/v1/activity/${id}`, updatedActivityData);
+      setSuccess(true); // Set success state to true if the update was successful
+      setLoading(false);
+      return true; // Return true if the update is successful
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      } else {
+        console.error("Error message:", err.message);
+      }
+      setError("Failed to update activity.");
+      setLoading(false);
+      setSuccess(false); // Set success state to false if there was an error
+      return false; // Return false if the update fails
+    }
+  };
+
+  return { updateActivity, loading, error, success };
 };
