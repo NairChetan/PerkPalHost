@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 const baseURL = "http://localhost:8080";
+// const token = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbmphbGkuZGFzQHNyZWVnY2xvdWRnbWFpbC5vbm1pY3Jvc29mdC5jb20iLCJpYXQiOjE3MjUzMjYyMDAsImV4cCI6MTcyNTkzMTAwMH0.zDY6rEwzZfqDYrS3wqI7C_uvblRpcVkFGSDxieFajk_fRogq5QqJ8MIU1pdvtOee"
 
 export type PointData = {
   totalPoints: number;
@@ -192,7 +193,13 @@ export const useFetchActivities = (categoryName: string) => {
           approvalStatus: status,
           remarks: remarks,
           approvalDate: approvalDate
-        });
+        }
+        // {
+        //   headers: {
+        //     'Authorization': `Bearer ${token}` // Attach the token here
+        //   }
+        // }
+      );
         setLoading(false);
         return response.data;
       } catch (err) {
