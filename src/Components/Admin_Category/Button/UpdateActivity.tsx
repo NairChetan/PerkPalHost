@@ -15,6 +15,7 @@ const UpdateActivity = ({ activityId }: { activityId: number }) => {
   const { updateActivity } = useUpdateActivityForAdmin();
 
   const [initialValues, setInitialValues] = useState({
+    activityName: '',
     description: '',
     weightagePerHour: ''
   });
@@ -25,6 +26,7 @@ const UpdateActivity = ({ activityId }: { activityId: number }) => {
      
       if (activity) {
         setInitialValues({
+          activityName: activity.activityName || '',
           description: activity.description || '',
           weightagePerHour: activity.weightagePerHour || ''
         });
@@ -35,17 +37,20 @@ const UpdateActivity = ({ activityId }: { activityId: number }) => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Yup.object({
+      activityName: Yup.string().required('Activity Name is required'),
       description: Yup.string().required('Description is required'),
       weightagePerHour: Yup.number()
-        .typeError('Weightage per hour must be a number')
-        .positive('Weightage per hour must be greater than zero')
-        .required('Weightage per hour is required'),
+        .typeError('Points per hour must be a number')
+        .positive('Points per hour must be greater than zero')
+        .required('Points per hour is required'),
     }),
+    enableReinitialize: true,
     onSubmit: async (values) => {
       setError(null);
       setOpenLoadingPopup(true);
-      console.log(activities.id);
+
       const success = await updateActivity(activityId, {
+        activityName: values.activityName,
         description: values.description,
         updatedBy: parseInt(localStorage.getItem("employeeId") || '0', 10),
         weightagePerHour: parseInt(values.weightagePerHour, 10),
@@ -74,7 +79,7 @@ const UpdateActivity = ({ activityId }: { activityId: number }) => {
       <div className={styles.headingContainer}>
         <div>
           <h3 className={styles.heading}>Update Activity!</h3>
-          <p className={styles.paraghraph}>Edit the details to update the activity</p>
+          <p className={styles.paragraph}>Edit the details to update the activity</p>
         </div>
         <img
           src="../../../src/assets/images/cheer 1.png"
@@ -86,6 +91,19 @@ const UpdateActivity = ({ activityId }: { activityId: number }) => {
       {error && <p className={styles.error}>{error}</p>}
 
       <form className={styles.form} onSubmit={formik.handleSubmit}>
+        <input
+          className={styles.input}
+          name="activityName"
+          type="text"
+          placeholder="Activity Name"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.activityName}
+        />
+        {formik.touched.activityName && formik.errors.activityName ? (
+          <div className={styles.error}>{formik.errors.activityName}</div>
+        ) : null}
+
         <input
           className={styles.input}
           name="description"

@@ -16,17 +16,47 @@ const Admin_Category = () => {
        <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '80%', margin: 'auto' }}>
   {/* Left side content with column flex */}
   <Box display="flex" flexDirection="column" alignItems="flex-start">
-    <Typography variant="h5" component="h1" style={{ fontWeight: 'bold', marginTop: '54px' ,marginLeft:'-81px',width:'100px'}}>
-      Categories
-    </Typography>
-  </Box>
+  <Typography
+    variant="h5"
+    component="h1"
+    sx={{
+      fontWeight: 'bold',
+      marginTop: {
+        xs: '20px', // Smaller margin-top for extra-small screens
+        sm: '30px', // Medium margin-top for small screens
+        md: '40px', // Larger margin-top for medium screens
+        lg: '54px', // Default margin-top for large screens
+      },
+      marginLeft: {
+        xs: '0px',  // No margin-left for extra-small screens
+        sm: '-20px', // Smaller margin-left for small screens
+        md: '-50px', // Medium margin-left for medium screens
+        lg: '-81px', // Default margin-left for large screens
+      },
+      width: {
+        xs: 'auto', // Auto width for extra-small screens
+        sm: '80px', // Smaller width for small screens
+        md: '90px', // Medium width for medium screens
+        lg: '100px', // Default width for large screens
+      },
+    }}
+  >
+    Categories
+  </Typography>
+</Box>
 
   {/* Right side image */}
   <img
-    src="../../src/assets/images/united 1.png"
-    alt="Celebration Icon"
-    style={{ width: '100px', height: '100px' ,marginTop:'10px'}}
-  />
+  src="../../src/assets/images/united 1.png"
+  alt="Celebration Icon"
+  style={{
+    width: '100px', // Default width
+    height: '100px', // Default height
+    marginTop: '10px',
+
+  }}
+/>
+
 </Box>
 
       <CategoriesTable/>

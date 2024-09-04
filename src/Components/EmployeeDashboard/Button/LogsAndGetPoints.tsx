@@ -126,15 +126,19 @@ const LogsAndGetPoints = () => {
             position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -53%)",
+            transform: "translate(-50%, -50%)",
             zIndex: "100",
             border: "1px solid gray",
-            width: '399px',
-            height: "80vh",
+            width: '400px',
+            height: "97vh",
             borderRadius: "15px",
-            background: "#1D1E22",
+            // background: "#1D1E22",
+           
             padding: "0%",
-            color: "#FFFFFF" // Add border with width, style, and color
+            color: "#FFFFFF", // Add border with width, style, and color
+            '@media (max-width: 321px)': {
+              width: '300px',
+            },
           }}
           ref={refOne}
         >

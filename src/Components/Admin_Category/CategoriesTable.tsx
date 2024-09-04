@@ -28,7 +28,6 @@ import { useFetchActivitiesForAdmin } from '../CustomHooks/CustomHooks'; // Adju
 import { useDeleteActivity } from '../CustomHooks/CustomHooks'; // Adjust the import path
 import AddNewActivity from '../Admin_Category/Button/AddNewActivity';
 import UpdateActivityButton from './Button/UpdateActivityButton';
-import { color } from '@mui/system';
 const CategoriesTable: React.FC = () => {
   const { activities, loading, error } = useFetchActivitiesForAdmin();
   const { deleteActivity, loading: deleteLoading, error: deleteError } = useDeleteActivity();
@@ -105,15 +104,31 @@ const CategoriesTable: React.FC = () => {
     >
       <TableContainer 
         component={Paper} 
-        sx={{ 
-          width: '100%', 
-          maxWidth: '1200px', 
-          height: 'calc(100vh - 292px)',
-          overflowX: 'auto',
-          overflowY: 'auto',
-          borderRadius: '10px',
-        }}
-      >
+        component={Paper} 
+  sx={{ 
+    width: '100%', 
+    maxWidth: '1200px', 
+    height: 'calc(100vh - 292px)',
+    overflowX: 'auto',
+    overflowY: 'auto',
+    borderRadius: '10px',
+    // Custom scrollbar styles
+    "&::-webkit-scrollbar": {
+      width: "7px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#2c2c2c",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#6c6c6c",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#9c9c9c",
+    },
+  }}
+    >
         <Table stickyHeader>
           <TableHead>
             <TableRow sx={{ backgroundColor: '#e0e0e0' }}>
@@ -140,11 +155,11 @@ const CategoriesTable: React.FC = () => {
                 <TableCell sx={{ padding: '8px' }}>{row.weightagePerHour}</TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
                   <IconButton size="small" sx={{ color: "#616161" }}>
-                    <UpdateActivityButton/>
+                  <UpdateActivityButton activityId={row.id} />
                   </IconButton>
                 </TableCell>
                 <TableCell align="center" sx={{ padding: '8px' }}>
-                  <IconButton size="small" sx={{ color: "#616161" }} onClick={() => handleDeleteClick(row.id)}>
+                  <IconButton size="small" sx={{ color: "#E60124" }} onClick={() => handleDeleteClick(row.id)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
