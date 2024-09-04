@@ -1640,6 +1640,8 @@ import {
   DialogContent,
   DialogTitle,
   Checkbox,
+  Tabs,
+  Tab
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"; // Import search icon
 import TextField from "@mui/material/TextField"; // Input fields
@@ -1653,13 +1655,17 @@ import { FaSync } from "react-icons/fa";
 const PendingApproval = () => {
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
   const [pageSize, setPageSize] = useState(8); // Default page size is 4
+  const [approvalStatus, setApprovalStatus] = useState<string | null>(
+    "pending"
+  );
+  const [sortBy, setSortBy] = useState<string | null>("");
   const [refreshPage, setRefreshPage] = useState<number>(0);
   const [activityName, setActivityName] = useState<string | null>("");
   const [firstName, setFirstName] = useState<string | null>("");
   const [lastName, setLastName] = useState<string | null>("");
   const [employeeId, setEmployeeId] = useState<string | null>("");
   const { participation, pagination, loading, error } = useFetchParticipation(
-    `/api/v1/participation/search?activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&pageNumber=${currentPage}&pageSize=${pageSize}&participationDate=participationDate&desc=desc`,
+    `/api/v1/participation/search?approvalStatus=${approvalStatus}&activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=desc`,
     refreshPage
   );
   console.log(participation);
@@ -1832,6 +1838,19 @@ const PendingApproval = () => {
   const handleDeselectAll = () => {
     setSelectedPanels([]);
   };
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    if (newValue === "pending") {
+      setApprovalStatus("pending");
+      setSortBy("participationDate");
+    } else if (newValue === "approved") {
+      setApprovalStatus("approved");
+      setSortBy("approvalDate");
+    } else if (newValue === "rejected") {
+      setApprovalStatus("rejected");
+      setSortBy("approvalDate");
+    }
+    setCurrentPage(0); // Reset to first page on tab change
+  };
 
   if (loading || actionLoading) {
     return (
@@ -1890,31 +1909,42 @@ const PendingApproval = () => {
                 mb: 2,
               }}
             >
-              <Typography variant="h5">Pending Approvals</Typography>
+              <Tabs value={approvalStatus} onChange={handleTabChange}>
+                <Tab value="pending" label="Pending" />
+                <Tab value="approved" label="Approved" />
+                <Tab value="rejected" label="Rejected" />
+              </Tabs>
+
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Button
-                  variant="contained"
-                  onClick={handleApproveSelected}
-                  disabled={selectedPanels.length === 0 || actionLoading}
-                >
-                  Approve Selected
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleRejectSelected}
-                  disabled={selectedPanels.length === 0 || actionLoading}
-                >
-                  Reject Selected
-                </Button>
-                <Checkbox
-                  checked={
-                    selectedPanels.length ===
-                    (participation ? participation.length : 0)
-                  }
-                  onChange={(e) =>
-                    e.target.checked ? handleSelectAll() : handleDeselectAll()
-                  }
-                />
+                {approvalStatus === "pending" && (
+                  <>
+                    <Button
+                      variant="contained"
+                      onClick={handleApproveSelected}
+                      disabled={selectedPanels.length === 0 || actionLoading}
+                    >
+                      Approve Selected
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={handleRejectSelected}
+                      disabled={selectedPanels.length === 0 || actionLoading}
+                    >
+                      Reject Selected
+                    </Button>
+                    <Checkbox
+                      checked={
+                        selectedPanels.length ===
+                        (participation ? participation.length : 0)
+                      }
+                      onChange={(e) =>
+                        e.target.checked
+                          ? handleSelectAll()
+                          : handleDeselectAll()
+                      }
+                    />
+                  </>
+                )}
                 <SearchIcon
                   sx={{ cursor: "pointer" }}
                   onClick={handleSearchIconClick}
@@ -1962,9 +1992,13 @@ const PendingApproval = () => {
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
                       <Typography>
-                        {new Date(item.participationDate).toLocaleDateString(
-                          "en-GB"
-                        )}
+                        {approvalStatus === "pending"
+                          ? new Date(item.participationDate).toLocaleDateString(
+                              "en-GB"
+                            )
+                          : new Date(item.approvalDate).toLocaleDateString(
+                              "en-GB"
+                            )}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="right">
@@ -1996,20 +2030,24 @@ const PendingApproval = () => {
                         >
                           <InfoIcon sx={{ cursor: "pointer", mr: 5 }} />
                         </Tooltip>
-                        <CheckCircleIcon
-                          color="success"
-                          sx={{ cursor: "pointer" }}
-                          onClick={(event) =>
-                            handleIconClick(event, item.id, "approve")
-                          }
-                        />
-                        <CancelIcon
-                          color="error"
-                          sx={{ ml: 1, cursor: "pointer" }}
-                          onClick={(event) =>
-                            handleIconClick(event, item.id, "reject")
-                          }
-                        />
+                        {approvalStatus === "pending" && (
+                          <>
+                            <CheckCircleIcon
+                              color="success"
+                              sx={{ cursor: "pointer" }}
+                              onClick={(event) =>
+                                handleIconClick(event, item.id, "approve")
+                              }
+                            />
+                            <CancelIcon
+                              color="error"
+                              sx={{ ml: 1, cursor: "pointer" }}
+                              onClick={(event) =>
+                                handleIconClick(event, item.id, "reject")
+                              }
+                            />
+                          </>
+                        )}
                       </>
                     </Grid>
                   </Grid>
