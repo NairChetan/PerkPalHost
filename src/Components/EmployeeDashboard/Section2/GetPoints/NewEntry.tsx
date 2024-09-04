@@ -37,10 +37,8 @@ const NewEntry = () => {
       activity: Yup.string().required('Activity is required'),
       description: Yup.string().required('Description is required'),
       participationDate: Yup.string().required('Participation Date is required'),
-      duration: Yup.number()
-        .typeError('Duration must be a number')
-        .positive('Duration must be greater than zero')
-        .integer('Duration must be an integer')
+      duration: Yup.string()
+        .matches(/^\d{1,2}:\d{2}$/, 'Duration must be in HH:MM format')
         .required('Duration is required'),
     }),
     onSubmit: async (values, { resetForm }) => {
@@ -49,6 +47,10 @@ const NewEntry = () => {
       const employeelocal = localStorage.getItem("employeeId");
 
       try {
+        // Convert HH:MM to minutes
+        const [hours, minutes] = values.duration.split(':').map(Number);
+        const durationInMinutes = hours * 60 + minutes;
+
         // Cloudinary upload
         const formData = new FormData();
         formData.append('file', proof!);
@@ -66,7 +68,7 @@ const NewEntry = () => {
             activityName: values.activity,
             participationDate: values.participationDate,
             description: values.description,
-            duration: values.duration,
+            duration: durationInMinutes, // Store the converted duration
             proofUrl: result.secure_url,
             createdBy: employeelocal,
             employeeEmpId: employeelocal,
@@ -182,12 +184,9 @@ const NewEntry = () => {
         <input
           className={styles.input}
           name="duration"
-          type="number"
-          placeholder="Duration in minutes"
-          onChange={(e) => {
-            const value = e.target.value;
-            formik.setFieldValue('duration', value ? parseInt(value, 10) : '');
-          }}
+          type="text"
+          placeholder="Duration HH:MM"
+          onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.duration}
         />

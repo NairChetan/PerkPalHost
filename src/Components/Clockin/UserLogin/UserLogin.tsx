@@ -4,8 +4,17 @@ import dayjs from 'dayjs';
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Dialog, DialogContent, DialogActions, Button, TextField, CircularProgress } from '@mui/material';
+import { Dialog, DialogContent, DialogActions, Button, TextField, CircularProgress, Typography } from '@mui/material';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import { useFetchUserLoginsByDate, useEditParticipationEntry, useDeleteParticipation } from '../../CustomHooks/CustomHooks';
+
+// Define the validation schema using Yup
+const validationSchema = Yup.object().shape({
+  description: Yup.string().required('Description is required'),
+  durationHours: Yup.number().min(0, 'Hours cannot be negative').required('Hours are required'),
+  durationMinutes: Yup.number().min(0, 'Minutes cannot be negative').max(59, 'Minutes must be less than 60').required('Minutes are required'),
+});
 
 interface UserLoginProps {
   selectedDate: string;
@@ -16,8 +25,6 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const [proofUrl, setProofUrl] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
-  const [description, setDescription] = useState('');
-  const [duration, setDuration] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
@@ -31,15 +38,21 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
 
   useEffect(() => {
     if (entry) {
-      setDescription(entry.description);
-      setDuration(entry.duration);
       setProofUrl(entry.proofUrl);
     }
   }, [entry]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Utility function to convert minutes to HH:MM format
+const convertMinutesToHHMM = (minutes: number): string => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+};
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, setFieldValue: (field: string, value: any) => void) => {
     if (event.target.files && event.target.files[0]) {
       setFile(event.target.files[0]);
+      setFieldValue('file', event.target.files[0]);
     }
   };
 
@@ -67,7 +80,9 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
     }
   };
 
-  const handleEditSave = async () => {
+  const handleEditSave = async (values: any) => {
+    const { description, durationHours, durationMinutes } = values;
+    const durationInMinutes = durationHours * 60 + durationMinutes;
     let updatedProofUrl = proofUrl;
 
     if (file) {
@@ -81,7 +96,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
     }
 
     if (editId) {
-      const success = await updateEntry({ description, duration, proofUrl: updatedProofUrl });
+      const success = await updateEntry({ description, duration: durationInMinutes, proofUrl: updatedProofUrl });
       if (success) {
         setMessage('Entry updated successfully.');
         handleEditClose();
@@ -117,9 +132,6 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const handleEditClose = () => {
     setEditOpen(false);
     setEditId(null);
-    setDescription('');
-    setDuration(0);
-    setProofUrl('');
     setFile(null);
   };
 
@@ -158,7 +170,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
     setMessage('');
   };
 
-  const filteredEntries = userLogins.filter(entry => dayjs(entry.participationDate).format('YYYY-MM-DD') === selectedDate);
+  const filteredEntries = userLogins.filter(entry => dayjs(entry.participationDate).format('YYYY-MM-DD') === selectedDate).reverse();
 
   return (
     <>
@@ -170,7 +182,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
               <th>Category</th>
               <th>Activity</th>
               <th>Description</th>
-              <th>Duration (Min)</th>
+              <th>Duration (Hrs)</th>
               <th>Remarks</th>
               <th>Status</th>
               <th>Proof</th>
@@ -184,7 +196,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
                 <td>{entry.activityIdCategoryName}</td>
                 <td>{entry.activityName}</td>
                 <td>{entry.description}</td>
-                <td>{entry.duration}</td>
+                <td>{convertMinutesToHHMM(entry.duration)}</td>
                 <td>{entry.remarks}</td>
                 <td>{entry.status}</td>
                 <td>
@@ -224,37 +236,74 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
 
       {/* Edit Dialog */}
       <Dialog open={editOpen} onClose={handleEditClose} maxWidth="sm" fullWidth>
-        <DialogContent>
-          <h3>Edit Entry</h3>
-          <TextField
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Duration (Min)"
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
-            fullWidth
-            margin="normal"
-          />
-          <input
-            accept="image/*"
-            type="file"
-            onChange={handleFileChange}
-            style={{ marginTop: '20px', display: 'block' }}
-          />
-          {uploading && <CircularProgress size={24} />}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleEditClose} color="secondary">Cancel</Button>
-          <Button onClick={handleEditSave} color="primary" disabled={editLoading || uploading}>
-            {editLoading || uploading ? "Saving..." : "Save"}
-          </Button>
-        </DialogActions>
+        <Formik
+          initialValues={{
+            description: '',
+            durationHours: 0,
+            durationMinutes: 0,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => handleEditSave(values)}
+        >
+          {({ setFieldValue }) => (
+            <Form>
+              <DialogContent>
+                <h3>Edit Entry</h3>
+                <Field
+                  name="description"
+                  as={TextField}
+                  label="Description"
+                  fullWidth
+                  margin="normal"
+                  helperText={<ErrorMessage name="description" />}
+                  error={Boolean(<ErrorMessage name="description" />)}
+                />
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Field
+                    name="durationHours"
+                    as={TextField}
+                    type="number"
+                    label="Duration Hours"
+                    fullWidth
+                    margin="normal"
+                    helperText={<ErrorMessage name="durationHours" />}
+                    error={Boolean(<ErrorMessage name="durationHours" />)}
+                  />
+                  <Field
+                    name="durationMinutes"
+                    as={TextField}
+                    type="number"
+                    label="Duration Minutes"
+                    fullWidth
+                    margin="normal"
+                    helperText={<ErrorMessage name="durationMinutes" />}
+                    error={Boolean(<ErrorMessage name="durationMinutes" />)}
+                  />
+                </div>
+                <input
+                  accept="image/*"
+                  type="file"
+                  onChange={(event) => handleFileChange(event, setFieldValue)}
+                  style={{ marginTop: '20px', display: 'block' }}
+                />
+                {uploading && <CircularProgress size={24} />}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleEditClose} color="secondary">Cancel</Button>
+                <Button type="submit" color="primary" disabled={editLoading || uploading}>
+                  {editLoading || uploading ? (
+                    <>
+                      <CircularProgress size={24} style={{ marginRight: '10px' }} />
+                      Saving...
+                    </>
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
+              </DialogActions>
+            </Form>
+          )}
+        </Formik>
       </Dialog>
 
       {/* Confirmation Dialog */}
@@ -265,7 +314,14 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
         <DialogActions>
           <Button onClick={handleConfirmClose} color="secondary">Cancel</Button>
           <Button onClick={handleDeleteConfirm} color="primary" disabled={deleteLoading}>
-            {deleteLoading ? "Deleting..." : "Delete"}
+            {deleteLoading ? (
+              <>
+                <CircularProgress size={24} style={{ marginRight: '10px' }} />
+                Deleting...
+              </>
+            ) : (
+              "Delete"
+            )}
           </Button>
         </DialogActions>
       </Dialog>

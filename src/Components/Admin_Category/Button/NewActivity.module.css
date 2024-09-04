@@ -1,10 +1,12 @@
 .container {
     background-color: #212121;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     width: 400px;
     margin: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 78vh;
+    overflow-y:auto;
   }
   
   .paraghraph{
@@ -113,3 +115,18 @@
     text-align: center;
   }
   
+
+  @media (max-width: 321px) {
+
+    .container {
+      background-color: #212121;
+      padding: 20px;
+      border-radius: 15px;
+      width: 300px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      height: 97vh;
+      overflow-y:auto;
+    }
+     
+  }

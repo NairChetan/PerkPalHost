@@ -37,11 +37,11 @@ const AddNewActivity = () => {
                     xl: "45%", // For extra-large screens
                   },
                    backgroundColor:"white",
-                   display: "flex",
-                   alignItems: "center", // Align items vertically center
-                   justifyContent: "center", // Center items horizontally
+                  //  display: "flex",
+                  //  alignItems: "center", // Align items vertically center
+                  //  justifyContent: "center", // Center items horizontally
                    color: "#E60124",
-                   boxShadow: 1,
+                  //  boxShadow: 1,
                    fontWeight: 700,
                    fontSize: {
                      xs: "4.7vw", // Extra small devices (phones, 600px and down)
@@ -51,10 +51,10 @@ const AddNewActivity = () => {
                      xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
                    },
                    textAlign: "center", // Center-align text
-                   '&:hover': {
+                  //  '&:hover': {
 
-                     color: "#5a1a1a", // Text color on hover (optional)
-                   },
+                  //    color: "#5a1a1a", // Text color on hover (optional)
+                  //  },
                 }}
                 >
                  <AddIcon fontSize="small" />
@@ -83,12 +83,15 @@ const AddNewActivity = () => {
             transform: "translate(-50%, -53%)",
             zIndex: "100",
             border: "1px solid gray",
-            width: '399px',
-            height: "80vh",
+            width: '400px',
+            height: "78vh",
             borderRadius: "15px",
             background: "#1D1E22",
             padding: "0%",
-            color: "#FFFFFF" // Add border with width, style, and color
+            color: "#FFFFFF", // Add border with width, style, and color
+            '@media (max-width: 321px)': {
+              width: '300px',
+            },
           }}
           ref={refOne}
         >
