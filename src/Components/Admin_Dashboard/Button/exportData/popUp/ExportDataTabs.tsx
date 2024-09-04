@@ -68,22 +68,18 @@ const ExportDataTabs = () => {
             },
           }}
         >
-          <Tab label="Activity data" />
           <Tab label="Chart data" />
           <Tab label="Leader-board data" />
           <Tab label="Category data" />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Tab4 />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
         <Tab1 />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={1}>
         <Tab2 />
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={2}>
         <Tab3 />
       </TabPanel>
     </>
