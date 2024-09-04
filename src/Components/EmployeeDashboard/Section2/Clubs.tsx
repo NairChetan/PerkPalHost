@@ -38,7 +38,7 @@ const Clubs: React.FC<PointProp> = ({ points }) => {
     >
       <div className='inner-club' style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ marginBottom: '15px' }}>
-          <p style={{ fontSize: '15px', fontWeight: '600' }}>Points Used</p>
+          <p style={{ fontSize: '15px', fontWeight: '600' }}>Utilized Points</p>
         </div>
         <div
           style={{

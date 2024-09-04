@@ -32,7 +32,7 @@ const Points: React.FC<PointProp> = ({ points }) => {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-        <p style={{ fontSize: '15px', fontWeight: '600', marginBottom: '10px' }}>Redeemable Points</p>
+        <p style={{ fontSize: '15px', fontWeight: '600', marginBottom: '10px' }}>Points Available For Redemption</p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           {redeemablePoints <= 90000 ? (
             <>

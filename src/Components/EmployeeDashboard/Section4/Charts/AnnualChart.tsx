@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Bar_Chart from "../../Section4/Charts/BarChartEd";
+import ResizeObserver from "resize-observer-polyfill"; // Import ResizeObserver for cross-browser support
 
 const chartOptions = {
   responsive: true,
@@ -22,21 +23,45 @@ const AnnualChart = () => {
     ],
   });
 
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  // Custom useResizeObserver logic
+  useEffect(() => {
+    if (chartRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (entries.length) {
+          const entry = entries[0];
+          setDimensions({
+            width: entry.contentRect.width,
+            height: entry.contentRect.height,
+          });
+        }
+      });
+      resizeObserver.observe(chartRef.current);
+
+      return () => resizeObserver.disconnect();
+    }
+  }, []);
+
+  // Fetch chart data
   useEffect(() => {
     const fetchData = async () => {
       const empid = localStorage.getItem("employeeId");
 
       if (!empid) {
-        console.error('Employee ID not found in localStorage');
+        console.error("Employee ID not found in localStorage");
         return;
       }
 
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/employee/employee/${empid}/points/last-four-years`);
+        const response = await fetch(
+          `http://localhost:8080/api/v1/employee/employee/${empid}/points/last-four-years`
+        );
         const data = await response.json();
 
-        const labels = data.map((item) => item.year.toString());
-        const points = data.map((item) => item.pointsAccumulated);
+        const labels = data.map((item: { year: number }) => item.year.toString());
+        const points = data.map((item: { pointsAccumulated: number }) => item.pointsAccumulated);
 
         setChartData({
           labels: labels,
@@ -69,12 +94,18 @@ const AnnualChart = () => {
         {/* Optional: Add other components or elements here */}
       </Box>
       <Box
+        ref={chartRef}
         sx={{
           width: "100%",
-          height: "75%",
+          height: dimensions.height || "75%",
         }}
       >
-        <Bar_Chart chartData={chartData} chartOptions={chartOptions} />
+        <Bar_Chart
+          chartData={chartData}
+          chartOptions={chartOptions}
+          width={dimensions.width}
+          height={dimensions.height}
+        />
       </Box>
     </>
   );

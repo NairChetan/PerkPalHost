@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Box,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DateRangePickExport from "./DateRangePickExport";
@@ -123,55 +124,80 @@ const Tab2 = () => {
     <>
       {/* Date Range Picker */}
       <DateRangePickExport onDateRangeChange={handleDateRangeChange} />
-
-      {/* Preview Button */}
-      <Button
-        variant="contained"
-        color="primary"
+      <Box
         sx={{
-          width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-          px: "2%",
-          marginTop: "1rem",
-          backgroundColor: "#303137",
-          borderRadius: "15px",
-          "&:hover": {
-            backgroundColor: "black",
-          },
+          mt: "1rem",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          gap: "20px",
         }}
-        onClick={handlePreviewClick} // Add onClick handler to Preview button
       >
-        {isTableVisible ? "Hide Data" : "Preview"}
-        <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />
-      </Button>
+        {/* Preview Button */}
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
+            px: "2%",
+            backgroundColor: "#303137",
+            borderRadius: "15px",
+            "&:hover": {
+              backgroundColor: "black",
+            },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handlePreviewClick} // Add onClick handler to Preview button
+        >
+          {isTableVisible ? "Hide Data" : "Preview"}
+          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />
+        </Button>
 
-      {/* Export Button */}
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-          marginTop: "1.5rem",
-          backgroundColor: "#4741FC",
-          borderRadius: "15px",
-          "&:hover": {
-            backgroundColor: "black",
-          },
-        }}
-        onClick={handleExportClick} // Add onClick handler to Export button
-      >
-        Export
-      </Button>
+        {/* Export Button */}
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
+            backgroundColor: "#4741FC",
+            borderRadius: "15px",
+            "&:hover": {
+              backgroundColor: "black",
+            },
+          }}
+          onClick={handleExportClick} // Add onClick handler to Export button
+        >
+          Export
+        </Button>
+      </Box>
 
       {/* Conditional Rendering of Table */}
       {isTableVisible && apiResponse.length > 0 && (
         <TableContainer
           component={Paper}
-          sx={{ marginTop: "1rem", overflow: "auto" }}
+          sx={{
+            marginTop: "1rem",
+            maxHeight: "300px", // Set a fixed height for the table container
+            overflowY: "auto", // Enable vertical scrolling
+            // Custom scrollbar styles
+            "&::-webkit-scrollbar": {
+              width: "7px",
+              height: "7px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "#fff",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#6c6c6c",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#9c9c9c",
+            },
+          }}
         >
-          <Table size="small">
+          <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>Rank</TableCell>
