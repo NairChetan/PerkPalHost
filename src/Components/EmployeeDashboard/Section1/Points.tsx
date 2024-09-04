@@ -19,7 +19,7 @@ const Points: React.FC<PointProp> = ({ points }) => {
     <div className='points-card'>
       <div style={{ padding: '15px', paddingLeft: '10px', paddingRight: '10px' }}>
         <div>
-          <p style={{ paddingLeft: '40px', fontSize: '15px', fontWeight: '600' }}>Points</p>
+          <p style={{ paddingLeft: '40px', fontSize: '15px', fontWeight: '600' }}>Total Points</p>
         </div>
         <div className='points-img'>
           {totalPoints <= 90000 ? (
