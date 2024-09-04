@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import { Box, Button, IconButton } from "@mui/material";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import CloseIcon from "@mui/icons-material/Close";
 import ExportDataHeader from "./popUp/ExportDataHeader";
 import ExportDataTabs from "./popUp/ExportDataTabs";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const ExportDataButton = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -59,7 +59,7 @@ const ExportDataButton = () => {
             },
           }}
         >
-          <GetAppIcon fontSize="inherit" />
+          <FileUploadIcon fontSize="inherit" />
         </Box>
         Export Data
       </Button>
@@ -88,15 +88,15 @@ const ExportDataButton = () => {
               xs: "90vw", // For extra small screens (mobile)
               sm: "90vw", // For small screens (small tablets)
               md: "70vw", // For medium screens (tablets)
-              lg: "50vw", // For large screens (desktops)
-              xl: "50vw", // For extra large screens
+              lg: "60vw", // For large screens (desktops)
+              xl: "60vw", // For extra large screens
             },
             height: "auto",
-            maxHeight: "90vh",
+            maxHeight: "95vh",
             background: "#1D1E22",
-            borderRadius: "50px",
+            borderRadius: 5,
             padding: "2rem",
-            overflowY: "auto",
+            overflowY: "hidden",
             // Custom scrollbar styles
             "&::-webkit-scrollbar": {
               width: "7px",

@@ -27,7 +27,7 @@ const formatDate = (date: Date): string => {
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 };
 
-const Tab2 = () => {
+const Tab4 = () => {
   // State to store the selected date range
   const [selectedDateRange, setSelectedDateRange] = useState<{
     startDate: Date | null;
@@ -126,7 +126,7 @@ const Tab2 = () => {
       <DateRangePickExport onDateRangeChange={handleDateRangeChange} />
       <Box
         sx={{
-          mt: "1rem",
+          mt: "2%",
           display: "flex",
           gap: "20px",
         }}
@@ -176,8 +176,8 @@ const Tab2 = () => {
         <TableContainer
           component={Paper}
           sx={{
-            marginTop: "1rem",
-            maxHeight: "300px", // Set a fixed height for the table container
+            marginTop: "2rem",
+            maxHeight: "400px", // Set a fixed height for the table container
             overflowY: "auto", // Enable vertical scrolling
             // Custom scrollbar styles
             "&::-webkit-scrollbar": {
@@ -256,4 +256,4 @@ const Tab2 = () => {
   );
 };
 
-export default Tab2;
+export default Tab4;
