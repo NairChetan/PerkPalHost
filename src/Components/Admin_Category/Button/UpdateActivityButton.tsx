@@ -22,8 +22,6 @@ const UpdateActivityButton: React.FC<UpdateActivityButtonProps> = ({ activityId 
         variant="contained"
         onClick={() => setOpen(!open)} 
         sx={{
-          px: "5%",
-          marginLeft: '-19px',
           width: '100%',
           height: '45%',
           backgroundColor: "transparent",
@@ -39,6 +37,11 @@ const UpdateActivityButton: React.FC<UpdateActivityButtonProps> = ({ activityId 
             md: "2.5vw",
             lg: "1vw",
             xl: "1vw",
+          },
+          "&:hover": {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            
           },
         }}
       >
