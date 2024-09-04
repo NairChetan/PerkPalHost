@@ -1685,6 +1685,7 @@ const PendingApproval = () => {
     setLastName("");
     setEmployeeId("");
   };
+  console.log(selectedPanels);
   // Handle opening and closing the search dialog
   const handleSearchIconClick = () => {
     setSearchDialogOpen(true);
@@ -1817,6 +1818,7 @@ const PendingApproval = () => {
   };
 
   const handleRejectSelected = () => {
+    setSelectedParticipation(null); // Ensure single selection is reset
     // Open the remarks modal for entering remarks
     setRemarksModalOpen(true);
   };
@@ -1955,7 +1957,7 @@ const PendingApproval = () => {
                       <Typography>
                         {Math.floor(item.duration / 60) > 0 &&
                           `${Math.floor(item.duration / 60)} hour `}
-                        {item.duration % 60} min
+                        {item.duration % 60 > 0 && `${item.duration % 60} min`}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={2} textAlign="center">
