@@ -70,6 +70,9 @@ const Navbar = () => {
     }
   }, []); // Empty dependency array for initial load
 
+  // Determine the role
+  const role = localStorage.getItem("role");
+
   return (
     <>
       <Box
@@ -177,7 +180,8 @@ const Navbar = () => {
                 },
               }}
             >
-              {userData.clubName} Club
+              {role === "admin" ? "Admin" : `${userData.clubName} Club`}{" "}
+              {/* Conditional rendering based on role */}
             </Typography>
             <Typography
               sx={{

@@ -415,14 +415,14 @@ const KnowYourCategory = () => {
               lg: "50vw",
               xl: "45vw",
             },
-            maxHeight: "90vh",
+            maxHeight: "95vh",
             backgroundColor: "#1D1E22",
             borderRadius: "20px",
             padding: {
               xs: "1.5rem",
               sm: "2rem",
             },
-            overflowY: "auto",
+            overflowY: "hidden",
             color: "#fff",
           }}
           ref={refOne}
@@ -495,7 +495,29 @@ const KnowYourCategory = () => {
           />
 
           {/* Table */}
-          <TableContainer component={Paper} sx={{ backgroundColor: "#2D2F33" }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              backgroundColor: "#2D2F33",
+              maxHeight: "400px", // Set a fixed height for the table container
+              overflowY: "auto",
+              "&::-webkit-scrollbar": {
+                width: "6px",
+                height: "6px",
+              },
+              "&::-webkit-scrollbar-track": {
+                background: "#fff",
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "#6c6c6c",
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: "#9c9c9c",
+              },
+            }}
+          >
             <Table>
               <TableHead>
                 <TableRow>
@@ -512,6 +534,10 @@ const KnowYourCategory = () => {
                         xs: "6px 12px",
                         sm: "8px 16px",
                       },
+                      position: "sticky", // Sticky position for the header
+                      top: 0, // Sticks the header to the top
+                      backgroundColor: "#2D2F33", // Matches the background color of the table container
+                      zIndex: 1, // Ensures the header is above other content when scrolling
                     }}
                   >
                     Category
@@ -529,6 +555,10 @@ const KnowYourCategory = () => {
                         xs: "6px 12px",
                         sm: "8px 16px",
                       },
+                      position: "sticky", // Sticky position for the header
+                      top: 0, // Sticks the header to the top
+                      backgroundColor: "#2D2F33", // Matches the background color of the table container
+                      zIndex: 1, // Ensures the header is above other content when scrolling
                     }}
                   >
                     Activity
@@ -546,6 +576,10 @@ const KnowYourCategory = () => {
                         xs: "6px 12px",
                         sm: "8px 16px",
                       },
+                      position: "sticky", // Sticky position for the header
+                      top: 0, // Sticks the header to the top
+                      backgroundColor: "#2D2F33", // Matches the background color of the table container
+                      zIndex: 1, // Ensures the header is above other content when scrolling
                     }}
                   >
                     Weightage Per Hour
