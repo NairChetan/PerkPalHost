@@ -36,12 +36,13 @@ const AddNewActivity = () => {
                     lg: "45%", // For large screens
                     xl: "45%", // For extra-large screens
                   },
+                  
+                   display: "flex",
+                   alignItems: "center", // Align items vertically center
+                   justifyContent: "center", // Center items horizontally
                    backgroundColor:"white",
-                  //  display: "flex",
-                  //  alignItems: "center", // Align items vertically center
-                  //  justifyContent: "center", // Center items horizontally
                    color: "#E60124",
-                  //  boxShadow: 1,
+                   boxShadow: 0,
                    fontWeight: 700,
                    fontSize: {
                      xs: "4.7vw", // Extra small devices (phones, 600px and down)
@@ -51,10 +52,10 @@ const AddNewActivity = () => {
                      xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
                    },
                    textAlign: "center", // Center-align text
-                  //  '&:hover': {
-
-                  //    color: "#5a1a1a", // Text color on hover (optional)
-                  //  },
+                   "&:hover": {
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                  },
                 }}
                 >
                  <AddIcon fontSize="small" />
