@@ -5,8 +5,29 @@
     width: 400px;
     margin: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    height: 97vh;
+    height: 79vh;
     overflow-y:auto;
+    
+  
+    /* Custom scrollbar styles */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #6c6c6c #2c2c2c; /* For Firefox */
+  
+    /* For WebKit (Chrome, Safari) */
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #2c2c2c;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #6c6c6c;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #9c9c9c;
+    }
   }
   
   .paraghraph{
@@ -115,7 +136,7 @@
     text-align: center;
   }
   
-
+  
   @media (max-width: 321px) {
 
     .container {
@@ -128,6 +149,7 @@
       height: 97vh;
       overflow-y:auto;
     }
-    
-    
+     
   }
+
+ 

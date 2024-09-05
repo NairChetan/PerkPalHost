@@ -64,24 +64,31 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedDate }) => {
           />
         </div>
         <div className={styles.calendarright}>
-          <DatePicker
-            className={styles.datepicker}
-            views={['year', 'month']}
-            label="Select Year and Month"
-            value={currentDate}
-            onChange={handleDateChange}
-            slots={{
-              textField: (params) => <TextField {...params} />
-            }}
-            sx={{
-              '& .MuiInputBase-root': {
-                backgroundColor: 'white',
-              },
-              '& .MuiInputAdornment-root': {
-                color: 'blue',
-              }
-            }}
-          />
+        <DatePicker
+  className={styles.datepicker}
+  views={['year', 'month']}
+  label="Select Year and Month"
+  value={currentDate}
+  onChange={handleDateChange}
+  slots={{
+    textField: (params) => <TextField {...params} />
+  }}
+  sx={{
+    '& .MuiInputBase-root': {
+      backgroundColor: 'white',
+      fontSize: '0.875rem', // Reduced font size
+      padding: '4px 8px', // Reduced padding
+      height: '32px', // Reduced height
+    },
+    '& .MuiInputAdornment-root': {
+      color: 'blue',
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: '1rem', // Reduced icon size if applicable
+    },
+  }}
+/>
+
           <div className={styles.daysOfWeek}>
             {daysOfWeek.map((day, index) => (
               <div key={index} className={styles.dayOfWeek}>{day}</div>

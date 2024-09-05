@@ -2,11 +2,19 @@
 .Log{
     text-align: left;
     padding-bottom: 5px;
+    
   }
   .table {
       width: 100%;
       border-collapse: collapse;
       align-items: center;
+      
+    }
+    .table th{
+      position: sticky;
+      position: sticky;
+      top: -1px;
+      z-index: 1;
     }
     .table th, .table td {
       border: 1px solid #ddd;
@@ -87,6 +95,7 @@
   overflow-x: auto;
   overflow-y: auto;
   max-height: 30vh; /* Adjust this height as needed */
+  position: relative;
 }
     @media (max-width: 769px) {
       .tableWrapper {

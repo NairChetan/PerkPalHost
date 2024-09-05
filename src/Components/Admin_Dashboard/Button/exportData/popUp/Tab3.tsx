@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Table,
@@ -13,6 +13,7 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios";
 import * as XLSX from "xlsx"; // Import xlsx for Excel export
+import { Box } from "@mui/system";
 
 const Tab3 = () => {
   const [categories, setCategories] = useState<any[]>([]); // State to store API data
@@ -70,47 +71,52 @@ const Tab3 = () => {
 
   return (
     <>
-      {/* Preview Button */}
-      <Button
-        variant="contained"
-        color="primary"
+      <Box
         sx={{
-          width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-          backgroundColor: "#303137",
-          borderRadius: "15px",
-          "&:hover": {
-            backgroundColor: "black",
-          },
-          px: "2%",
-          marginTop: "1rem",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          gap: "20px",
         }}
-        onClick={fetchCategories} // Call API and toggle data visibility on button click
       >
-        {showData ? "Hide Data" : "Preview"}{" "}
-        {/* Change button text based on state */}
-        <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />
-      </Button>
+        {/* Preview Button */}
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
+            backgroundColor: "#303137",
+            borderRadius: "15px",
+            "&:hover": {
+              backgroundColor: "black",
+            },
+            px: "2%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={fetchCategories} // Call API and toggle data visibility on button click
+        >
+          {showData ? "Hide Data" : "Preview"}{" "}
+          {/* Change button text based on state */}
+          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />
+        </Button>
 
-      {/* Export Button */}
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-          backgroundColor: "#4741FC",
-          borderRadius: "15px",
-          "&:hover": {
-            backgroundColor: "black",
-          },
-          marginTop: "1.5rem",
-        }}
-        onClick={handleExport} // Export data as Excel when clicked
-      >
-        Export
-      </Button>
+        {/* Export Button */}
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
+            backgroundColor: "#4741FC",
+            borderRadius: "15px",
+            "&:hover": {
+              backgroundColor: "black",
+            },
+          }}
+          onClick={handleExport} // Export data as Excel when clicked
+        >
+          Export
+        </Button>
+      </Box>
 
       {/* Loading/Error Message */}
       {loading && <Typography>Loading...</Typography>}
@@ -120,9 +126,29 @@ const Tab3 = () => {
       {!loading && !error && showData && categories.length > 0 && (
         <TableContainer
           component={Paper}
-          sx={{ marginTop: "1rem", overflow: "auto" }}
+          sx={{
+            marginTop: "1rem",
+            maxHeight: "350px", // Set a fixed height for the table container
+            overflowY: "auto", // Enable vertical scrolling
+            // Custom scrollbar styles
+            "&::-webkit-scrollbar": {
+              width: "6px",
+              height: "6px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "#fff",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#6c6c6c",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#9c9c9c",
+            },
+          }}
         >
-          <Table>
+          <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>Category Name</TableCell>

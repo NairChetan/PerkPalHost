@@ -2,10 +2,10 @@ import { Box, Button} from "@mui/material";
 import  { useState,  useRef } from 'react';
 import {IconButton } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
-import NewEntry from '../Section2/GetPoints/NewEntry';
-import { Link } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+import NewActivity from "./NewActivity";
 
-const LogsAndGetPoints = () => {
+const AddNewActivity = () => {
 
 
   const [open, setOpen] = useState<boolean>(false);
@@ -23,50 +23,6 @@ const LogsAndGetPoints = () => {
                     lg: "35%", // For large screens
                     xl: "35%", // For extra-large screens
                   },}}>
-                <Button
-                  component={Link}
-                  to="/clockin"
-                 sx={{
-                   px: "5%",
-                   width: {
-                    xs: "100%", // For extra-small screens
-                    sm: "100%", // For small screens
-                    md: "100%", // For medium screens
-                    lg: "100%", // For large screens
-                    xl: "100%", // For extra-large screens
-                  },
-                  height: {
-                    xs: "45%", // For extra-small screens
-                    sm: "45%", // For small screens
-                    md: "45%", // For medium screens
-                    lg: "45%", // For large screens
-                    xl: "45%", // For extra-large screens
-                  },
-                   backgroundColor: "#ffc9ce", // Default background color
-                   display: "flex",
-                   alignItems: "center", // Align items vertically center
-                   justifyContent: "center", // Center items horizontally
-                   borderRadius: 15,
-                   color: "#801c26",
-                   boxShadow: 1,
-                   fontWeight: 700,
-                   fontSize: {
-                     xs: "4.7vw", // Extra small devices (phones, 600px and down)
-                     sm: "3vw", // Small devices (tablets, 600px and up)
-                     md: "2.5vw", // Medium devices (desktops, 900px and up)
-                     lg: "1vw", // Large devices (large desktops, 1200px and up)
-                     xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
-                   },
-                   textAlign: "center", // Center-align text
-                   '&:hover': {
-                     backgroundColor: "#dba2a2", // Background color on hover
-                     color: "#5a1a1a", // Text color on hover (optional)
-                   },
-                }}>
-                  Logs
-                </Button>
-
-                {/* Button for get points */}
                 <Button 
                   variant="contained"
                   onClick={() => setOpen((open) => !open)} 
@@ -80,14 +36,13 @@ const LogsAndGetPoints = () => {
                     lg: "45%", // For large screens
                     xl: "45%", // For extra-large screens
                   },
-                   
-                   backgroundColor: "#ffc9ce", // Default background color
+                  
                    display: "flex",
                    alignItems: "center", // Align items vertically center
                    justifyContent: "center", // Center items horizontally
-                   borderRadius: 15,
-                   color: "#801c26",
-                   boxShadow: 1,
+                   backgroundColor:"white",
+                   color: "#E60124",
+                   boxShadow: 0,
                    fontWeight: 700,
                    fontSize: {
                      xs: "4.7vw", // Extra small devices (phones, 600px and down)
@@ -97,13 +52,13 @@ const LogsAndGetPoints = () => {
                      xl: "1vw", // Extra large devices (larger desktops, 1536px and up)
                    },
                    textAlign: "center", // Center-align text
-                   '&:hover': {
-                     backgroundColor: "#dba2a2", // Background color on hover
-                     color: "#5a1a1a", // Text color on hover (optional)
-                   },
+                   "&:hover": {
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                  },
                 }}
                 >
-                  Get Points
+                 <AddIcon fontSize="small" />
                 </Button>
 
                 {/* Modal here */}
@@ -126,14 +81,13 @@ const LogsAndGetPoints = () => {
             position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -53%)",
             zIndex: "100",
             border: "1px solid gray",
             width: '400px',
-            height: "97vh",
+            height: "78vh",
             borderRadius: "15px",
-            // background: "#1D1E22",
-           
+            background: "#1D1E22",
             padding: "0%",
             color: "#FFFFFF", // Add border with width, style, and color
             '@media (max-width: 321px)': {
@@ -154,7 +108,7 @@ const LogsAndGetPoints = () => {
           >
             <CloseIcon />
           </IconButton>
-            <NewEntry/>
+          <NewActivity/>
         </Box>
       )}
          </Box>
@@ -163,4 +117,4 @@ const LogsAndGetPoints = () => {
   )
 }
 
-export default LogsAndGetPoints
+export default AddNewActivity

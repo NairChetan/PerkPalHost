@@ -4,6 +4,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tab1 from "./Tab1";
 import Tab2 from "./Tab2";
 import Tab3 from "./Tab3";
+import Tab4 from "./Tab4";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,9 +41,7 @@ const ExportDataTabs = () => {
 
   return (
     <>
-      <Box
-        sx={{ borderBottom: 1, borderColor: "divider", marginBottom: "1rem" }}
-      >
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
           onChange={handleChange}

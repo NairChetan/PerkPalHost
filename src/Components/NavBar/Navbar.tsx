@@ -36,7 +36,8 @@ const Navbar = () => {
   };
 
   const handleHomeClick = () => {
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("Role");
+    console.log(role);
 
     // Redirect based on the role
     if (role === "admin") {
@@ -69,6 +70,9 @@ const Navbar = () => {
       setAvatarSrc(storedPhotoUrl);
     }
   }, []); // Empty dependency array for initial load
+
+  // Determine the role
+  const role = localStorage.getItem("Role");
 
   return (
     <>
@@ -177,7 +181,8 @@ const Navbar = () => {
                 },
               }}
             >
-              {userData.clubName} Club
+              {role === "admin" ? "Admin" : `${userData.clubName} Club`}{" "}
+              {/* Conditional rendering based on role */}
             </Typography>
             <Typography
               sx={{

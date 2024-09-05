@@ -45,10 +45,10 @@ const Employee_chart: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const formattedStartDate = formatDate(startDate);
-        const formattedEndDate = formatDate(endDate);
-        console.log(formattedStartDate);
-        console.log(formattedEndDate);
+        const formattedStartDate = formatDate(startDate); // Format the start date
+        const formattedEndDate = formatDate(endDate); // Format the end date
+        console.log(formattedStartDate); // Debug: Log start date
+        console.log(formattedEndDate); // Debug: Log end date
         const response = await axios.get(
           "http://localhost:8080/api/v1/employee/api/v1/employees/by-points",
           {
@@ -58,28 +58,32 @@ const Employee_chart: React.FC = () => {
             },
           }
         );
-        // Extract data for chart
-        const labels = response.data.map((item: any) => item.firstName);
-        const data = response.data.map((item: any) => item.totalPoints);
+        // Extract and slice data for chart (limit to top 10)
+        const labels = response.data
+          .slice(0, 10)
+          .map((item: any) => item.firstName); // Get top 10 employee names
+        const data = response.data
+          .slice(0, 10)
+          .map((item: any) => item.totalPoints); // Get top 10 total points
 
         setChartData({
           labels: labels,
           datasets: [
             {
               data: data,
-              backgroundColor: "#a083c9",
+              backgroundColor: "#a083c9", // Set bar color
             },
           ],
         });
       } catch (error) {
-        setError("Failed to fetch data");
+        setError("Failed to fetch data"); // Set error message on failure
       } finally {
-        setLoading(false);
+        setLoading(false); // End loading state
       }
     };
 
     fetchData();
-  }, [startDate, endDate]);
+  }, [startDate, endDate]); // Re-run effect when startDate or endDate changes
 
   // Callback to update the date range when it changes
   const handleDateRangeChange = (start: Date, end: Date) => {
