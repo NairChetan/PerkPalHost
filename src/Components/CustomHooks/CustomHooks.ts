@@ -19,7 +19,7 @@ export type ActivityFiltered={
     categoryName: string
 
 }
- 
+
 export type participationDataForPendingApproval = {
   employeeFirstName: string;
   employeeLastName: string;
@@ -29,11 +29,10 @@ export type participationDataForPendingApproval = {
   description: string;
 };
 
-export const useFetchPoints = (endUrl: string,refresh:number) => {
+export const useFetchPoints = (endUrl: string, refresh: number) => {
   const [points, setPoints] = useState<PointData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | Error>(null);
- 
 
   useEffect(() => {
     const fetchPoints = async () => {
@@ -48,10 +47,10 @@ export const useFetchPoints = (endUrl: string,refresh:number) => {
         setLoading(false);
       }
     };
- 
+
     fetchPoints();
   }, [endUrl,refresh]);
- 
+
   return { points, loading, error };
 };
 
@@ -89,116 +88,133 @@ export const useFetchCategories = (endUrl: string) => {
 
 
 export const useFetchActivities = (categoryName: string) => {
-    const [activities, setActivities] = useState<ActivityFiltered[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
+  const [activities, setActivities] = useState<ActivityFiltered[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
-    useEffect(() => {
-        if (!categoryName) return;
-        const fetchActivities = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get(`${baseURL}/api/v1/activity/category/${categoryName}`);
-                setActivities(response.data.data); // Ensure this matches the response structure
-            } catch (err) {
-                setError(err as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchActivities();
-    }, [categoryName]);
-
-    return { activities, loading, error };
-};
-
-  // export const useSubmitParticipation = () => {
-  //   const [loading, setLoading] = useState(false);
-  //   const [error, setError] = useState(null);
-  
-  //   const submitParticipation = async (participationData :string) => {
-  //     try {
-  //       setLoading(true);
-  //       await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
-  //     } catch (err) {
-  //       setError(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  
-  //   return { submitParticipation, loading, error };
-  // };
-
-  export const useSubmitParticipation = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-  
-    const submitParticipation = async (participationData: object) => {
+  useEffect(() => {
+    if (!categoryName) return;
+    const fetchActivities = async () => {
       try {
         setLoading(true);
-        await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
-      } catch (err: any) {
-        setError(err.response?.data?.message || 'An error occurred');
+        const response = await axios.get(
+          `${baseURL}/api/v1/activity/category/${categoryName}`
+        );
+        setActivities(response.data.data); // Ensure this matches the response structure
+      } catch (err) {
+        setError(err as Error);
       } finally {
         setLoading(false);
       }
     };
-  
-    return { submitParticipation, loading, error };
+
+    fetchActivities();
+  }, [categoryName]);
+
+  return { activities, loading, error };
+};
+
+// export const useSubmitParticipation = () => {
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+
+//   const submitParticipation = async (participationData :string) => {
+//     try {
+//       setLoading(true);
+//       await axios.post(`${baseURL}/api/v1/participation/participationpost`, participationData);
+//     } catch (err) {
+//       setError(err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return { submitParticipation, loading, error };
+// };
+
+export const useSubmitParticipation = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submitParticipation = async (participationData: object) => {
+    try {
+      setLoading(true);
+      await axios.post(
+        `${baseURL}/api/v1/participation/participationpost`,
+        participationData
+      );
+    } catch (err: any) {
+      setError(err.response?.data?.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
   };
-  
-  export const useFetchParticipation = (url: string,refreshPage:number) => {
-    const [participation, setParticipation] = useState<any[]>([]);
-    const [pagination, setPagination] = useState<{ totalPages: number; totalElements: number; size: number; number: number } | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-   
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`${baseURL}${url}`);
-          console.log(response);
-          setParticipation(response.data.data.content);
-          setPagination({
-            totalPages: response.data.data.totalPages,
-            totalElements: response.data.data.totalElements,
-            size: response.data.data.size,
-            number: response.data.data.number
-          });
-          setLoading(false);
-        } catch (err) {
-          if (axios.isAxiosError(err) && err.response) {
-            // Log detailed error information
-            console.error("Error response data:", err.response.data);
-            console.error("Error response status:", err.response.status);
-            console.error("Error response headers:", err.response.headers);
-          } else {
-            // Log the error message
-            console.error("Error message:", err.message);
-          }
-          setError("Failed to fetch data.");
-          setLoading(false);
-        }
-      };
-   
-      fetchData();
-    }, [url,refreshPage]);
-   
-    return { participation, pagination, loading, error };
-  };
-  export const usePostApprovalStatus = () => {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-  
-    const postApprovalStatus = async (id: number, status: string, remarks: string | null,approvalDate:string) => {
+
+  return { submitParticipation, loading, error };
+};
+
+export const useFetchParticipation = (url: string, refreshPage: number) => {
+  const [participation, setParticipation] = useState<any[]>([]);
+  const [pagination, setPagination] = useState<{
+    totalPages: number;
+    totalElements: number;
+    size: number;
+    number: number;
+  } | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        setLoading(true);
-        const response = await axios.put(`${baseURL}/api/v1/participation/approval-status-remark/${id}`, {
+        const response = await axios.get(`${baseURL}${url}`);
+        console.log(response);
+        setParticipation(response.data.data.content);
+        setPagination({
+          totalPages: response.data.data.totalPages,
+          totalElements: response.data.data.totalElements,
+          size: response.data.data.size,
+          number: response.data.data.number,
+        });
+        setLoading(false);
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          // Log detailed error information
+          console.error("Error response data:", err.response.data);
+          console.error("Error response status:", err.response.status);
+          console.error("Error response headers:", err.response.headers);
+        } else {
+          // Log the error message
+          console.error("Error message:", err.message);
+        }
+        setError("Failed to fetch data.");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url, refreshPage]);
+
+  return { participation, pagination, loading, error };
+};
+export const usePostApprovalStatus = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const postApprovalStatus = async (
+    id: number,
+    status: string,
+    remarks: string | null,
+    approvalDate: string
+  ) => {
+    try {
+      setLoading(true);
+      const response = await axios.put(
+        `${baseURL}/api/v1/participation/approval-status-remark/${id}`,
+        {
           approvalStatus: status,
           remarks: remarks,
-          approvalDate: approvalDate
+          approvalDate: approvalDate,
         }
         // {
         //   headers: {
@@ -206,79 +222,83 @@ export const useFetchActivities = (categoryName: string) => {
         //   }
         // }
       );
-        setLoading(false);
-        return response.data;
+      setLoading(false);
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      } else {
+        console.error("Error message:", err.message);
+      }
+      setError("Failed to post approval status.");
+      setLoading(false);
+      throw err;
+    }
+  };
+
+  return { postApprovalStatus, loading, error };
+};
+
+export const useFetchUserLoginsByEmployee = (employeeId: string) => {
+  const [userLogins, setUserLogins] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!employeeId) return;
+
+    const fetchUserLogins = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${baseURL}/api/v1/participation/date?employeeId=${employeeId}`
+        );
+        setUserLogins(response.data);
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
-          console.error("Error response data:", err.response.data);
-          console.error("Error response status:", err.response.status);
-          console.error("Error response headers:", err.response.headers);
-        } else {
-          console.error("Error message:", err.message);
-        }
-        setError("Failed to post approval status.");
+        setError(err as Error);
+      } finally {
         setLoading(false);
-        throw err;
       }
     };
-  
-    return { postApprovalStatus, loading, error };
-  };
 
-  
-  export const useFetchUserLoginsByEmployee = (employeeId: string) => {
-    const [userLogins, setUserLogins] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
-  
-    useEffect(() => {
-      if (!employeeId) return;
-  
-      const fetchUserLogins = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(`${baseURL}/api/v1/participation/date?employeeId=${employeeId}`);
-          setUserLogins(response.data);
-        } catch (err) {
-          setError(err as Error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchUserLogins();
-    }, [employeeId]);
-  
-    return { userLogins, loading, error };
-  };
-  
+    fetchUserLogins();
+  }, [employeeId]);
 
- 
-export const useFetchUserLoginsByDate = (selectedDate: string, employeeId: string) => {
-    const [userLogins, setUserLogins] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
+  return { userLogins, loading, error };
+};
 
-    useEffect(() => {
-        if (!selectedDate || !employeeId) return;
+export const useFetchUserLoginsByDate = (
+  selectedDate: string,
+  employeeId: string
+) => {
+  const [userLogins, setUserLogins] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
-        const fetchUserLogins = async () => {
-            try {
-                setLoading(true);
-               
-                const response = await axios.get(`${baseURL}/api/v1/participation/date/${selectedDate}?employeeId=${employeeId}`);
-                setUserLogins(response.data);
-            } catch (err) {
-                setError(err as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    if (!selectedDate || !employeeId) return;
 
-        fetchUserLogins();
-    }, [selectedDate, employeeId]);
+    const fetchUserLogins = async () => {
+      try {
+        setLoading(true);
 
-    return { userLogins, loading, error };
+        const response = await axios.get(
+          `${baseURL}/api/v1/participation/date/${selectedDate}?employeeId=${employeeId}`
+        );
+        setUserLogins(response.data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserLogins();
+  }, [selectedDate, employeeId]);
+
+  return { userLogins, loading, error };
 };
 
 export const useEditParticipationEntry = (id: number) => {
@@ -290,7 +310,9 @@ export const useEditParticipationEntry = (id: number) => {
     const fetchEntry = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${baseURL}/api/v1/participation/userLog/${id}`);
+        const response = await axios.get(
+          `${baseURL}/api/v1/participation/userLog/${id}`
+        );
         setEntry(response.data);
       } catch (err) {
         setError(err as Error);
@@ -302,10 +324,17 @@ export const useEditParticipationEntry = (id: number) => {
     fetchEntry();
   }, [id]);
 
-  const updateEntry = async (updatedData: { description: string, duration: number, proofUrl: string | null }) => {
+  const updateEntry = async (updatedData: {
+    description: string;
+    duration: number;
+    proofUrl: string | null;
+  }) => {
     try {
       setLoading(true);
-      await axios.put(`${baseURL}/api/v1/participation/userLog/${id}`, updatedData);
+      await axios.put(
+        `${baseURL}/api/v1/participation/userLog/${id}`,
+        updatedData
+      );
       setLoading(false);
       return true; // Return true if update is successful
     } catch (err) {
@@ -317,7 +346,6 @@ export const useEditParticipationEntry = (id: number) => {
 
   return { entry, updateEntry, loading, error };
 };
-
 
 export const useDeleteParticipation = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -346,7 +374,6 @@ export const useDeleteParticipation = () => {
   return { deleteParticipation, loading, error };
 };
 
-
 export const useFetchActivitiesForAdmin = () => {
   const [activities, setActivities] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -357,7 +384,7 @@ export const useFetchActivitiesForAdmin = () => {
       try {
         setLoading(true);
         const response = await axios.get(`${baseURL}/api/v1/activity`);
-        setActivities(response.data.data); 
+        setActivities(response.data.data);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           console.error("Error response data:", err.response.data);
@@ -405,8 +432,6 @@ export const useDeleteActivity = () => {
   return { deleteActivity, loading, error };
 };
 
-
-
 export const useAddNewActivityForAdmin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -416,7 +441,7 @@ export const useAddNewActivityForAdmin = () => {
     activityName: string;
     categoryId: number;
     description: string;
-    createdBy:number;
+    createdBy: number;
     weightagePerHour: number;
   }) => {
     try {
@@ -442,7 +467,6 @@ export const useAddNewActivityForAdmin = () => {
 
   return { addNewActivity, loading, error, success };
 };
-
 
 export const useUpdateActivityForAdmin = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -479,4 +503,104 @@ export const useUpdateActivityForAdmin = () => {
   };
 
   return { updateActivity, loading, error, success };
+};
+export type ClubDtoForAdmin =  {
+  clubId: number;
+  createdBy:number;
+  clubName: string;
+  clubDescription: string;
+  initialThreshold: number;
+  finalThreshold: number;
+}
+
+export const useFetchClubs = () => {
+  const [clubs, setClubs] = useState<ClubDtoForAdmin[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/club");
+        console.log(response.data);
+        setClubs(response.data.data); // Assuming `data` contains the club list
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch clubs");
+        setLoading(false);
+      }
+    };
+
+    fetchClubs();
+  }, []);
+  return { clubs, loading, error}
+};
+export const useCreateClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<ClubDtoForAdmin | null>(null);
+
+  const createClub = async (clubDto: ClubDtoForAdmin) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/club",
+        clubDto
+      );
+      setData(response.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { createClub, data, loading, error };
+};
+export const useUpdateClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
+
+  const updateClub = async (id: number, club: Partial<ClubDtoForAdmin>) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/club/${id}`,
+        club
+      );
+      setData(response.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateClub, data, loading, error };
+};
+export const useDeleteClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
+
+  const deleteClub = async (id: number) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await axios.delete(`http://localhost:8080/api/v1/club/${id}`);
+      setData("Deleted Successfully");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteClub, data, loading, error };
 };
