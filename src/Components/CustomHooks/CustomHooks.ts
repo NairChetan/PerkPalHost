@@ -134,10 +134,16 @@ export const useSubmitParticipation = () => {
 
   const submitParticipation = async (participationData: object) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.post(
         `${baseURL}/api/v1/participation/participationpost`,
-        participationData
+        participationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
     } catch (err: any) {
       setError(err.response?.data?.message || "An error occurred");
@@ -204,6 +210,7 @@ export const usePostApprovalStatus = () => {
     approvalDate: string
   ) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       const response = await axios.put(
         `${baseURL}/api/v1/participation/approval-status-remark/${id}`,
@@ -211,12 +218,12 @@ export const usePostApprovalStatus = () => {
           approvalStatus: status,
           remarks: remarks,
           approvalDate: approvalDate,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}` // Attach the token here
+          }
         }
-        // {
-        //   headers: {
-        //     'Authorization': `Bearer ${token}` // Attach the token here
-        //   }
-        // }
       );
       setLoading(false);
       return response.data;
@@ -330,7 +337,12 @@ export const useEditParticipationEntry = (id: number) => {
       setLoading(true);
       await axios.put(
         `${baseURL}/api/v1/participation/userLog/${id}`,
-        updatedData
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
       setLoading(false);
       return true; // Return true if update is successful
@@ -350,6 +362,7 @@ export const useDeleteParticipation = () => {
 
   const deleteParticipation = async (id: number) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.delete(`${baseURL}/api/v1/participation/${id}`, {
         headers: {
@@ -412,6 +425,7 @@ export const useDeleteActivity = () => {
 
   const deleteActivity = async (id: number) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.delete(`${baseURL}/api/v1/activity/${id}`, {
         headers: {
