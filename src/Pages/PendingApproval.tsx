@@ -1641,7 +1641,7 @@ import {
   DialogTitle,
   Checkbox,
   Tabs,
-  Tab
+  Tab,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"; // Import search icon
 import TextField from "@mui/material/TextField"; // Input fields
@@ -1922,6 +1922,10 @@ const PendingApproval = () => {
                       variant="contained"
                       onClick={handleApproveSelected}
                       disabled={selectedPanels.length === 0 || actionLoading}
+                      sx={{
+                        backgroundColor: "green",
+                        "&:hover": { backgroundColor: "darkgreen" },
+                      }}
                     >
                       Approve Selected
                     </Button>
@@ -1929,6 +1933,10 @@ const PendingApproval = () => {
                       variant="contained"
                       onClick={handleRejectSelected}
                       disabled={selectedPanels.length === 0 || actionLoading}
+                      sx={{
+                        backgroundColor: "red",
+                        "&:hover": { backgroundColor: "darkred" },
+                      }}
                     >
                       Reject Selected
                     </Button>
