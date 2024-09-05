@@ -134,16 +134,10 @@ export const useSubmitParticipation = () => {
 
   const submitParticipation = async (participationData: object) => {
     try {
-      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.post(
         `${baseURL}/api/v1/participation/participationpost`,
-        participationData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Attach the token here
-          },
-        }
+        participationData
       );
     } catch (err: any) {
       setError(err.response?.data?.message || "An error occurred");
@@ -211,20 +205,18 @@ export const usePostApprovalStatus = () => {
   ) => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("accessToken");
-      console.log(token);
       const response = await axios.put(
         `${baseURL}/api/v1/participation/approval-status-remark/${id}`,
         {
           approvalStatus: status,
           remarks: remarks,
           approvalDate: approvalDate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Attach the token here
-          },
         }
+        // {
+        //   headers: {
+        //     'Authorization': `Bearer ${token}` // Attach the token here
+        //   }
+        // }
       );
       setLoading(false);
       return response.data;
@@ -339,12 +331,6 @@ export const useEditParticipationEntry = (id: number) => {
       await axios.put(
         `${baseURL}/api/v1/participation/userLog/${id}`,
         updatedData
-        ,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}` // Attach the token here
-          }
-        }
       );
       setLoading(false);
       return true; // Return true if update is successful
@@ -365,13 +351,11 @@ export const useDeleteParticipation = () => {
   const deleteParticipation = async (id: number) => {
     try {
       setLoading(true);
-      await axios.delete(`${baseURL}/api/v1/participation/${id}`,
-      {
+      await axios.delete(`${baseURL}/api/v1/participation/${id}`, {
         headers: {
-          'Authorization': `Bearer ${token}` // Attach the token here
-        }
-      }
-      );
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setLoading(false);
       return true; // Return true if deletion is successful
     } catch (err) {
@@ -429,13 +413,11 @@ export const useDeleteActivity = () => {
   const deleteActivity = async (id: number) => {
     try {
       setLoading(true);
-      await axios.delete(`${baseURL}/api/v1/activity/${id}`,
-      {
+      await axios.delete(`${baseURL}/api/v1/activity/${id}`, {
         headers: {
-          'Authorization': `Bearer ${token}` // Attach the token here
-        }
-      }
-      );
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setLoading(false);
       return true; // Return true if deletion is successful
     } catch (err) {
@@ -470,13 +452,11 @@ export const useAddNewActivityForAdmin = () => {
     try {
       const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.post(`${baseURL}/api/v1/activity`, activityData,
-      {
+      await axios.post(`${baseURL}/api/v1/activity`, activityData, {
         headers: {
-          'Authorization': `Bearer ${token}` // Attach the token here
-        }
-      }
-      );
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setSuccess(true); // Set success state to true if the activity was added successfully
       setLoading(false);
       return true; // Return true if the addition is successful
@@ -514,13 +494,11 @@ export const useUpdateActivityForAdmin = () => {
     try {
       const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.put(`${baseURL}/api/v1/activity/${id}`, updatedActivityData,
-      {
+      await axios.put(`${baseURL}/api/v1/activity/${id}`, updatedActivityData, {
         headers: {
-          'Authorization': `Bearer ${token}` // Attach the token here
-        }
-      }
-      );
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setSuccess(true); // Set success state to true if the update was successful
       setLoading(false);
       return true; // Return true if the update is successful
@@ -540,4 +518,122 @@ export const useUpdateActivityForAdmin = () => {
   };
 
   return { updateActivity, loading, error, success };
+};
+
+export type ClubDtoForAdmin = {
+  clubId: number;
+  createdBy: number;
+  clubName: string;
+  clubDescription: string;
+  initialThreshold: number;
+  finalThreshold: number;
+};
+
+export const useFetchClubs = () => {
+  const [clubs, setClubs] = useState<ClubDtoForAdmin[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/club");
+        console.log(response.data);
+        setClubs(response.data.data); // Assuming `data` contains the club list
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch clubs");
+        setLoading(false);
+      }
+    };
+
+    fetchClubs();
+  }, []);
+  return { clubs, loading, error };
+};
+export const useCreateClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<ClubDtoForAdmin | null>(null);
+
+  const createClub = async (clubDto: ClubDtoForAdmin) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/club",
+        clubDto,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
+      );
+      setData(response.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { createClub, data, loading, error };
+};
+export const useUpdateClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
+
+  const updateClub = async (id: number, club: Partial<ClubDtoForAdmin>) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/club/${id}`,
+        club,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
+      );
+      setData(response.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateClub, data, loading, error };
+};
+export const useDeleteClub = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
+
+  const deleteClub = async (id: number) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`http://localhost:8080/api/v1/club/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
+      setData("Deleted Successfully");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteClub, data, loading, error };
 };
