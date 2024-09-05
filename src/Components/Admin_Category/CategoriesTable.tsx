@@ -103,7 +103,7 @@ const CategoriesTable: React.FC = () => {
       }}
     >
       <TableContainer 
-        component={Paper} 
+        component={Paper}  
   sx={{ 
     width: '100%', 
     maxWidth: '1200px', 
