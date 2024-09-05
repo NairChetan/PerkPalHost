@@ -27,7 +27,7 @@ const NewEntry = () => {
     initialValues: {
       category: '',
       activity: '',
-      participationDate: ' ',
+      participationDate: '',
       description: '',
       duration: '',
       proof: '',
@@ -47,41 +47,48 @@ const NewEntry = () => {
       const employeelocal = localStorage.getItem("employeeId");
 
       try {
+        let proofUrl = null; // Default to null if no proof is provided
+
+        if (proof) {
+          // Only perform Cloudinary upload if proof exists
+          const formData = new FormData();
+          formData.append('file', proof);
+          formData.append('upload_preset', 'Proof_preset');  // Replace with your Cloudinary upload preset
+
+          const response = await fetch(`https://api.cloudinary.com/v1_1/drflngubf/image/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          // Check if secure_url is present in the response
+          proofUrl = result.secure_url ? result.secure_url : null;
+
+          if (!response.ok) {
+            throw new Error('Error uploading proof: ' + result.error.message);
+          }
+        }
+
         // Convert HH:MM to minutes
         const [hours, minutes] = values.duration.split(':').map(Number);
         const durationInMinutes = hours * 60 + minutes;
 
-        // Cloudinary upload
-        const formData = new FormData();
-        formData.append('file', proof!);
-        formData.append('upload_preset', 'Proof_preset');  // Replace with your Cloudinary upload preset
+        const entry = {
+          categoryName: values.category,
+          activityName: values.activity,
+          participationDate: values.participationDate,
+          description: values.description,
+          duration: durationInMinutes, // Store the converted duration
+          proofUrl: proofUrl, // Will be null if no proof
+          createdBy: employeelocal,
+          employeeEmpId: employeelocal,
+        };
 
-        const response = await fetch(`https://api.cloudinary.com/v1_1/drflngubf/image/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-          const entry = {
-            categoryName: values.category,
-            activityName: values.activity,
-            participationDate: values.participationDate,
-            description: values.description,
-            duration: durationInMinutes, // Store the converted duration
-            proofUrl: result.secure_url,
-            createdBy: employeelocal,
-            employeeEmpId: employeelocal,
-          };
-
-          await submitParticipation(entry);
-          resetForm();
-          setOpenLoadingPopup(false); // Close loading popup
-          setOpenSuccessPopup(true); // Show success popup
-        } else {
-          setError('Error uploading proof: ' + result.error.message);
-          setOpenLoadingPopup(false); // Close loading popup
-        }
+        await submitParticipation(entry);
+        resetForm();
+        setOpenLoadingPopup(false); // Close loading popup
+        setOpenSuccessPopup(true); // Show success popup
       } catch (err) {
         console.log(err);
         setError('Error submitting your entry');
@@ -98,7 +105,6 @@ const NewEntry = () => {
 
   const handleCloseSuccessPopup = () => {
     setOpenSuccessPopup(false);
-
   };
 
   return (
@@ -193,7 +199,7 @@ const NewEntry = () => {
         {formik.touched.duration && formik.errors.duration ? (
           <div className={styles.error}>{formik.errors.duration}</div>
         ) : null}
-        <h5>Upload Proof</h5>
+        <h5>Upload Proof (Optional)</h5>
         <input
           accept="image/*"
           type="file"

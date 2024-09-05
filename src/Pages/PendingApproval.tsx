@@ -112,6 +112,7 @@ const PendingApproval = () => {
 
   const handleApprove = async (id: number) => {
     setActionLoading(true); // Start loading animation
+    setSelectedPanels([]);
     try {
       const currentDate = new Date().toISOString(); // Generate the current date and time
       await postApprovalStatus(id, "approved", null, currentDate); // Pass current date
@@ -148,6 +149,7 @@ const PendingApproval = () => {
       }
       setRefreshPage((prev) => prev + 1); // Refresh page after action
       setRemarksModalOpen(false); // Close modal after submission
+      setSelectedPanels([]);
     } catch (error) {
       console.error("Rejection failed", error);
     } finally {
@@ -197,6 +199,7 @@ const PendingApproval = () => {
         console.error("Approval failed for panel", panelId, error);
       } finally {
         setActionLoading(false);
+        setSelectedPanels([]);
       }
     }
     setRefreshPage((refresh) => refresh + 1);
