@@ -1,8 +1,10 @@
-import { Tabs, Tab, Box, Button, IconButton, Typography } from "@mui/material";
+import { Tabs, Tab, Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
-import Dropdown from "./Dropdown";
-import YearSelector from "./YearSelector";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Tab1 from "./Tab1";
+import Tab2 from "./Tab2";
+import Tab3 from "./Tab3";
+import Tab4 from "./Tab4";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -39,9 +41,7 @@ const ExportDataTabs = () => {
 
   return (
     <>
-      <Box
-        sx={{ borderBottom: 1, borderColor: "divider", marginBottom: "1rem" }}
-      >
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -74,126 +74,13 @@ const ExportDataTabs = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Dropdown label="Select Chart" options={["Chart 1", "Chart 2"]} />
-        <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
-        <YearSelector />
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            px: "2%",
-            marginTop: "1rem",
-            backgroundColor: "#303137",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-            display: "flex", // Ensures content is aligned properly
-            justifyContent: "center", // Centers the content horizontally
-            alignItems: "center", // Centers the content vertically
-          }}
-        >
-          Preview
-          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
-          {/* Added down arrow */}
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            marginTop: "1.5rem",
-            backgroundColor: "#4741FC",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-          }}
-        >
-          Export
-        </Button>
+        <Tab1 />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Dropdown label="Quarter" options={["Q1", "Q2", "Q3", "Q4"]} />
-        <YearSelector />
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            px: "2%",
-            marginTop: "1rem",
-            backgroundColor: "#303137",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-            display: "flex", // Ensures content is aligned properly
-            justifyContent: "center", // Centers the content horizontally
-            alignItems: "center", // Centers the content vertically
-          }}
-        >
-          Preview
-          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
-          {/* Added down arrow */}
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            marginTop: "1.5rem",
-            backgroundColor: "#4741FC",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-          }}
-        >
-          Export
-        </Button>
+        <Tab2 />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            px: "2%",
-            marginTop: "1rem",
-            backgroundColor: "#303137",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-            display: "flex", // Ensures content is aligned properly
-            justifyContent: "center", // Centers the content horizontally
-            alignItems: "center", // Centers the content vertically
-          }}
-        >
-          Preview
-          <ArrowDropDownIcon sx={{ marginLeft: "0.2rem" }} />{" "}
-          {/* Added down arrow */}
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: { xs: "100%", sm: "40%", md: "30%", lg: "30%", xl: "25%" },
-            marginTop: "1.5rem",
-            backgroundColor: "#4741FC",
-            borderRadius: "15px", // Button color
-            "&:hover": {
-              backgroundColor: "black", // Hover color
-            },
-          }}
-        >
-          Export
-        </Button>
+        <Tab3 />
       </TabPanel>
     </>
   );

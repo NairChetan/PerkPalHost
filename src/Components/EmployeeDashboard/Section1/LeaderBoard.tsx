@@ -1,78 +1,101 @@
-import React from 'react';
-import { Box, Typography, Avatar } from '@mui/material';
-import { styled } from '@mui/system';
-
-const leaderboardData = [
-  { name: 'Sanjay Nair', points: 3150, du: 'DU 2', avatar: 'https://via.placeholder.com/40' },
-  { name: 'Alby Kennady', points: 3150, du: 'DU 2', avatar: 'https://via.placeholder.com/40' },
-  { name: 'John Doe', points: 3000, du: 'DU 1', avatar: 'https://via.placeholder.com/40' },
-  { name: 'Jane Smith', points: 2900, du: 'DU 3', avatar: 'https://via.placeholder.com/40' },
-  { name: 'User Five', points: 2800, du: 'DU 2', avatar: 'https://via.placeholder.com/40' },
-  { name: 'User Six', points: 2700, du: 'DU 4', avatar: 'https://via.placeholder.com/40' },
-  { name: 'User Seven', points: 2600, du: 'DU 5', avatar: 'https://via.placeholder.com/40' },
-  { name: 'User Eight', points: 2500, du: 'DU 6', avatar: 'https://via.placeholder.com/40' },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Box, Typography, Avatar, CircularProgress } from "@mui/material";
+import { styled } from "@mui/system";
 
 const ScrollBox = styled(Box)({
   flexGrow: 1,
-  overflowY: 'auto',
+  overflowY: "hidden",
   marginTop: 1,
-  '&::-webkit-scrollbar': {
-    width: '8px',
+  "&::-webkit-scrollbar": {
+    width: "8px",
   },
-  '&::-webkit-scrollbar-track': {
-    background: '#4F0A3A',
-    borderRadius: '10px',
+  "&::-webkit-scrollbar-track": {
+    background: "#4F0A3A",
+    borderRadius: "10px",
   },
-  '&::-webkit-scrollbar-thumb': {
-    background: '#888',
-    borderRadius: '10px',
+  "&::-webkit-scrollbar-thumb": {
+    background: "#888",
+    borderRadius: "10px",
   },
-  '&::-webkit-scrollbar-thumb:hover': {
-    background: '#555',
+  "&::-webkit-scrollbar-thumb:hover": {
+    background: "#555",
   },
 });
 
-const Leaderboard = () => {
+const Leaderboard: React.FC = () => {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // State for loading
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch leaderboard data from API
+    axios.get<ApiResponse>('http://localhost:8080/api/v1/employee/leaderboard')
+      .then(response => {
+        // Check the structure here
+        console.log('API Response:', response.data);
+        setLeaderboardData(response.data.data);
+        setLoading(false); // Stop loading when data is fetched
+      })
+      .catch(error => {
+        console.error('Error fetching leaderboard data:', error);
+        setError('Error fetching leaderboard data');
+        setLoading(false); // Stop loading in case of error
+      });
+  }, []);
+
   return (
     <Box
       sx={{
-        backgroundColor: '#4F0A3A',
+        backgroundColor: "#4F0A3A",
         borderRadius: 7,
         padding: 2,
-        color: 'white',
-        width: '100%',
-        height: '100%', // Adjusted height to make it smaller
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
+        color: "white",
+        width: "100%",
+        height: "100%", // Adjusted height to make it smaller
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Typography variant="h6" component="div" gutterBottom>
-        Meet Our Stars!
+        Stars This Year!
       </Typography>
-      <ScrollBox>
-        {leaderboardData.slice(0, 3).map((user, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#5D1049',
-              borderRadius: 2,
-              padding: 1,
-              marginBottom: 1,
-            }}
-          >
-            <Avatar src={user.avatar} alt={user.name} sx={{ width: 40, height: 40, marginRight: 2 }} />
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="body1">{user.name}</Typography>
-              <Typography variant="body2">{user.du}</Typography>
+      {loading ? (
+        // Show loading spinner while fetching data
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : error ? (
+        <Typography color="error">{error}</Typography>
+      ) : (
+        <ScrollBox>
+          {leaderboardData.slice(0, 3).map((user, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#5D1049",
+                borderRadius: 2,
+                padding: 1,
+                marginBottom: 1,
+              }}
+            >
+              <Avatar
+                src={user.photoUrl}
+                alt={user.fullName}
+                sx={{ width: 40, height: 40, marginRight: 2 }}
+              />
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="body1">{user.fullName}</Typography>
+                <Typography variant="body2">{user.departmentName}</Typography>
+              </Box>
+              <Typography variant="h6">{Math.round(user.totalPoints)}</Typography>
             </Box>
-            <Typography variant="h6">{user.points}</Typography>
-          </Box>
-        ))}
-      </ScrollBox>
+          ))}
+        </ScrollBox>
+      )}
     </Box>
   );
 };

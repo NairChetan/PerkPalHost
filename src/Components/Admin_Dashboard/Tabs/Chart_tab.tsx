@@ -18,10 +18,10 @@ const Chart_tab: React.FC<ChartTabProps> = ({
       <TabContext value={selectedTab}>
         <Box
           sx={{
-            borderBottom: 2,
+            borderBottom: 1,
             borderColor: "divider",
             width: "100%",
-            height: "10%",
+            height: "12%",
           }}
         >
           <TabList
@@ -32,7 +32,8 @@ const Chart_tab: React.FC<ChartTabProps> = ({
             centered
             TabIndicatorProps={{
               style: {
-                display: "none",
+                height: "3px", // Thickness of the underline
+                backgroundColor: "#4f3a69", // Color of the underline
               },
             }}
           >
@@ -50,7 +51,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#764832" },
+                "&.Mui-selected": { color: "#4f3a69" },
               }}
             />
             <Tab
@@ -67,7 +68,7 @@ const Chart_tab: React.FC<ChartTabProps> = ({
                   lg: "1.5vw", // Large devices (large desktops, 1200px and up)
                   xl: "1.5vw", // Extra large devices (larger desktops, 1536px and up)
                 },
-                "&.Mui-selected": { color: "#764832 " },
+                "&.Mui-selected": { color: "#4f3a69 " },
               }}
             />
           </TabList>

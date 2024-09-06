@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
-
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Box } from "@mui/material";
@@ -13,11 +12,15 @@ interface DateRange {
   key: string;
 }
 
-const DateRangePick: React.FC = () => {
+interface DateRangePickProps {
+  onDateRangeChange: (startDate: Date, endDate: Date) => void; // Callback to pass the date range to the parent
+}
+
+const DateRangePick: React.FC<DateRangePickProps> = ({ onDateRangeChange }) => {
   const [range, setRange] = useState<DateRange[]>([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: addDays(new Date(), -30),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -29,6 +32,11 @@ const DateRangePick: React.FC = () => {
     return () => {
       document.removeEventListener("click", hideOnClickOutside, true);
     };
+  }, []);
+
+  useEffect(() => {
+    // Pass the initial default dates to the parent when the component mounts
+    onDateRangeChange(range[0].startDate, range[0].endDate);
   }, []);
 
   const hideOnClickOutside = (e: MouseEvent) => {
@@ -47,6 +55,8 @@ const DateRangePick: React.FC = () => {
           key: selection.key || "selection", // Provide a default value if key is undefined
         },
       ]);
+      // Pass the updated dates to the parent component
+      onDateRangeChange(selection.startDate!, selection.endDate!);
     }
   };
 
