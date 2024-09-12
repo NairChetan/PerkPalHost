@@ -2,23 +2,23 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 const baseURL = "http://localhost:8080";
-// const token = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbmphbGkuZGFzQHNyZWVnY2xvdWRnbWFpbC5vbm1pY3Jvc29mdC5jb20iLCJpYXQiOjE3MjU0MDkxNDQsImV4cCI6MTcyNjAxMzk0M30.N50E174u1aWfWvs4U8nwRZnzhb9D2EPKtAAUGl7M4zHep_yBxszNQavhbIo_ZoKS"
-
+// const token = localStorage.getItem("accessToken");
+// console.log(token);
+// const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmphbGkuZGFzQHNyZWVnY2xvdWRnbWFpbC5vbm1pY3Jvc29mdC5jb20iLCJpYXQiOjE3MjU0NzQ1OTYsImV4cCI6MTcyNjA3OTM5NX0.3QV_4bB9yASi3HcHLBhwk4qECJ3hb0VErQzB6KPvznK82IhKG2U0H6813WO6D_BfqxvCfbLa6PmPxUZLDiLcQg";
 export type PointData = {
   totalPoints: number;
   redeemablePoints: number;
 };
 
-export type categoryNameFetch ={
-  categoryName : string;
+export type categoryNameFetch = {
+  categoryName: string;
 };
 
-export type ActivityFiltered={
-    id: number,
-    activityName: string,
-    categoryName: string
-
-}
+export type ActivityFiltered = {
+  id: number;
+  activityName: string;
+  categoryName: string;
+};
 
 export type participationDataForPendingApproval = {
   employeeFirstName: string;
@@ -49,12 +49,10 @@ export const useFetchPoints = (endUrl: string, refresh: number) => {
     };
 
     fetchPoints();
-  }, [endUrl,refresh]);
+  }, [endUrl, refresh]);
 
   return { points, loading, error };
 };
-
-
 
 interface Category {
   id: number;
@@ -84,8 +82,6 @@ export const useFetchCategories = (endUrl: string) => {
 
   return { categories, loading, error };
 };
-
-
 
 export const useFetchActivities = (categoryName: string) => {
   const [activities, setActivities] = useState<ActivityFiltered[]>([]);
@@ -138,10 +134,16 @@ export const useSubmitParticipation = () => {
 
   const submitParticipation = async (participationData: object) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.post(
         `${baseURL}/api/v1/participation/participationpost`,
-        participationData
+        participationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
     } catch (err: any) {
       setError(err.response?.data?.message || "An error occurred");
@@ -208,6 +210,7 @@ export const usePostApprovalStatus = () => {
     approvalDate: string
   ) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       const response = await axios.put(
         `${baseURL}/api/v1/participation/approval-status-remark/${id}`,
@@ -215,12 +218,12 @@ export const usePostApprovalStatus = () => {
           approvalStatus: status,
           remarks: remarks,
           approvalDate: approvalDate,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}` // Attach the token here
+          }
         }
-        // {
-        //   headers: {
-        //     'Authorization': `Bearer ${token}` // Attach the token here
-        //   }
-        // }
       );
       setLoading(false);
       return response.data;
@@ -330,10 +333,16 @@ export const useEditParticipationEntry = (id: number) => {
     proofUrl: string | null;
   }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
       await axios.put(
         `${baseURL}/api/v1/participation/userLog/${id}`,
-        updatedData
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
       setLoading(false);
       return true; // Return true if update is successful
@@ -353,8 +362,13 @@ export const useDeleteParticipation = () => {
 
   const deleteParticipation = async (id: number) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.delete(`${baseURL}/api/v1/participation/${id}`);
+      await axios.delete(`${baseURL}/api/v1/participation/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setLoading(false);
       return true; // Return true if deletion is successful
     } catch (err) {
@@ -411,8 +425,13 @@ export const useDeleteActivity = () => {
 
   const deleteActivity = async (id: number) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.delete(`${baseURL}/api/v1/activity/${id}`);
+      await axios.delete(`${baseURL}/api/v1/activity/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setLoading(false);
       return true; // Return true if deletion is successful
     } catch (err) {
@@ -445,8 +464,13 @@ export const useAddNewActivityForAdmin = () => {
     weightagePerHour: number;
   }) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.post(`${baseURL}/api/v1/activity`, activityData);
+      await axios.post(`${baseURL}/api/v1/activity`, activityData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setSuccess(true); // Set success state to true if the activity was added successfully
       setLoading(false);
       return true; // Return true if the addition is successful
@@ -482,8 +506,13 @@ export const useUpdateActivityForAdmin = () => {
     }
   ) => {
     try {
+      const token = localStorage.getItem("accessToken");
       setLoading(true);
-      await axios.put(`${baseURL}/api/v1/activity/${id}`, updatedActivityData);
+      await axios.put(`${baseURL}/api/v1/activity/${id}`, updatedActivityData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setSuccess(true); // Set success state to true if the update was successful
       setLoading(false);
       return true; // Return true if the update is successful
@@ -504,14 +533,15 @@ export const useUpdateActivityForAdmin = () => {
 
   return { updateActivity, loading, error, success };
 };
-export type ClubDtoForAdmin =  {
+
+export type ClubDtoForAdmin = {
   clubId: number;
-  createdBy:number;
+  createdBy: number;
   clubName: string;
   clubDescription: string;
   initialThreshold: number;
   finalThreshold: number;
-}
+};
 
 export const useFetchClubs = () => {
   const [clubs, setClubs] = useState<ClubDtoForAdmin[]>([]);
@@ -533,7 +563,7 @@ export const useFetchClubs = () => {
 
     fetchClubs();
   }, []);
-  return { clubs, loading, error}
+  return { clubs, loading, error };
 };
 export const useCreateClub = () => {
   const [loading, setLoading] = useState(false);
@@ -545,9 +575,15 @@ export const useCreateClub = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.post(
         "http://localhost:8080/api/v1/club",
-        clubDto
+        clubDto,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
       setData(response.data);
     } catch (err: any) {
@@ -569,9 +605,15 @@ export const useUpdateClub = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await axios.put(
         `http://localhost:8080/api/v1/club/${id}`,
-        club
+        club,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token here
+          },
+        }
       );
       setData(response.data);
     } catch (err: any) {
@@ -593,7 +635,12 @@ export const useDeleteClub = () => {
     setError(null);
 
     try {
-      await axios.delete(`http://localhost:8080/api/v1/club/${id}`);
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`http://localhost:8080/api/v1/club/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token here
+        },
+      });
       setData("Deleted Successfully");
     } catch (err: any) {
       setError(err.message);

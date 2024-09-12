@@ -36,7 +36,8 @@ const Navbar = () => {
   };
 
   const handleHomeClick = () => {
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("Role");
+    console.log(role);
 
     // Redirect based on the role
     if (role === "admin") {
@@ -71,7 +72,7 @@ const Navbar = () => {
   }, []); // Empty dependency array for initial load
 
   // Determine the role
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem("Role");
 
   return (
     <>

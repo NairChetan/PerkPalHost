@@ -23,41 +23,48 @@ const AppRoutes: React.FC = () => {
   const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Loading state
   const activeAccount = instance.getActiveAccount();
-  console.log(activeAccount);
-
+  
   useEffect(() => {
-    if (activeAccount) {
+    const storedRole = localStorage.getItem("Role");
+
+    if (storedRole) {
+      setRole(storedRole.toLowerCase());
+      setLoading(false);
+    } else if (activeAccount) {
       const fetchRole = async () => {
         try {
-          // Call the new API endpoint for employee details
-          const response = await axios.get(
-            "http://localhost:8080/api/v1/employee/login-info",
+          // Call the API endpoint for authentication
+          const response = await axios.post(
+            "http://localhost:8080/api/v1/auth/login",
             {
-              params: { email: activeAccount.username }, // Pass email as query parameter
+              email: activeAccount.username, // Pass email in request body for POST
             }
           );
 
           // Destructure the data according to the response format
           const {
-            id,
-            roleName,
+            accessToken,
+            clubName,
+            duName,
+            employeeId,
             firstName,
             lastName,
-            duName,
             photoUrl,
-            clubName,
-          } = response.data.data;
+            roleName
+          } = response.data;
 
-          setRole(roleName.toLowerCase()); // Ensure role is lowercase for consistency
+          // Set role in state
+          setRole(roleName.toLowerCase());
 
           // Store employee details directly in localStorage
-          localStorage.setItem("employeeId", id.toString());
-          localStorage.setItem("role", roleName.toLowerCase());
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("employeeId", employeeId.toString());
           localStorage.setItem("firstName", firstName);
           localStorage.setItem("lastName", lastName);
           localStorage.setItem("duName", duName);
           localStorage.setItem("photoUrl", photoUrl);
           localStorage.setItem("clubName", clubName);
+          localStorage.setItem("Role", roleName);
         } catch (error) {
           console.error("Error fetching role:", error);
         } finally {
