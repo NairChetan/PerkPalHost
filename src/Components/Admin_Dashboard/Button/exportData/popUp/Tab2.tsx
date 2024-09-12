@@ -200,11 +200,29 @@ const Tab2 = () => {
           <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>Rank</TableCell>
-                <TableCell>First Name</TableCell>
-                <TableCell>Last Name</TableCell>
+                <TableCell
+                  sx={{
+                    position: "sticky", // Make this column sticky
+                    left: 0, // Stick it to the left side
+                    zIndex: 10, // Higher z-index to stay above content cells
+                    background: "white", // Keep background consistent
+                    top: 0, // Sticky header
+                  }}
+                >
+                  Rank
+                </TableCell>
+                <TableCell
+                  sx={{
+                    position: "sticky", // Make this column sticky
+                    left: 60, // Offset to not overlap the first column
+                    zIndex: 9, // Higher z-index to stay above content cells
+                    background: "white",
+                    top: 0, // Sticky header
+                  }}
+                >
+                  Name
+                </TableCell>
                 <TableCell>Designation</TableCell>
-                <TableCell>Email</TableCell>
                 <TableCell>Department</TableCell>
                 <TableCell>Role</TableCell>
                 <TableCell>Total Points</TableCell>
@@ -215,21 +233,32 @@ const Tab2 = () => {
             <TableBody>
               {apiResponse.map((employee, index) => (
                 <TableRow key={index}>
-                  <TableCell sx={{ fontSize: "0.75rem", textAlign: "center" }}>
+                  <TableCell
+                    sx={{
+                      fontSize: "0.75rem",
+                      textAlign: "center",
+                      position: "sticky", // Make this column sticky
+                      left: 0, // Stick it to the left side
+                      background: "white", // Maintain background consistency
+                      zIndex: 1, // Keep it above the rest of the rows
+                    }}
+                  >
                     {index + 1}
                   </TableCell>
 
-                  <TableCell sx={{ fontSize: "0.75rem" }}>
-                    {employee.firstName}
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "0.75rem" }}>
-                    {employee.lastName}
+                  <TableCell
+                    sx={{
+                      fontSize: "0.75rem",
+                      position: "sticky", // Make this column sticky
+                      left: 60, // Offset to not overlap the first column
+                      background: "white",
+                      zIndex: 1,
+                    }}
+                  >
+                    {employee.firstName} {employee.lastName}
                   </TableCell>
                   <TableCell sx={{ fontSize: "0.75rem" }}>
                     {employee.designation}
-                  </TableCell>
-                  <TableCell sx={{ fontSize: "0.75rem" }}>
-                    {employee.email}
                   </TableCell>
                   <TableCell sx={{ fontSize: "0.75rem" }}>
                     {employee.duDepartmentName}
