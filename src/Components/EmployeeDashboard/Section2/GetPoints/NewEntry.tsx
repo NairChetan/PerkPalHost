@@ -9,6 +9,7 @@ import { Modal } from '@mui/material';
 const NewEntry = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [proof, setProof] = useState<File | null>(null);
+  const [proofPreview, setProofPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openLoadingPopup, setOpenLoadingPopup] = useState(false); // New state for loading popup
@@ -89,6 +90,8 @@ const NewEntry = () => {
         resetForm();
         setOpenLoadingPopup(false); // Close loading popup
         setOpenSuccessPopup(true); // Show success popup
+        setProof(null); // Reset the proof state after submission
+        setProofPreview(null); // Clear proof preview
       } catch (err) {
         console.log(err);
         setError('Error submitting your entry');
@@ -99,8 +102,21 @@ const NewEntry = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setProof(event.target.files[0]);
+      const file = event.target.files[0];
+      setProof(file);
+    
+     // Create a preview if the file is an image
+     if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProofPreview(reader.result as string); // Set proof preview to the file's data URL
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setProofPreview(null); // Reset if not an image
     }
+  }
+
   };
 
   const handleCloseSuccessPopup = () => {
@@ -200,12 +216,20 @@ const NewEntry = () => {
           <div className={styles.error}>{formik.errors.duration}</div>
         ) : null}
         <h5>Upload Proof (Optional)</h5>
-        <input
-          accept="image/*"
-          type="file"
-          onChange={handleFileChange}
-        />
-
+        <div className={styles.proofContainer}>
+          <input
+            accept="image/*"
+            type="file"
+            onChange={handleFileChange}
+          />
+          {proofPreview && (
+            <img
+              src={proofPreview}
+              alt="Proof Thumbnail"
+              className={styles.thumbnail} // Add thumbnail styling
+            />
+          )}
+        </div>
         <button type="submit" className={styles.submit} disabled={loading}>
           <LuSave className={styles.icon} /> Submit
         </button>
@@ -239,3 +263,5 @@ const NewEntry = () => {
 };
 
 export default NewEntry;
+
+// og version

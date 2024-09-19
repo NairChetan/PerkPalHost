@@ -1,7 +1,11 @@
 .clockinContainer {
     background-color: #F3F3F3;
     padding: 5px;
-    max-width: 100%;
+    /* max-width: 100%; */
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    
   }
   
   /* Adjust component widths */

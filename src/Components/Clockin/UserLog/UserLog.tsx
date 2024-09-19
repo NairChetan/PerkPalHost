@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './UserLogin.module.css';
+import styles from './UserLog.module.css';
 import dayjs from 'dayjs';
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -35,7 +35,6 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const { userLogins } = useFetchUserLoginsByDate(selectedDate, localStorage.getItem("employeeId") || "");
   const { entry, updateEntry, loading: editLoading, error: editError } = useEditParticipationEntry(editId || 0);
   const { deleteParticipation, loading: deleteLoading, error: deleteError } = useDeleteParticipation();
-
   useEffect(() => {
     if (entry) {
       setProofUrl(entry.proofUrl);
@@ -43,7 +42,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   }, [entry]);
 
   // Utility function to convert minutes to HH:MM format
-const convertMinutesToHHMM = (minutes: number): string => {
+const convertMinutesToHHMM = (minutes: number | null): string => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
@@ -79,6 +78,11 @@ const convertMinutesToHHMM = (minutes: number): string => {
       setUploading(false);
     }
   };
+
+  // edit
+  const [selectedDescription, setSelectedDescription] = useState('');
+  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+  const [selectedProof, setSelectedproof] = useState<string | null>(null);
 
   const handleEditSave = async (values: any) => {
     const { description, durationHours, durationMinutes } = values;
@@ -119,10 +123,15 @@ const convertMinutesToHHMM = (minutes: number): string => {
     setProofUrl('');
   };
 
-  const handleEditClick = (id: number, status: string) => {
+  const handleEditClick = (id: number, status: string,description: string,duration:number,proof:string) => {
+    console.log('r',proof);
     if (status === "pending") {
       setEditId(id);
+      setSelectedDescription(description);
+      setSelectedDuration(duration);
+      setSelectedproof(proof);
       setEditOpen(true);
+
     } else {
       setMessage('Edit option is only available for pending status.');
       setMessageOpen(true);
@@ -171,11 +180,13 @@ const convertMinutesToHHMM = (minutes: number): string => {
   };
 
   const filteredEntries = userLogins.filter(entry => dayjs(entry.participationDate).format('YYYY-MM-DD') === selectedDate).reverse();
+ 
 
   return (
     <>
-      <h3 className={styles.Log}>User Log Entry</h3>
-      <div className={styles.tableWrapper}>
+      <div className={styles.container}>
+       <div className={styles.Log}><h3 >User Log Entry</h3></div>
+       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -209,8 +220,9 @@ const convertMinutesToHHMM = (minutes: number): string => {
                   )}
                 </td>
                 <td>
-                  <button onClick={() => handleEditClick(entry.id, entry.status)}>
+                  <button onClick={() => handleEditClick(entry.id, entry.status,entry.description,entry.duration,entry.proof)}>
                     <AiOutlineEdit />
+                  
                   </button>
                 </td>
                 <td>
@@ -236,75 +248,85 @@ const convertMinutesToHHMM = (minutes: number): string => {
 
       {/* Edit Dialog */}
       <Dialog open={editOpen} onClose={handleEditClose} maxWidth="sm" fullWidth>
-        <Formik
-          initialValues={{
-            description: '',
-            durationHours: 0,
-            durationMinutes: 0,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => handleEditSave(values)}
-        >
-          {({ setFieldValue }) => (
-            <Form>
-              <DialogContent>
-                <h3>Edit Entry</h3>
-                <Field
-                  name="description"
-                  as={TextField}
-                  label="Description"
-                  fullWidth
-                  margin="normal"
-                  helperText={<ErrorMessage name="description" />}
-                  error={Boolean(<ErrorMessage name="description" />)}
-                />
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  <Field
-                    name="durationHours"
-                    as={TextField}
-                    type="number"
-                    label="Duration Hours"
-                    fullWidth
-                    margin="normal"
-                    helperText={<ErrorMessage name="durationHours" />}
-                    error={Boolean(<ErrorMessage name="durationHours" />)}
-                  />
-                  <Field
-                    name="durationMinutes"
-                    as={TextField}
-                    type="number"
-                    label="Duration Minutes"
-                    fullWidth
-                    margin="normal"
-                    helperText={<ErrorMessage name="durationMinutes" />}
-                    error={Boolean(<ErrorMessage name="durationMinutes" />)}
-                  />
-                </div>
-                <input
-                  accept="image/*"
-                  type="file"
-                  onChange={(event) => handleFileChange(event, setFieldValue)}
-                  style={{ marginTop: '20px', display: 'block' }}
-                />
-                {uploading && <CircularProgress size={24} />}
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleEditClose} color="secondary">Cancel</Button>
-                <Button type="submit" color="primary" disabled={editLoading || uploading}>
-                  {editLoading || uploading ? (
-                    <>
-                      <CircularProgress size={24} style={{ marginRight: '10px' }} />
-                      Saving...
-                    </>
-                  ) : (
-                    "Save"
-                  )}
-                </Button>
-              </DialogActions>
-            </Form>
-          )}
-        </Formik>
-      </Dialog>
+  <Formik
+    initialValues={{
+      description: selectedDescription || '',  // Set initial description from selectedEntry
+      duration: convertMinutesToHHMM(selectedDuration),  // Set initial duration in HH:MM format
+      proof: proofUrl|| '', // Set initial proof (if applicable)
+    }}
+    validationSchema={Yup.object().shape({
+      description: Yup.string().required('Description is required'),
+      duration: Yup.string()
+        .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format. Use HH:MM')
+        .required('Duration is required'),
+    })}
+    onSubmit={(values) => {
+      const [hours, minutes] = values.duration.split(':').map(Number);
+      const durationInMinutes = hours * 60 + minutes;
+      handleEditSave({ 
+        ...values, 
+        durationHours: hours, 
+        durationMinutes: minutes, 
+        durationInMinutes 
+      });
+    }}
+  >
+    {({ setFieldValue }) => (
+      <Form>
+        <DialogContent>
+          <h3>Edit Entry</h3>
+
+          {/* Description Field */}
+          <Field
+            name="description"
+            as={TextField}
+            label="Description"
+            fullWidth
+            margin="normal"
+            helperText={<ErrorMessage name="description" />}
+            error={Boolean(<ErrorMessage name="description" />)}
+          />
+
+          {/* Duration Field */}
+          <Field
+            name="duration"
+            as={TextField}
+            label="Duration (HH:MM)"
+            fullWidth
+            margin="normal"
+            helperText={<ErrorMessage name="duration" />}
+            error={Boolean(<ErrorMessage name="duration" />)}
+            placeholder="00:00"
+          />
+
+          {/* Proof File Input */}
+          <input
+            accept="image/*"
+            type="file"
+            onChange={(event) => handleFileChange(event, setFieldValue)}
+            style={{ marginTop: '20px', display: 'block' }}
+          />
+          {uploading && <CircularProgress size={24} />}
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handleEditClose} color="secondary">Cancel</Button>
+          <Button type="submit" color="primary" disabled={editLoading || uploading}>
+            {editLoading || uploading ? (
+              <>
+                <CircularProgress size={24} style={{ marginRight: '10px' }} />
+                Saving...
+              </>
+            ) : (
+              "Save"
+            )}
+          </Button>
+        </DialogActions>
+      </Form>
+    )}
+  </Formik>
+</Dialog>
+
 
       {/* Confirmation Dialog */}
       <Dialog open={confirmOpen} onClose={handleConfirmClose} maxWidth="sm" fullWidth>
@@ -335,6 +357,7 @@ const convertMinutesToHHMM = (minutes: number): string => {
           <Button onClick={handleMessageClose} color="primary">Close</Button>
         </DialogActions>
       </Dialog>
+      </div>
     </>
   );
 };

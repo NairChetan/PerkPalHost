@@ -1,6 +1,7 @@
 .container {
     background-color: #212121;
     padding: 20px;
+    padding-top: 10px;
     border-radius: 15px;
     width: 400px;
     margin: auto;
@@ -113,6 +114,19 @@
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+  }
+  
+  .thumbnail {
+    width: 65px;
+    height: 29px;
+    object-fit: cover;
+    margin-left: -71px;
+  }
+  
+  .proofContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
 
