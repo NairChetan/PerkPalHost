@@ -62,6 +62,17 @@ const Tab1 = () => {
     setSelectedChart(event.target.value); // Update the state with the selected chart type
   };
 
+  // Define headers for both charts
+  const headers: { [key: string]: string[] } = {
+    "Employee Chart": [
+      "Employee Name",
+      "Department",
+      "Total Points",
+      "Redeemable Points",
+    ],
+    "DU Chart": ["DU Name", "Points"],
+  };
+
   // Function to fetch data from the API
   const fetchData = async () => {
     if (selectedDateRange.startDate && selectedDateRange.endDate) {
@@ -230,18 +241,32 @@ const Tab1 = () => {
           <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
-                {/* Update these headers based on your API response structure */}
-                {Object.keys(apiData[0]).map((key) => (
-                  <TableCell key={key}>{key}</TableCell>
+                {/* Dynamically render table headers based on the selected chart */}
+                {headers[selectedChart].map((header, index) => (
+                  <TableCell key={index}>{header}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
               {apiData.map((row, index) => (
                 <TableRow key={index}>
-                  {Object.values(row).map((value, idx) => (
-                    <TableCell key={idx}>{String(value)}</TableCell>
-                  ))}
+                  {selectedChart === "Employee Chart" && (
+                    <>
+                      {/* Display name (firstName + lastName) */}
+                      <TableCell>{`${row.firstName} ${row.lastName}`}</TableCell>
+                      {/* Display duDepartmentName */}
+                      <TableCell>{row.duDepartmentName}</TableCell>
+                      {/* Display totalPoints */}
+                      <TableCell>{row.totalPoints}</TableCell>
+                      {/* Display redeemablePoints */}
+                      <TableCell>{row.redeemablePoints}</TableCell>
+                    </>
+                  )}
+
+                  {selectedChart === "DU Chart" &&
+                    Object.values(row).map((value, idx) => (
+                      <TableCell key={idx}>{String(value)}</TableCell>
+                    ))}
                 </TableRow>
               ))}
             </TableBody>
