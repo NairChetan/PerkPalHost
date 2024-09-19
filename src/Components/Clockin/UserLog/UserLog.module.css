@@ -1,8 +1,15 @@
 
 .Log{
     text-align: left;
-    padding-bottom: 5px;
+    position: sticky;
+    top: -1px;
+    z-index: 3;
+    margin-top: 6%;
+
     
+  }
+  .tableWrapper{
+    margin-top: 1%;
   }
   .table {
       width: 100%;
@@ -94,7 +101,7 @@
 .tableWrapper {
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 30vh; /* Adjust this height as needed */
+  max-height: 55vh; /* Adjust this height as needed */
   position: relative;
 }
     @media (max-width: 769px) {
