@@ -56,13 +56,13 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedDate }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className={styles.calendarContainer}>
-        <div className={styles.calendarleft}>
+        {/* <div className={styles.calendarleft}>
           <img
             src="../../src/assets/Images/achievement 1.png"
             alt="Celebration Icon"
             className={styles.calendarImage}
           />
-        </div>
+        </div> */}
         <div className={styles.calendarright}>
         <DatePicker
   className={styles.datepicker}
