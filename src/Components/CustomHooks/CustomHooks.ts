@@ -155,7 +155,7 @@ export const useSubmitParticipation = () => {
   return { submitParticipation, loading, error };
 };
 
-export const useFetchParticipation = (url: string, refreshPage: number) => {
+export const useFetchParticipation = (url: string, refreshPage: number,  isLoadingMore: boolean,setIsLoadingMore: (loading: boolean) => void) => {
   const [participation, setParticipation] = useState<any[]>([]);
   const [pagination, setPagination] = useState<{
     totalPages: number;
@@ -179,6 +179,7 @@ export const useFetchParticipation = (url: string, refreshPage: number) => {
           number: response.data.data.number,
         });
         setLoading(false);
+        setIsLoadingMore(false);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           // Log detailed error information
@@ -191,6 +192,7 @@ export const useFetchParticipation = (url: string, refreshPage: number) => {
         }
         setError("Failed to fetch data.");
         setLoading(false);
+
       }
     };
 
