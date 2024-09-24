@@ -31,8 +31,9 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const [message, setMessage] = useState('');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-render
 
-  const { userLogins } = useFetchUserLoginsByDate(selectedDate, localStorage.getItem("employeeId") || "");
+  const { userLogins } = useFetchUserLoginsByDate(selectedDate, localStorage.getItem("employeeId") || "",refreshKey);
   const { entry, updateEntry, loading: editLoading, error: editError } = useEditParticipationEntry(editId || 0);
   const { deleteParticipation, loading: deleteLoading, error: deleteError } = useDeleteParticipation();
   useEffect(() => {
@@ -40,6 +41,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
       setProofUrl(entry.proofUrl);
     }
   }, [entry]);
+
 
   // Utility function to convert minutes to HH:MM format
 const convertMinutesToHHMM = (minutes: number | null): string => {
@@ -82,8 +84,12 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
   // edit
   const [selectedDescription, setSelectedDescription] = useState('');
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
-  const [selectedProof, setSelectedproof] = useState<string | null>(null);
+  const [selectedProof, setSelectedproof] = useState<File | null>(null);
 
+
+  useEffect(() => {
+  
+  }, [refreshKey]);
   const handleEditSave = async (values: any) => {
     const { description, durationHours, durationMinutes } = values;
     const durationInMinutes = durationHours * 60 + durationMinutes;
@@ -104,6 +110,7 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
       if (success) {
         setMessage('Entry updated successfully.');
         handleEditClose();
+        setRefreshKey(prevKey => prevKey + 1); // Trigger component re-render
       } else {
         setMessage('Failed to update the entry.');
       }
@@ -123,13 +130,13 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
     setProofUrl('');
   };
 
-  const handleEditClick = (id: number, status: string,description: string,duration:number,proof:string) => {
-    console.log('r',proof);
+  const handleEditClick = (id: number, status: string,description: string,duration:number) => {
+    console.log('ra',file);
     if (status === "pending") {
       setEditId(id);
       setSelectedDescription(description);
       setSelectedDuration(duration);
-      setSelectedproof(proof);
+      setSelectedproof(file);
       setEditOpen(true);
 
     } else {
@@ -160,12 +167,13 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
       if (success) {
         setMessage('Entry deleted successfully.');
         // Optionally, refetch or update the state to remove the deleted entry
+        setRefreshKey(prevKey => prevKey + 1); // Trigger component re-render
       } else {
         setMessage('Failed to delete the entry.');
       }
       setMessageOpen(true);
       setConfirmOpen(false);
-      window.location.reload();
+     
     }
   };
 
@@ -181,7 +189,7 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
 
   const filteredEntries = userLogins.filter(entry => dayjs(entry.participationDate).format('YYYY-MM-DD') === selectedDate).reverse();
  
-
+  
   return (
     <>
       <div className={styles.container}>
@@ -220,7 +228,7 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
                   )}
                 </td>
                 <td>
-                  <button onClick={() => handleEditClick(entry.id, entry.status,entry.description,entry.duration,entry.proof)}>
+                  <button onClick={() => handleEditClick(entry.id, entry.status,entry.description,entry.duration)}>
                     <AiOutlineEdit />
                   
                   </button>
@@ -252,7 +260,7 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
     initialValues={{
       description: selectedDescription || '',  // Set initial description from selectedEntry
       duration: convertMinutesToHHMM(selectedDuration),  // Set initial duration in HH:MM format
-      proof: proofUrl|| '', // Set initial proof (if applicable)
+      proof: selectedProof || 'saraaa.jpg', // Set initial proof (if applicable)
     }}
     validationSchema={Yup.object().shape({
       description: Yup.string().required('Description is required'),
