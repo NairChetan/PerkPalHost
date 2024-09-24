@@ -34,6 +34,7 @@ import { FaSync } from "react-icons/fa";
 
 const PendingApproval = () => {
   // const [participation, setParticipation] = useState([]);
+  const [participationDate, setParticipationDate] = useState("");
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
   const [pageSize, setPageSize] = useState(16); // Default page size is 4
   const [approvalStatus, setApprovalStatus] = useState<string | null>(
@@ -47,7 +48,7 @@ const PendingApproval = () => {
   const [lastName, setLastName] = useState<string | null>("");
   const [employeeId, setEmployeeId] = useState<string | null>("");
   const { participation, pagination, loading, error } = useFetchParticipation(
-    `/api/v1/participation/search?approvalStatus=${approvalStatus}&activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=desc`,
+    `/api/v1/participation/search?approvalStatus=${approvalStatus}&activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&participationDate=${participationDate}&pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=desc`,
     refreshPage,
     isLoadingMore, // Pass isLoadingMore state
     setIsLoadingMore
@@ -58,11 +59,13 @@ const PendingApproval = () => {
     if (participation && participation.length > 0) {
       setAllParticipation((prevParticipation) => {
         // Create a Set to track unique IDs (or other unique properties)
-        const existingIds = new Set(prevParticipation.map(item => item.id)); // Assuming 'id' is the unique identifier
-        
+        const existingIds = new Set(prevParticipation.map((item) => item.id)); // Assuming 'id' is the unique identifier
+
         // Filter out duplicates from the new participation data
-        const newUniqueParticipation = participation.filter(item => !existingIds.has(item.id));
-  
+        const newUniqueParticipation = participation.filter(
+          (item) => !existingIds.has(item.id)
+        );
+
         // Return the updated state with only unique items
         return [...prevParticipation, ...newUniqueParticipation];
       });
@@ -103,13 +106,18 @@ const PendingApproval = () => {
   const handleSearchDialogClose = () => {
     setSearchDialogOpen(false);
   };
+  // Function to format the date to 'yyyy-mm-dd'
+  const handleDateChange = (newDate) => {
+    const formattedDate = format(newDate, "yyyy-MM-dd"); // Convert to 'yyyy-mm-dd'
+    setParticipationDate(formattedDate);
+  };
   const handleActivityChange = (e) => {
     setSelectedPanels([]);
     setAllParticipation([]);
     setCurrentPage(0);
     setActivityName(e.target.value);
-  }
-  
+  };
+
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameParts = e.target.value.split(" ");
     if (nameParts.length >= 1) {
@@ -120,6 +128,9 @@ const PendingApproval = () => {
       setLastName(null);
     }
     setFullName(e.target.value);
+    setSelectedPanels([]);
+    setAllParticipation([]);
+    setCurrentPage(0);
   };
 
   const handleProofClick = (proofUrl: string | null) => {
@@ -231,19 +242,19 @@ const PendingApproval = () => {
         return () => clearTimeout(timeoutId); // Trigger the fetch only if not already loading and we have data
       }
     });
-  
+
     const currentElement = bottomBoundaryRef.current;
-  
+
     if (currentElement) {
       observer.observe(currentElement); // Start observing the bottom element
     }
-  
+
     return () => {
       if (currentElement) {
         observer.unobserve(currentElement); // Stop observing to prevent memory leaks
       }
     };
-  }, [loading, participation, loadMoreItems]); 
+  }, [loading, participation, loadMoreItems]);
 
   const handleApproveSelected = async () => {
     setActionLoading(true);
@@ -697,13 +708,6 @@ const PendingApproval = () => {
                     label="Full Name (First Last)"
                     value={fullName}
                     onChange={handleFullNameChange}
-                    fullWidth
-                  />
-                  <TextField
-                    label="Employee ID"
-                    value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
-                    type="number" // Added this line to restrict input to numbers
                     fullWidth
                   />
                 </Box>
