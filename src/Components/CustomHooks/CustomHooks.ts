@@ -276,7 +276,8 @@ export const useFetchUserLoginsByEmployee = (employeeId: string) => {
 
 export const useFetchUserLoginsByDate = (
   selectedDate: string,
-  employeeId: string
+  employeeId: string,
+  refreshKey: number
 ) => {
   const [userLogins, setUserLogins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -301,7 +302,7 @@ export const useFetchUserLoginsByDate = (
     };
 
     fetchUserLogins();
-  }, [selectedDate, employeeId]);
+  }, [selectedDate, employeeId,refreshKey]);
 
   return { userLogins, loading, error };
 };
