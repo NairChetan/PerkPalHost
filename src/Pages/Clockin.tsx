@@ -12,6 +12,7 @@ const Clockin: React.FC = () => {
     console.log("Selected Date in Clockin Component:", selectedDate);
   }, [selectedDate]);
 
+
   return (
     <>
       <Navbar />
