@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Footer from "../Components/Footer/Footer";
 import Navbar from "../Components/NavBar/Navbar";
@@ -7,6 +9,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import InfoIcon from "@mui/icons-material/Info"; // Add description icon
+import CommentIcon from "@mui/icons-material/Comment";
 import Tooltip from "@mui/material/Tooltip"; // Add Tooltip component
 import VisibilityIcon from "@mui/icons-material/Visibility"; // Eye icon for proof
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"; //Eye off icon for no proof
@@ -26,7 +29,6 @@ import SearchIcon from "@mui/icons-material/Search"; // Import search icon
 import TextField from "@mui/material/TextField"; // Input fields
 import RemarksModal from "../Components/PendingApproval/RemarksModal";
 import {
-  participationDataForPendingApproval,
   useFetchParticipation,
   usePostApprovalStatus,
 } from "../Components/CustomHooks/CustomHooks";
@@ -36,7 +38,7 @@ const PendingApproval = () => {
   // const [participation, setParticipation] = useState([]);
   const [participationDate, setParticipationDate] = useState("");
   const [currentPage, setCurrentPage] = useState(0); // Start with page 0
-  const [pageSize, setPageSize] = useState(16); // Default page size is 4
+  // const [pageSize, setPageSize] = useState(16);
   const [approvalStatus, setApprovalStatus] = useState<string | null>(
     "pending"
   );
@@ -47,8 +49,9 @@ const PendingApproval = () => {
   const [firstName, setFirstName] = useState<string | null>("");
   const [lastName, setLastName] = useState<string | null>("");
   const [employeeId, setEmployeeId] = useState<string | null>("");
+  const [approvalDate, setApprovalDate] = useState<string>("");
   const { participation, pagination, loading, error } = useFetchParticipation(
-    `/api/v1/participation/search?approvalStatus=${approvalStatus}&activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&participationDate=${participationDate}&pageNumber=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=desc`,
+    `/api/v1/participation/search?approvalStatus=${approvalStatus}&activityName=${activityName}&employeeId=${employeeId}&firstName=${firstName}&lastName=${lastName}&participationDate=${participationDate}&approvalDate=${approvalDate}&pageNumber=${currentPage}&sortBy=${sortBy}&sortDir=desc`,
     refreshPage,
     isLoadingMore, // Pass isLoadingMore state
     setIsLoadingMore
@@ -95,6 +98,8 @@ const PendingApproval = () => {
     setFirstName("");
     setLastName("");
     setEmployeeId("");
+    setParticipationDate("");
+    setApprovalDate("");
     setSelectedPanels([]);
   };
   console.log(selectedPanels);
@@ -107,9 +112,16 @@ const PendingApproval = () => {
     setSearchDialogOpen(false);
   };
   // Function to format the date to 'yyyy-mm-dd'
-  const handleDateChange = (newDate) => {
-    const formattedDate = format(newDate, "yyyy-MM-dd"); // Convert to 'yyyy-mm-dd'
-    setParticipationDate(formattedDate);
+  const handleDateChange = (e) => {
+    if (approvalStatus == "pending") {
+      setParticipationDate(e.target.value);
+    } else if (approvalStatus == "approved" || approvalStatus == "rejected") {
+      setApprovalDate(e.target.value);
+      console.log(e.target.value);
+    }
+    setSelectedPanels([]);
+    setAllParticipation([]);
+    setCurrentPage(0);
   };
   const handleActivityChange = (e) => {
     setSelectedPanels([]);
@@ -190,6 +202,8 @@ const PendingApproval = () => {
       console.error("Rejection failed", error);
     } finally {
       setActionLoading(false); // Stop loading animation
+      setAllParticipation([]);
+      setCurrentPage(0);
     }
   };
 
@@ -218,9 +232,9 @@ const PendingApproval = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
-  };
+  // const handlePrevPage = () => {
+  //   setCurrentPage((prevPage) => (prevPage > 0 ? prevPage - 1 : 0));
+  // };
 
   const loadMoreItems = useCallback(() => {
     if (currentPage < totalPages - 1 && !loading) {
@@ -271,6 +285,8 @@ const PendingApproval = () => {
       } finally {
         setActionLoading(false);
         setSelectedPanels([]);
+        setCurrentPage(0);
+        setAllParticipation([]);
       }
     }
     setRefreshPage((refresh) => refresh + 1);
@@ -291,18 +307,17 @@ const PendingApproval = () => {
   const handleDeselectAll = () => {
     setSelectedPanels([]);
   };
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     if (newValue === "pending") {
-      setAllParticipation([]);
-      setCurrentPage(0);
+      clearFields();
       setApprovalStatus("pending");
       setSortBy("participationDate");
     } else if (newValue === "approved") {
-      setAllParticipation([]);
+      clearFields();
       setApprovalStatus("approved");
       setSortBy("approvalDate");
     } else if (newValue === "rejected") {
-      setAllParticipation([]);
+      clearFields();
       setApprovalStatus("rejected");
       setSortBy("approvalDate");
     }
@@ -452,7 +467,7 @@ const PendingApproval = () => {
                 item
                 xs={12}
                 sm={2}
-                md={1.5}
+                md={2}
                 sx={{
                   display: {
                     xs: "none",
@@ -470,8 +485,8 @@ const PendingApproval = () => {
                 xs={12}
                 sm={3}
                 md={3.3}
-                lg={3.3}
-                textAlign={"center"}
+                lg={3.6}
+                textAlign={"left"}
                 sx={{
                   display: {
                     xs: "none",
@@ -486,9 +501,9 @@ const PendingApproval = () => {
                 item
                 xs={12}
                 sm={2}
-                md={2.3}
+                md={2}
                 lg={2.3}
-                textAlign={"center"}
+                textAlign={"left"}
                 sx={{
                   display: {
                     xs: "none",
@@ -504,7 +519,7 @@ const PendingApproval = () => {
                 xs={12}
                 sm={3}
                 md={3}
-                lg={3}
+                lg={2}
                 sx={{
                   display: {
                     xs: "none",
@@ -513,7 +528,7 @@ const PendingApproval = () => {
                   },
                 }}
               >
-                <Typography variant="h6" textAlign={"center"}>
+                <Typography variant="h6" textAlign={"left"} marginLeft={"11%"}>
                   {approvalStatus === "pending"
                     ? "Participation Date"
                     : approvalStatus === "approved"
@@ -614,6 +629,7 @@ const PendingApproval = () => {
                             gap: 1,
                           }}
                         >
+                          {/* Proof Icon */}
                           {item.proofUrl ? (
                             <VisibilityIcon
                               sx={{ cursor: "pointer", mr: 1 }}
@@ -631,17 +647,26 @@ const PendingApproval = () => {
                               }}
                             />
                           )}
+
+                          {/* Description Icon */}
                           <Tooltip
                             title={
                               item.description?.length > 0
                                 ? item.description
-                                : "Description is not provided"
+                                : "No description provided"
                             }
                             arrow
                           >
-                            <InfoIcon sx={{ cursor: "pointer", mr: 1 }} />
+                            <InfoIcon
+                              sx={{ cursor: "pointer", mr: 1 }}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                // Handle description click if necessary
+                              }}
+                            />
                           </Tooltip>
                         </Box>
+
                         {approvalStatus === "pending" && (
                           <Box
                             sx={{
@@ -665,6 +690,27 @@ const PendingApproval = () => {
                                 handleIconClick(event, item.id, "reject")
                               }
                             />
+                          </Box>
+                        )}
+
+                        {approvalStatus === "rejected" && (
+                          <Box
+                            sx={{
+                              display: { xs: "flex", sm: "block" },
+                              flexDirection: "column",
+                              alignItems: "flex-end",
+                              gap: 1,
+                            }}
+                          >
+                            <Tooltip title={item.remarks} arrow>
+                              <CommentIcon
+                                sx={{ cursor: "pointer", color: "black" }}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  // Handle remarks click if necessary
+                                }}
+                              />
+                            </Tooltip>
                           </Box>
                         )}
                       </>
@@ -709,6 +755,16 @@ const PendingApproval = () => {
                     value={fullName}
                     onChange={handleFullNameChange}
                     fullWidth
+                  />
+                  <TextField
+                    label="Participation Date"
+                    type="date"
+                    value={participationDate}
+                    onChange={(e) => handleDateChange(e)}
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true, // This keeps the label above the input even when it's empty
+                    }}
                   />
                 </Box>
               </DialogContent>

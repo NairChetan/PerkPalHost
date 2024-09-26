@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import DateRangePick from "../DateRange/DateRangePick";
 import Bar_Chart from "../Charts/Bar_Chart";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { addDays } from "date-fns";
 import axios from "axios";
 
