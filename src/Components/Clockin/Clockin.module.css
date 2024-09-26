@@ -1,17 +1,17 @@
 .clockinContainer {
-    background-color: #F3F3F3;
-    padding: 5px;
-    /* max-width: 100%; */
+  background-color: #f3f3f3;
+  padding: 5px;
+  /* max-width: 100%; */
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  height: 78vh;
+}
+
+/* Adjust component widths */
+@media (max-width: 769px) {
+  .clockinContainer {
     display: flex;
-    flex-direction: row;
-    gap: 5%;
-    
+    flex-direction: column;
   }
-  
-  /* Adjust component widths */
-  @media (max-width: 769px) {
-    .clockinContainer {
-      display: flex;
-      flex-direction: column;
-    }
-  }
+}
