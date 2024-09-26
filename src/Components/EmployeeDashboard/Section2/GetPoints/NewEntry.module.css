@@ -130,6 +130,21 @@
   }
   
 
+  @media (max-width: 376px) {
+
+    .container {
+      background-color: #212121;
+      padding: 20px;
+      border-radius: 15px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      height: 97vh;
+      overflow-y:auto;
+    }
+    
+    
+  }
   @media (max-width: 321px) {
 
     .container {

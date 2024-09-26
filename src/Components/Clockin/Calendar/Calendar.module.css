@@ -79,6 +79,23 @@
     .calendarImage {
       display: none;
     }
+    .calendarContainer{
+      padding-left: 15%;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      width: 85%;
+    }
+    .daysOfWeek {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      width: 84%;
+    }
   }
   @media (max-width: 426px) {
     .calendar,.daysOfWeek {
@@ -89,12 +106,20 @@
     .calendarImage {
       display: none;
     }
+    .calendarContainer{
+      padding-left: 15%;
+    }
+  
+    
   }
   
   @media (max-width: 376px) {
     .calendar,.daysOfWeek {
       max-width: 375px; /* adjust as needed */
     
+    }
+    .calendarContainer{
+      padding-left: 9%;
     }
   }
   
@@ -106,5 +131,8 @@
     }
     .calendarright{
       width: 300px;
+    }
+    .calendarContainer{
+      padding-left: 11%;
     }
   }
