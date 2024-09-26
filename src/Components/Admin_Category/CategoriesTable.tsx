@@ -113,7 +113,7 @@ const CategoriesTable: React.FC = () => {
     borderRadius: '10px',
     // Custom scrollbar styles
     "&::-webkit-scrollbar": {
-      width: "7px",
+      width: "4px",
     },
     "&::-webkit-scrollbar-track": {
       background: "#2c2c2c",
