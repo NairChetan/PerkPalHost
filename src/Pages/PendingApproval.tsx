@@ -467,7 +467,7 @@ const PendingApproval = () => {
                 item
                 xs={12}
                 sm={2}
-                md={2}
+                md={2.1}
                 sx={{
                   display: {
                     xs: "none",
@@ -501,10 +501,11 @@ const PendingApproval = () => {
                 item
                 xs={12}
                 sm={2}
-                md={2}
-                lg={2.3}
+                md={2.5}
+                lg={2}
                 textAlign={"left"}
                 sx={{
+                  marginLeft:"0%",
                   display: {
                     xs: "none",
                     sm: "none",
@@ -519,7 +520,7 @@ const PendingApproval = () => {
                 xs={12}
                 sm={3}
                 md={3}
-                lg={2}
+                lg={2.3}
                 sx={{
                   display: {
                     xs: "none",
@@ -528,7 +529,7 @@ const PendingApproval = () => {
                   },
                 }}
               >
-                <Typography variant="h6" textAlign={"left"} marginLeft={"11%"}>
+                <Typography variant="h6" textAlign={"left"}>
                   {approvalStatus === "pending"
                     ? "Participation Date"
                     : approvalStatus === "approved"
@@ -540,8 +541,8 @@ const PendingApproval = () => {
                 item
                 xs={12}
                 sm={2}
-                md={1.5}
-                lg={1.5}
+                md={1.0}
+                lg={1.0}
                 sx={{
                   display: {
                     xs: "none",
@@ -588,7 +589,7 @@ const PendingApproval = () => {
                     <Grid item xs={12} sm={3} textAlign="left">
                       <Typography>{item.activityName}</Typography>
                     </Grid>
-                    <Grid item xs={12} sm={2} textAlign="center">
+                    <Grid item xs={12} sm={2.5} textAlign="center">
                       {/* <Typography>{item.duration} minutes</Typography> */}
                       <Typography>
                         {Math.floor(item.duration / 60) > 0 &&
@@ -596,7 +597,7 @@ const PendingApproval = () => {
                         {item.duration % 60 > 0 && `${item.duration % 60} min`}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={3} textAlign="center">
+                    <Grid item xs={12} sm={2.4} textAlign="left" marginLeft={"2%"}>
                       <Typography>
                         {approvalStatus === "pending"
                           ? new Date(item.participationDate).toLocaleDateString(
@@ -611,7 +612,7 @@ const PendingApproval = () => {
                       item
                       xs={12}
                       sm={2}
-                      md={2}
+                      md={1.3}
                       sx={{
                         display: "flex",
                         flexDirection: { xs: "column", sm: "row", md: "row" }, // Stack vertically on extra-small screens, row on small and larger screens
