@@ -6,7 +6,6 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import React from "react";
 
 interface DropdownProps {
   label: string;
