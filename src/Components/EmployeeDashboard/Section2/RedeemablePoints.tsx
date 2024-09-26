@@ -15,7 +15,7 @@ const Points: React.FC<PointProp> = ({ points }) => {
     return <p>No data available</p>; // Handle loading or error states if needed
   }
 
-  const { totalPoints, redeemablePoints } = points;
+  const {  redeemablePoints } = points;
 
   return (
    

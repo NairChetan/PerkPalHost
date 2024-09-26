@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, Typography, Avatar, CircularProgress } from "@mui/material";
@@ -24,13 +25,13 @@ const ScrollBox = styled(Box)({
 });
 
 const Leaderboard: React.FC = () => {
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // State for loading
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch leaderboard data from API
-    axios.get<ApiResponse>('http://localhost:8080/api/v1/employee/leaderboard')
+    axios.get('http://localhost:8080/api/v1/employee/leaderboard')
       .then(response => {
         // Check the structure here
         console.log('API Response:', response.data);

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/LoginForm.tsx
 import React from "react";
 import {Button, Box, Typography } from "@mui/material";
@@ -11,7 +13,7 @@ const LoginForm: React.FC = () => {
 
   
  
-  const activeAccount = instance.getActiveAccount();
+  // const activeAccount = instance.getActiveAccount();
 
   const handleLoginRedirect = () => {
       instance

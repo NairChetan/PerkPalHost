@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 import {
   Box,
@@ -301,7 +302,7 @@ const KnowYourCategory = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredCategories.map((category, categoryIndex) => (
+                {filteredCategories.map((category, _categoryIndex) => (
                   <React.Fragment key={category.id}>
                     {category.activities.map((activity, activityIndex) => (
                       <TableRow key={activity.id}>

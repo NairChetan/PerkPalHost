@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -40,7 +41,10 @@ const Club_Edit_Button = () => {
   };
 
   const handleAddRow = () => {
-    setLocalClubs([...localClubs, { clubName: "", initialThreshold: 0, finalThreshold: 0, createdBy: 0, clubDescription: null }]); // Add new club with default values
+    setLocalClubs([...localClubs, {
+      clubName: "", initialThreshold: 0, finalThreshold: 0, createdBy: 0, clubDescription: "Default club description",
+      clubId: 1
+    }]); // Add new club with default values
     setEditIndex(localClubs.length); // Set the new row as editable
   };
 

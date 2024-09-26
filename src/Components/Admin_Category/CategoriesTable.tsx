@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -20,31 +22,31 @@ import {
   Button,
   Snackbar,
   Alert,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import { useFetchActivitiesForAdmin } from '../CustomHooks/CustomHooks'; // Adjust the import path
-import { useDeleteActivity } from '../CustomHooks/CustomHooks'; // Adjust the import path
-import AddNewActivity from '../Admin_Category/Button/AddNewActivity';
-import UpdateActivityButton from './Button/UpdateActivityButton';
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useFetchActivitiesForAdmin } from "../CustomHooks/CustomHooks"; // Adjust the import path
+import { useDeleteActivity } from "../CustomHooks/CustomHooks"; // Adjust the import path
+import AddNewActivity from "../Admin_Category/Button/AddNewActivity";
+import UpdateActivityButton from "./Button/UpdateActivityButton";
 const CategoriesTable: React.FC = () => {
   const { activities, loading, error } = useFetchActivitiesForAdmin();
-  const { deleteActivity, loading: deleteLoading, error: deleteError } = useDeleteActivity();
+  const {
+    deleteActivity,
+    loading: deleteLoading,
+  } = useDeleteActivity();
   const [page, setPage] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const rowsPerPage = 4;
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleDeleteClick = (id: number) => {
     setSelectedId(id);
     setDialogOpen(true);
-    
   };
 
   const handleConfirmDelete = async () => {
@@ -62,112 +64,144 @@ const CategoriesTable: React.FC = () => {
     setSnackbarOpen(false);
   };
 
-  if (loading) return (
-    <Box
-      sx={{
-        height: '70vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-      }}
-    >
-      <CircularProgress />
-    </Box>
-  );
+  if (loading)
+    return (
+      <Box
+        sx={{
+          height: "70vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
-  if (error) return (
-    <Box
-      sx={{
-        height: '70vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-      }}
-    >
-      <Typography color="error">{error}</Typography>
-    </Box>
-  );
+  if (error)
+    return (
+      <Box
+        sx={{
+          height: "70vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
 
   return (
     <Box
       sx={{
-        height: '60vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-        overflow: 'hidden',
+        height: "60vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+        overflow: "hidden",
       }}
     >
-      <TableContainer 
-        component={Paper}  
-  sx={{ 
-    width: '100%', 
-    maxWidth: '1200px', 
-    height: 'calc(100vh - 292px)',
-    overflowX: 'auto',
-    overflowY: 'auto',
-    borderRadius: '10px',
-    // Custom scrollbar styles
-    "&::-webkit-scrollbar": {
-      width: "7px",
-    },
-    "&::-webkit-scrollbar-track": {
-      background: "#2c2c2c",
-      borderRadius: "10px",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      background: "#6c6c6c",
-      borderRadius: "10px",
-    },
-    "&::-webkit-scrollbar-thumb:hover": {
-      background: "#9c9c9c",
-    },
-  }}
-    >
+      <TableContainer
+        component={Paper}
+        sx={{
+          width: "100%",
+          maxWidth: "1200px",
+          height: "calc(100vh - 292px)",
+          overflowX: "auto",
+          overflowY: "auto",
+          borderRadius: "10px",
+          // Custom scrollbar styles
+          "&::-webkit-scrollbar": {
+            width: "7px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#2c2c2c",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#6c6c6c",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#9c9c9c",
+          },
+        }}
+      >
         <Table stickyHeader>
           <TableHead>
-            <TableRow sx={{ backgroundColor: '#e0e0e0' }}>
-              <TableCell sx={{ padding: '8px' }}><strong>Activity</strong></TableCell>
-              <TableCell sx={{ padding: '8px' }}><strong>Category</strong></TableCell>
-              <TableCell sx={{ padding: '8px' }}><strong>Description</strong></TableCell>
-              <TableCell sx={{ padding: '8px' }}><strong>Points Per Hour</strong></TableCell>
-              <TableCell align="center" sx={{ padding: '8px' }}><strong>Save/Edit</strong></TableCell>
-              <TableCell align="center" sx={{ padding: '8px' }}><strong>Delete</strong></TableCell>
+            <TableRow sx={{ backgroundColor: "#e0e0e0" }}>
+              <TableCell sx={{ padding: "8px" }}>
+                <strong>Activity</strong>
+              </TableCell>
+              <TableCell sx={{ padding: "8px" }}>
+                <strong>Category</strong>
+              </TableCell>
+              <TableCell sx={{ padding: "8px" }}>
+                <strong>Description</strong>
+              </TableCell>
+              <TableCell sx={{ padding: "8px" }}>
+                <strong>Points Per Hour</strong>
+              </TableCell>
+              <TableCell align="center" sx={{ padding: "8px" }}>
+                <strong>Save/Edit</strong>
+              </TableCell>
+              <TableCell align="center" sx={{ padding: "8px" }}>
+                <strong>Delete</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {activities?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => (
-              <TableRow
-                key={index}
-                sx={{
-                  height: '40px',
-                  backgroundColor: index % 2 === 0 ? '#ffffff' : '#f5f5f5'
-                }}
+            {activities
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row: any, index: number) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    height: "40px",
+                    backgroundColor: index % 2 === 0 ? "#ffffff" : "#f5f5f5",
+                  }}
+                >
+                  <TableCell sx={{ padding: "8px" }}>
+                    {row.activityName}
+                  </TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    {row.categoryName}
+                  </TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    {row.description}
+                  </TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    {row.weightagePerHour}
+                  </TableCell>
+                  <TableCell align="center" sx={{ padding: "8px" }}>
+                    <IconButton size="small" sx={{ color: "#616161" }}>
+                      <UpdateActivityButton activityId={row.id} />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="center" sx={{ padding: "8px" }}>
+                    <IconButton
+                      size="small"
+                      sx={{ color: "#E60124" }}
+                      onClick={() => handleDeleteClick(row.id)}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            <TableRow sx={{ height: "10px", backgroundColor: "#ffffff" }}>
+              <TableCell
+                colSpan={6}
+                align="right"
+                sx={{ paddingTop: "3px", paddingRight: "50px" }}
               >
-                <TableCell sx={{ padding: '8px' }}>{row.activityName}</TableCell>
-                <TableCell sx={{ padding: '8px' }}>{row.categoryName}</TableCell>
-                <TableCell sx={{ padding: '8px' }}>{row.description}</TableCell>
-                <TableCell sx={{ padding: '8px' }}>{row.weightagePerHour}</TableCell>
-                <TableCell align="center" sx={{ padding: '8px' }}>
-                  <IconButton size="small" sx={{ color: "#616161" }}>
-                  <UpdateActivityButton activityId={row.id} />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="center" sx={{ padding: '8px' }}>
-                  <IconButton size="small" sx={{ color: "#E60124" }} onClick={() => handleDeleteClick(row.id)}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-            <TableRow sx={{ height: '10px', backgroundColor: '#ffffff' }}>
-              <TableCell colSpan={6} align="right" sx={{ paddingTop: '3px',paddingRight:'50px' }}>
                 <IconButton color="primary" size="small">
-                  <AddNewActivity/>
+                  <AddNewActivity />
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -181,14 +215,11 @@ const CategoriesTable: React.FC = () => {
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
-        sx={{ backgroundColor: '#fffff', width: '100%', overflow: 'hidden' }}
+        sx={{ backgroundColor: "#fffff", width: "100%", overflow: "hidden" }}
       />
-      
+
       {/* Confirmation Dialog */}
-      <Dialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-      >
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -197,8 +228,12 @@ const CategoriesTable: React.FC = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleConfirmDelete} color="error" disabled={deleteLoading}>
-            {deleteLoading ? <CircularProgress size={20} /> : 'Delete'}
+          <Button
+            onClick={handleConfirmDelete}
+            color="error"
+            disabled={deleteLoading}
+          >
+            {deleteLoading ? <CircularProgress size={20} /> : "Delete"}
           </Button>
         </DialogActions>
       </Dialog>

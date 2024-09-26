@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 const Navbar = () => {
   const { instance } = useMsal();
-  const activeAccount = instance.getActiveAccount();
+  // const activeAccount = instance.getActiveAccount();
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);

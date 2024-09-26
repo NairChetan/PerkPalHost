@@ -1,5 +1,3 @@
-import React from "react";
-
 import AppRoutes from "./auth/AppRoutes";
 
 function App() {

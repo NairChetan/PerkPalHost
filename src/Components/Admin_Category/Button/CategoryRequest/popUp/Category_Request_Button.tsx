@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useRef } from "react";
 import { Box, Button, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import CategoryRequest from "../../../CategoryRequest";
+// import CategoryRequest from "../../../CategoryRequest";
 
 const Category_Request_Button = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -12,7 +13,7 @@ const Category_Request_Button = () => {
     setOpen(false);
   };
 
-  const CustomButton = styled(Button)(({ theme }) => ({
+  const CustomButton = styled(Button)(() => ({
     "&.MuiButton-root": {
       padding: "12px 0px",
       marginLeft: "-5px", // Customize the root padding here
@@ -114,7 +115,7 @@ const Category_Request_Button = () => {
             >
               <CloseIcon />
             </IconButton>
-            <CategoryRequest />
+            {/* <CategoryRequest /> */}
           </Box>
         )}
       </Box>
