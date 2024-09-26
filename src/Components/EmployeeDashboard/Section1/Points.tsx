@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import CountUp from 'react-countup';
 import rewardsimg from '../../../assets/Images/EmployeeDashboardAssets/reward.png';
@@ -13,7 +14,7 @@ const Points: React.FC<PointProp> = ({ points }) => {
     return <p>No data available</p>; // Handle loading or error states if needed
   }
 
-  const { totalPoints, redeemablePoints } = points;
+  const { totalPoints } = points;
 
   return (
     <div className='points-card'>

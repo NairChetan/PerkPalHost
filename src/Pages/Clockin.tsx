@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import Navbar from "../Components/NavBar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import Calendar from "../Components/Clockin/Calendar/Calendar";
-import UserLogin from "../Components/Clockin/UserLogin/UserLogin";
+import UserLogin from "../Components/Clockin/UserLog/UserLog";
 import styles from "../Components/Clockin/Clockin.module.css";
 
 const Clockin: React.FC = () => {
@@ -11,6 +11,7 @@ const Clockin: React.FC = () => {
   useEffect(() => {
     console.log("Selected Date in Clockin Component:", selectedDate);
   }, [selectedDate]);
+
 
   return (
     <>

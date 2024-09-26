@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import Bar_Chart from "../../Section4/Charts/BarChartEd";
 import axios from 'axios';
@@ -14,9 +14,9 @@ const chartOptions = {
 
 const MonthlyChart = () => {
   const [chartData, setChartData] = useState({
-    labels: [],
+    labels: [] as string[],  // Fix: labels are an array of strings
     datasets: [{
-      data: [],
+      data: [] as number[],  // Fix: data is an array of numbers
       backgroundColor: "#895937",
     }],
   });
@@ -34,7 +34,7 @@ const MonthlyChart = () => {
         const response = await axios.get(`http://localhost:8080/api/v1/employee/${empid}/points/current-year-per-month`);
         const data = response.data;
 
-        const labels = [];
+        const labels:string[] = [];
         const dataPoints = new Array(12).fill(0); // Initialize with zeroes for each month
 
         data.forEach(item => {

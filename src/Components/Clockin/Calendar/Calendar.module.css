@@ -5,6 +5,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   gap: 10px;
+  padding-left: 1%;
 }
 .calendarImage {
   width: 360px;
@@ -13,8 +14,9 @@
   margin-left: -20px;
 }
 .calendarright{
-  width: 1000px;
+  width: 100%;
 }
+
 
 .datepicker{
   align-self: center;
@@ -28,7 +30,8 @@
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 1px;
+    width: 20%;
   }
   
   .daysOfWeek {
@@ -37,6 +40,7 @@
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
+    width: 19%;
   }
   
   .dayOfWeek {
@@ -75,6 +79,23 @@
     .calendarImage {
       display: none;
     }
+    .calendarContainer{
+      padding-left: 15%;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      width: 85%;
+    }
+    .daysOfWeek {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      width: 84%;
+    }
   }
   @media (max-width: 426px) {
     .calendar,.daysOfWeek {
@@ -85,12 +106,20 @@
     .calendarImage {
       display: none;
     }
+    .calendarContainer{
+      padding-left: 15%;
+    }
+  
+    
   }
   
   @media (max-width: 376px) {
     .calendar,.daysOfWeek {
       max-width: 375px; /* adjust as needed */
     
+    }
+    .calendarContainer{
+      padding-left: 9%;
     }
   }
   
@@ -102,5 +131,8 @@
     }
     .calendarright{
       width: 300px;
+    }
+    .calendarContainer{
+      padding-left: 11%;
     }
   }

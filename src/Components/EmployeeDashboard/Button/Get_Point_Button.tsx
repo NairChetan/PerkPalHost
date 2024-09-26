@@ -14,7 +14,7 @@ const Category_Request_Button = () => {
     setOpen(false);
   };
 
-  const CustomButton = styled(Button)(({ theme }) => ({
+  const CustomButton = styled(Button)(() => ({
     "&.MuiButton-root": {
       padding: "12px 0px",
       marginLeft: "-5px", // Customize the root padding here

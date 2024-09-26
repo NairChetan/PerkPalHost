@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import  { useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useFetchCategories, useAddNewActivityForAdmin } from '../../CustomHooks/CustomHooks';
@@ -11,7 +12,7 @@ const NewActivity = () => {
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
+  const { categories, loading: categoriesLoading } = useFetchCategories('/api/v1/category/category-name-only');
   const { addNewActivity } = useAddNewActivityForAdmin();
 
   const formik = useFormik({

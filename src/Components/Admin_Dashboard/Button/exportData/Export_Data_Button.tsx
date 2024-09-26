@@ -91,6 +91,7 @@ const ExportDataButton = () => {
               lg: "60vw", // For large screens (desktops)
               xl: "60vw", // For extra large screens
             },
+            minHeight: "75vh",
             height: "auto",
             maxHeight: "95vh",
             background: "#1D1E22",

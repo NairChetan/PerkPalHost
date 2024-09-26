@@ -1,10 +1,8 @@
-import { Tabs, Tab, Box, Button, Typography } from "@mui/material";
+import { Tabs, Tab, Box, Typography } from "@mui/material";
 import React, { useState } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tab1 from "./Tab1";
 import Tab2 from "./Tab2";
 import Tab3 from "./Tab3";
-import Tab4 from "./Tab4";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -35,7 +33,7 @@ const TabPanel: React.FC<TabPanelProps> = (props) => {
 const ExportDataTabs = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

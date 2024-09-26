@@ -1,6 +1,7 @@
 .container {
     background-color: #212121;
     padding: 20px;
+    padding-top: 10px;
     border-radius: 15px;
     width: 400px;
     margin: auto;
@@ -115,7 +116,35 @@
     text-align: center;
   }
   
+  .thumbnail {
+    width: 65px;
+    height: 29px;
+    object-fit: cover;
+    margin-left: -71px;
+  }
+  
+  .proofContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
 
+  @media (max-width: 376px) {
+
+    .container {
+      background-color: #212121;
+      padding: 20px;
+      border-radius: 15px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      height: 97vh;
+      overflow-y:auto;
+    }
+    
+    
+  }
   @media (max-width: 321px) {
 
     .container {

@@ -1,8 +1,15 @@
 
 .Log{
     text-align: left;
-    padding-bottom: 5px;
+    position: sticky;
+    top: -1px;
+    z-index: 3;
+    margin-top: 6%;
+
     
+  }
+  .tableWrapper{
+    margin-top: 1.9%;
   }
   .table {
       width: 100%;
@@ -94,8 +101,25 @@
 .tableWrapper {
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 30vh; /* Adjust this height as needed */
+  max-height: 55vh; /* Adjust this height as needed */
   position: relative;
+  width: 100%;
+}
+@media (max-width: 1441px) {
+  .tableWrapper {
+    overflow-x: auto;
+    /* width:75% */
+  }
+  .Log{
+    text-align: left;
+    position: sticky;
+    top: -1px;
+    z-index: 3;
+    margin-top: 6%;
+    width: 75%;
+
+    
+  }
 }
     @media (max-width: 769px) {
       .tableWrapper {

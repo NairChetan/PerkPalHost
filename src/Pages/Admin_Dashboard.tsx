@@ -14,7 +14,7 @@ import Club_Edit_Button from "../Components/Admin_Dashboard/Button/Club_Edit_But
 const Admin_Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState<string>("1");
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setSelectedTab(newValue);
   };
 
