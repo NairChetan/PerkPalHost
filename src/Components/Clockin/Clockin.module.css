@@ -9,7 +9,7 @@
   }
   
   /* Adjust component widths */
-  @media (max-width: 426px) {
+  @media (max-width: 769px) {
     .clockinContainer {
       display: flex;
       flex-direction: column;

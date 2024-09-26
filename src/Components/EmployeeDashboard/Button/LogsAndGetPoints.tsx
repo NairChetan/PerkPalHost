@@ -136,9 +136,12 @@ const LogsAndGetPoints = () => {
            
             padding: "0%",
             color: "#FFFFFF", // Add border with width, style, and color
+            '@media (max-width: 376px)': {
+              width: '350px',
+            },
             '@media (max-width: 321px)': {
               width: '300px',
-            },
+            }, 
           }}
           ref={refOne}
         >
