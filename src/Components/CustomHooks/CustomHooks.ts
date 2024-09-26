@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -72,6 +73,7 @@ export const useFetchCategories = (endUrl: string) => {
         setCategories(response.data.data);
       } catch (err) {
         setError(err as Error);
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -155,7 +157,7 @@ export const useSubmitParticipation = () => {
   return { submitParticipation, loading, error };
 };
 
-export const useFetchParticipation = (url: string, refreshPage: number,  isLoadingMore: boolean,setIsLoadingMore: (loading: boolean) => void) => {
+export const useFetchParticipation = (url: string, refreshPage: number,  _isLoadingMore: boolean,setIsLoadingMore: (loading: boolean) => void) => {
   const [participation, setParticipation] = useState<any[]>([]);
   const [pagination, setPagination] = useState<{
     totalPages: number;
@@ -186,18 +188,17 @@ export const useFetchParticipation = (url: string, refreshPage: number,  isLoadi
           console.error("Error response data:", err.response.data);
           console.error("Error response status:", err.response.status);
           console.error("Error response headers:", err.response.headers);
-        } else {
+        } else if(err instanceof Error) {
           // Log the error message
           console.error("Error message:", err.message);
         }
         setError("Failed to fetch data.");
         setLoading(false);
-
       }
     };
 
     fetchData();
-  }, [url, refreshPage]);
+  }, [url, refreshPage,setIsLoadingMore]);
 
   return { participation, pagination, loading, error };
 };
@@ -234,7 +235,7 @@ export const usePostApprovalStatus = () => {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
-      } else {
+      } else if(err instanceof Error) {
         console.error("Error message:", err.message);
       }
       setError("Failed to post approval status.");
@@ -379,7 +380,7 @@ export const useDeleteParticipation = () => {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
-      } else {
+      } else if(err instanceof Error) {
         console.error("Error message:", err.message);
       }
       setError("Failed to delete participation entry.");
@@ -407,7 +408,7 @@ export const useFetchActivitiesForAdmin = () => {
           console.error("Error response data:", err.response.data);
           console.error("Error response status:", err.response.status);
           console.error("Error response headers:", err.response.headers);
-        } else {
+        } else if(err instanceof Error) {
           console.error("Error message:", err.message);
         }
         setError("Failed to fetch activities.");
@@ -442,7 +443,7 @@ export const useDeleteActivity = () => {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
-      } else {
+      } else if(err instanceof Error) {
         console.error("Error message:", err.message);
       }
       setError("Failed to delete activity.");
@@ -482,7 +483,7 @@ export const useAddNewActivityForAdmin = () => {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
-      } else {
+      } else if(err instanceof Error) {
         console.error("Error message:", err.message);
       }
       setError("Failed to add new activity.");
@@ -503,6 +504,7 @@ export const useUpdateActivityForAdmin = () => {
   const updateActivity = async (
     id: number,
     updatedActivityData: {
+      activityName:string,
       description: string;
       updatedBy: number;
       weightagePerHour: number;
@@ -524,7 +526,7 @@ export const useUpdateActivityForAdmin = () => {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
-      } else {
+      } else if(err instanceof Error) {
         console.error("Error message:", err.message);
       }
       setError("Failed to update activity.");

@@ -1,16 +1,11 @@
-import React from 'react';
 import {
   Box,
   Button,
   TextField,
   Typography,
-  IconButton,
-  Dialog,
   DialogContent,
   useMediaQuery,
 } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 
 

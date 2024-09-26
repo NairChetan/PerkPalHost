@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import React from "react";
 import backgroundImage from "../assets/Images/Sin City Red 3.png";
 import facePhoto from "../assets/Images/Face photo.png";
 import bgText1 from "../assets/Images/perks by (1).png";

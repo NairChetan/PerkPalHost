@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -10,14 +11,15 @@ const NewEntry = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [proof, setProof] = useState<File | null>(null);
   const [proofPreview, setProofPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading] = useState(false);
+  const [error, setError] = useState<string | null | Error>(null);
   const [openLoadingPopup, setOpenLoadingPopup] = useState(false); // New state for loading popup
   const [openSuccessPopup, setOpenSuccessPopup] = useState(false); // New state for success popup
 
   const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories('/api/v1/category/category-name-only');
   const { activities, loading: activitiesLoading, error: activitiesError } = useFetchActivities(selectedCategory);
   const { submitParticipation } = useSubmitParticipation();
+  console.log(error);
 
   useEffect(() => {
     if (categoriesError) setError(categoriesError);
@@ -137,7 +139,7 @@ const NewEntry = () => {
         />
       </div>
 
-      {error && <p className={styles.error}>{error}</p>}
+      {/* {error && <p className={styles.error}>{error}</p>} */}
 
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <select

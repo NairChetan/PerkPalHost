@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import styles from './UserLog.module.css';
 import dayjs from 'dayjs';
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Dialog, DialogContent, DialogActions, Button, TextField, CircularProgress, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogActions, Button, TextField, CircularProgress} from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useFetchUserLoginsByDate, useEditParticipationEntry, useDeleteParticipation } from '../../CustomHooks/CustomHooks';
 
 // Define the validation schema using Yup
-const validationSchema = Yup.object().shape({
-  description: Yup.string().required('Description is required'),
-  durationHours: Yup.number().min(0, 'Hours cannot be negative').required('Hours are required'),
-  durationMinutes: Yup.number().min(0, 'Minutes cannot be negative').max(59, 'Minutes must be less than 60').required('Minutes are required'),
-});
+// const validationSchema = Yup.object().shape({
+//   description: Yup.string().required('Description is required'),
+//   durationHours: Yup.number().min(0, 'Hours cannot be negative').required('Hours are required'),
+//   durationMinutes: Yup.number().min(0, 'Minutes cannot be negative').max(59, 'Minutes must be less than 60').required('Minutes are required'),
+// });
 
 interface UserLoginProps {
   selectedDate: string;
@@ -34,8 +35,8 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-render
 
   const { userLogins } = useFetchUserLoginsByDate(selectedDate, localStorage.getItem("employeeId") || "",refreshKey);
-  const { entry, updateEntry, loading: editLoading, error: editError } = useEditParticipationEntry(editId || 0);
-  const { deleteParticipation, loading: deleteLoading, error: deleteError } = useDeleteParticipation();
+  const { entry, updateEntry, loading: editLoading} = useEditParticipationEntry(editId || 0);
+  const { deleteParticipation, loading: deleteLoading} = useDeleteParticipation();
   useEffect(() => {
     if (entry) {
       setProofUrl(entry.proofUrl);
@@ -44,7 +45,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
 
 
   // Utility function to convert minutes to HH:MM format
-const convertMinutesToHHMM = (minutes: number | null): string => {
+const convertMinutesToHHMM = (minutes: number | 0): string => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
@@ -83,7 +84,7 @@ const convertMinutesToHHMM = (minutes: number | null): string => {
 
   // edit
   const [selectedDescription, setSelectedDescription] = useState('');
-  const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+  const [selectedDuration, setSelectedDuration] = useState<number>(0);
   const [selectedProof, setSelectedproof] = useState<File | null>(null);
 
 
