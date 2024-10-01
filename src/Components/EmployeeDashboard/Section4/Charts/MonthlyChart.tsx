@@ -31,7 +31,7 @@ const MonthlyChart = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/employee/${empid}/points/current-year-per-month`);
+        const response = await axios.get(`https://172.16.4.89:8443/api/v1/employee/${empid}/points/current-year-per-month`);
         const data = response.data;
 
         const labels:string[] = [];

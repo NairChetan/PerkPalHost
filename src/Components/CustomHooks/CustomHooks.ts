@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const baseURL = "http://localhost:8080";
+const baseURL = "https://172.16.4.89:8443";
 // const token = localStorage.getItem("accessToken");
 // console.log(token);
 // const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmphbGkuZGFzQHNyZWVnY2xvdWRnbWFpbC5vbm1pY3Jvc29mdC5jb20iLCJpYXQiOjE3MjU0NzQ1OTYsImV4cCI6MTcyNjA3OTM5NX0.3QV_4bB9yASi3HcHLBhwk4qECJ3hb0VErQzB6KPvznK82IhKG2U0H6813WO6D_BfqxvCfbLa6PmPxUZLDiLcQg";
@@ -556,7 +556,7 @@ export const useFetchClubs = () => {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/club");
+        const response = await axios.get("https://172.16.4.89:8443/api/v1/club");
         console.log(response.data);
         setClubs(response.data.data); // Assuming `data` contains the club list
         setLoading(false);
@@ -582,7 +582,7 @@ export const useCreateClub = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.post(
-        "http://localhost:8080/api/v1/club",
+        "https://172.16.4.89:8443/api/v1/club",
         clubDto,
         {
           headers: {
@@ -612,7 +612,7 @@ export const useUpdateClub = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `http://localhost:8080/api/v1/club/${id}`,
+        `https://172.16.4.89:8443/api/v1/club/${id}`,
         club,
         {
           headers: {
@@ -641,7 +641,7 @@ export const useDeleteClub = () => {
 
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`http://localhost:8080/api/v1/club/${id}`, {
+      await axios.delete(`https://172.16.4.89:8443/api/v1/club/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token here
         },

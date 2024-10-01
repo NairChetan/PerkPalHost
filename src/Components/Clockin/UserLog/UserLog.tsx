@@ -33,7 +33,7 @@ const UserLogin: React.FC<UserLoginProps> = ({ selectedDate }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-render
-
+console.log(localStorage.getItem("employeeId"));
   const { userLogins } = useFetchUserLoginsByDate(selectedDate, localStorage.getItem("employeeId") || "",refreshKey);
   const { entry, updateEntry, loading: editLoading} = useEditParticipationEntry(editId || 0);
   const { deleteParticipation, loading: deleteLoading} = useDeleteParticipation();

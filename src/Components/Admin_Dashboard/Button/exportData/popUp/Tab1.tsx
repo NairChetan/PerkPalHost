@@ -83,7 +83,7 @@ const Tab1 = () => {
         let apiUrl = "";
         if (selectedChart === "Employee Chart") {
           apiUrl =
-            "http://localhost:8080/api/v1/employee/api/v1/employees/by-points-full-details";
+            "https://172.16.4.89:8443/api/v1/employee/api/v1/employees/by-points-full-details";
 
           const response = await axios.get(apiUrl, {
             params: {
@@ -94,7 +94,7 @@ const Tab1 = () => {
 
           return response.data;
         } else if (selectedChart === "DU Chart") {
-          apiUrl = "http://localhost:8080/api/v1/du/points";
+          apiUrl = "https://172.16.4.89:8443/api/v1/du/points";
 
           const response = await axios.get(apiUrl, {
             params: {

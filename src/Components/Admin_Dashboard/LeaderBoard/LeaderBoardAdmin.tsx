@@ -56,7 +56,7 @@ const LeaderBoardAdmin = () => {
         const endDate = `${currentYear}-12-31T23:59:59`;
         // Replace with your API endpoint
         const response = await axios.get(
-          "http://localhost:8080/api/v1/employee/api/v1/employees/by-points",
+          "https://172.16.4.89:8443/api/v1/employee/api/v1/employees/by-points",
           {
             params: {
               initialDate,

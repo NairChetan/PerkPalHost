@@ -35,12 +35,11 @@ const AppRoutes: React.FC = () => {
         try {
           // Call the API endpoint for authentication
           const response = await axios.post(
-            "http://localhost:8080/api/v1/auth/login",
+            "https://172.16.4.89:8443/api/v1/auth/login",
             {
               email: activeAccount.username, // Pass email in request body for POST
             }
           );
-
           // Destructure the data according to the response format
           const {
             accessToken,

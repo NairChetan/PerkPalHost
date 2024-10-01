@@ -50,7 +50,7 @@ const Employee_chart: React.FC = () => {
         console.log(formattedStartDate); // Debug: Log start date
         console.log(formattedEndDate); // Debug: Log end date
         const response = await axios.get(
-          "http://localhost:8080/api/v1/employee/api/v1/employees/by-points",
+          "https://172.16.4.89:8443/api/v1/employee/api/v1/employees/by-points",
           {
             params: {
               initialDate: formattedStartDate,
