@@ -8,12 +8,15 @@
   </head>
   <body>
     <script type="text/javascript">
+      // GitHub Pages uses 404.html to serve when routes are not found
+      // Redirect to index.html and preserve the path for React Router
       (function () {
-        // Preserve the current path and redirect to index.html for React Router to handle
         var currentPath = window.location.pathname;
-        var newUrl = "/PerkPal/index.html"; // Always use this path for GitHub Pages
+        var newUrl = currentPath.includes("/PerkPal")
+          ? "/PerkPal/index.html"
+          : "/index.html";
 
-        // Redirect to index.html while preserving the path for React Router
+        // Redirect to the index page while preserving the path for React Router to handle
         window.location.replace(newUrl + "?redirect=" + encodeURIComponent(currentPath));
       })();
     </script>
