@@ -82,7 +82,7 @@ const AppRoutes: React.FC = () => {
   }
 
   return (
-    <Router>
+    <Router basename="/PerkPal">
       <AuthenticatedTemplate>
         {role ? (
           <Routes>
