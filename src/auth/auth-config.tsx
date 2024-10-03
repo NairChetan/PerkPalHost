@@ -16,7 +16,7 @@ export const msalConfig = {
         clientId: 'ea8059a3-7baf-4bcc-b943-f4d31a69b6ba', // This is the ONLY mandatory field that you need to supply.
         authority: 'https://login.microsoftonline.com/5b751804-232f-410d-bb2f-714e3bb466eb/', // Replace the placeholder with your tenant subdomain 
         redirectUri: 'https://rithikar25.github.io/PerkPal/', // Points to window.location.origin. You must register this URI on Microsoft Entra admin center/App Registration.
-        postLogoutRedirectUri: '', // Indicates the page to navigate after logout.
+        postLogoutRedirectUri: '/', // Indicates the page to navigate after logout.
         navigateToLoginRequestUrl: false, // If "true", will navigate back to the original request location before processing the auth code response.
     },
     cache: {
