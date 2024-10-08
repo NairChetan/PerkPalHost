@@ -1,6 +1,6 @@
 {
   "name": "perkpal",
-  "homepage": "https://RithikAR25.github.io/PerkPal",
+  "homepage": "https://perk-pal-host.vercel.app/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
