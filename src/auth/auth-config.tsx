@@ -10,7 +10,7 @@ import { LogLevel } from '@azure/msal-browser';
  * For a full list of MSAL.js configuration parameters, visit:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
-
+//changed redirectURL
 export const msalConfig = {
     auth: {
         clientId: 'ea8059a3-7baf-4bcc-b943-f4d31a69b6ba', // This is the ONLY mandatory field that you need to supply.
