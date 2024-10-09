@@ -12,7 +12,7 @@ export default defineConfig({
         target: 'https://172.16.4.89:8443', // The URL of your backend server
         changeOrigin: true, // Needed for virtual hosted sites
         secure: false, // Use this if your backend uses self-signed certs
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/.*?(\/api.*)/, '$1'),
       },
     },
   },
