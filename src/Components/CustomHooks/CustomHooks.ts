@@ -556,7 +556,7 @@ export const useFetchClubs = () => {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await axios.get("https://172.16.4.89:8443/api/v1/club");
+        const response = await axios.get("https://perkpalbackend.onrender.com/api/v1/club");
         console.log(response.data);
         setClubs(response.data.data); // Assuming `data` contains the club list
         setLoading(false);
@@ -582,7 +582,7 @@ export const useCreateClub = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.post(
-        "https://172.16.4.89:8443/api/v1/club",
+        "https://perkpalbackend.onrender.com/api/v1/club",
         clubDto,
         {
           headers: {
@@ -612,7 +612,7 @@ export const useUpdateClub = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `https://172.16.4.89:8443/api/v1/club/${id}`,
+        `https://perkpalbackend.onrender.com/api/v1/club/${id}`,
         club,
         {
           headers: {
@@ -641,7 +641,7 @@ export const useDeleteClub = () => {
 
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`https://172.16.4.89:8443/api/v1/club/${id}`, {
+      await axios.delete(`https://perkpalbackend.onrender.com/api/v1/club/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token here
         },
