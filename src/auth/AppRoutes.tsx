@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import https from "https"; // Import the HTTPS module
 import {
   BrowserRouter as Router,
   Routes,
@@ -23,7 +24,7 @@ const AppRoutes: React.FC = () => {
   const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Loading state
   const activeAccount = instance.getActiveAccount();
-  
+
   useEffect(() => {
     const storedRole = localStorage.getItem("Role");
 
@@ -33,13 +34,23 @@ const AppRoutes: React.FC = () => {
     } else if (activeAccount) {
       const fetchRole = async () => {
         try {
+          // Create an Axios instance with httpsAgent conditionally
+          const axiosInstance = axios.create({
+            httpsAgent: process.env.NODE_ENV !== 'production'
+              ? new https.Agent({
+                  rejectUnauthorized: false, // Ignore self-signed SSL in development
+                })
+              : undefined, // Use default HTTPS behavior in production
+          });
+
           // Call the API endpoint for authentication
-          const response = await axios.post(
+          const response = await axiosInstance.post(
             "https://172.16.4.89:8443/api/v1/auth/login",
             {
               email: activeAccount.username, // Pass email in request body for POST
             }
           );
+          
           // Destructure the data according to the response format
           const {
             accessToken,
@@ -49,7 +60,7 @@ const AppRoutes: React.FC = () => {
             firstName,
             lastName,
             photoUrl,
-            roleName
+            roleName,
           } = response.data;
 
           // Set role in state
