@@ -41,7 +41,7 @@ const DU_chart = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://172.16.4.89:8443/api/v1/du/points",
+          "https://perkpalbackend.onrender.com/api/v1/du/points",
           {
             params: {
               startDate: startDate.toISOString().slice(0, 19).replace("T", " "),
