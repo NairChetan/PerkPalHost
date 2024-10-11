@@ -29,7 +29,7 @@ const Tab3 = () => {
       setError(null);
       try {
         const response = await axios.get(
-          "https://172.16.4.89:8443/api/v1/category"
+          "https://perkpalbackend.onrender.com/api/v1/category"
         );
         setCategories(response.data.data);
       } catch (err) {
@@ -45,7 +45,7 @@ const Tab3 = () => {
   const handleExport = async () => {
     try {
       // Fetch data from the API
-      const response = await axios.get("https://172.16.4.89:8443/api/v1/category");
+      const response = await axios.get("https://perkpalbackend.onrender.com/api/v1/category");
       const categories = response.data.data;
 
       // Transform data into a format suitable for Excel
